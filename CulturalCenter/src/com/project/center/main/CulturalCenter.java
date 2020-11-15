@@ -2,6 +2,8 @@ package com.project.center.main;
 
 import java.util.Scanner;
 
+import com.project.center.program.ProgramManage;
+
 public class CulturalCenter {
 	public static void main(String[] args) {
 		
@@ -60,6 +62,7 @@ public class CulturalCenter {
 						
 					} else if (Num == 2) {
 						System.out.println("프로그램 신청");
+						ProgramManage.applyProgram();
 						
 					} else if (Num == 3) {
 						System.out.println("신청한 프로그램");
