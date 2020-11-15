@@ -1,6 +1,9 @@
 package com.project.center.employee;
 
-import java.util.Calendar;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
+import data.Path;
 
 public class Employee {
 	
@@ -8,8 +11,8 @@ public class Employee {
 	private String name;
 	private String position;
 	private String password;
-	private int monthlyIncome;
-	private Calendar startDate = Calendar.getInstance();
+	private String monthlyIncome;
+	private String startDate;
 			
 	public Employee() {
 		
@@ -17,8 +20,8 @@ public class Employee {
 		this.name = null;
 		this.position = null;
 		this.password = null;
-		this.monthlyIncome = 0;
-		this.startDate = Calendar.getInstance();
+		this.monthlyIncome = null;
+		this.startDate = null;
 		
 	}
 
@@ -50,25 +53,48 @@ public class Employee {
 		return password;
 	}
 
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public int getMonthlyIncome() {
+	public String getMonthlyIncome() {
 		return monthlyIncome;
 	}
 
-	public void setMonthlyIncome(int monthlyIncome) {
+	public void setMonthlyIncome(String monthlyIncome) {
 		this.monthlyIncome = monthlyIncome;
 	}
 
-	public Calendar getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Calendar startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
+	}
+	
+	public void setEmployeeIntoData() {
+		
+		try {
+
+			BufferedWriter writer = new BufferedWriter(new FileWriter(Path.EMPLOYEELIST, true));
+			
+			writer.newLine();
+			writer.write(String.format("%s,%s,%s,%s,%s,%s"
+					, this.code
+					, this.name
+					, this.position
+					, this.password
+					, this.monthlyIncome
+					, this.startDate));
+			
+			writer.close();
+
+		} catch (Exception e) {
+			System.out.println("Employee.setEmployeeIntoData()");
+			e.printStackTrace();
+		}
+		
 	}
 		
 }
