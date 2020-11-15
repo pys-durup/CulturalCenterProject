@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Scanner;
 
-import com.project.center.main.Path;
+import data.Path;
 
 public class EmployeeManage {
 
@@ -32,6 +32,7 @@ public class EmployeeManage {
 			String inputID = scan.nextLine();
 			System.out.print("관리자 비밀번호 :");
 			String inputPassword = scan.nextLine();
+			System.out.println();
 			
 			if (inputID.equals(masterID) && inputPassword.equals(masterPassword)) {
 				check = true;
