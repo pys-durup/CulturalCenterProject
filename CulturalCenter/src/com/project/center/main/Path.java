@@ -21,4 +21,5 @@ public class Path {
 	public static final String MILEAGE = "src\\data\\마일리지정보.txt";
 	public static final String NOTICE = "src\\data\\공지사항.txt";
 
+
 }

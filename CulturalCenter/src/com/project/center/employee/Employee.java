@@ -50,6 +50,7 @@ public class Employee {
 		return password;
 	}
 
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -70,8 +71,6 @@ public class Employee {
 		this.startDate = startDate;
 	}
 		
-		
-	
 }
 
 	
