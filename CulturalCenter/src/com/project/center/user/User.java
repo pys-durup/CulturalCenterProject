@@ -2,19 +2,21 @@ package com.project.center.user;
 
 public class User {
 	
-	String code;
-	String id;
-	String pw;
-	String birth;
-	String gender;
-	String tel;
-	String address;
-	String group;
+	private String code;
+	private String name;
+	private String id;
+	private String pw;
+	private String birth;
+	private String gender;
+	private String tel;
+	private String address;
+	private String group;
 	
 
 	
-	public User(String code, String id, String pw, String birth, String gender, String tel, String address, String group) {
+	public User(String code, String name, String id, String pw, String birth, String gender, String tel, String address, String group) {
 		this.code = code;
+		this.name = name;
 		this.id = id;
 		this.pw = pw;
 		this.birth = birth;
@@ -29,6 +31,12 @@ public class User {
 	}
 	public void setCode(String code) {
 		this.code = code;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getId() {
 		return id;
