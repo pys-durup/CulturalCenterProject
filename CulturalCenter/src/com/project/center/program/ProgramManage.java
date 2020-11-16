@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.project.center.main.Path;
-import com.test.dummy.ProgramStudent;
 
 public class ProgramManage {
 	
@@ -21,7 +20,10 @@ public class ProgramManage {
 	}
 
 
-	// 프로그램을 신청하는 흐름
+	/**
+	 *  프로그램 신청이 진행되는 메서드
+	 * 
+	 */
 	public void applyProgram() {
 	
 		while(true) {
@@ -29,10 +31,11 @@ public class ProgramManage {
 			showMenu();
 			
 			// 입력 번호를 받아옴
+			System.out.print("번호를 입력하세요 : ");
 			int num = selectNum();
 			
 			if(num == 1) {
-				System.out.println("검색어");
+				System.out.println("검색어를 입력하세요 : ");
 				String text = getSearchString();
 				showSearchList(text);
 
@@ -51,7 +54,12 @@ public class ProgramManage {
  		}
 	}
 
-	// 프로그램 신청 메뉴를 보여주는 메서드
+	
+	
+	/**
+	 *  프로그램 신청 메뉴를 보여주는 메서드
+	 * 
+	 */
 	private void showMenu() {
 		
 		System.out.println("1. 검색어로 찾기");
@@ -62,37 +70,25 @@ public class ProgramManage {
 	}
 	
 	
-	// 검색어를 받아오는 메서드
+	/**
+	 *  검색어를 받아오는 메서드 
+	 *   
+	 */
 	private String getSearchString() {
+//		System.out.println("getSearchString()");
 		Scanner scan = new Scanner(System.in);
 		return scan.nextLine();
 	}
 	
-	// 번호를 입력받는 메서드
-	private static int selectNum() {
-		
-		// 사용자에게 번호를 입력받는다
-		Scanner scan = new Scanner(System.in);
-		System.out.println();
-		System.out.print("번호를 선택하세요 : ");
-		return Integer.parseInt(scan.nextLine());
-	}
-	
-	// 일시정지
-	private static void pause() {
-		Scanner scan = new Scanner(System.in);
-		System.out.println("잘못된 숫자입니다. 엔터키를 누르면 이전화면으로 돌아갑니다.");
-		scan.nextLine();
-		for(int i=0 ; i<10 ; i++) {
-			System.out.println();
-		}
-	}
-	
-	
-	// 검색 결과를 만드는 메서드
+	/**
+	 * 	검색 결과를 ArrayList에 담아두는 메서드 
+	 *  @param text : 사용자가 검색한 검색어
+	 *  
+	 */
 	private void showSearchList(String text) {
+//		System.out.println("showSearchList(text)");
 		// 검색어 
-		String keyword = getSearchString().trim();
+		String keyword = text.trim();
 		// 검색된 결과를 담을 리스트
 		ArrayList<Program> resultList = new ArrayList<Program>();
 		
@@ -108,12 +104,20 @@ public class ProgramManage {
 		
 	}
 	
-	// 검색 결과를 출력하는 메서드
+	/**
+	 * 	검색 결과를 출력하는 메서드 
+	 *  @param list : 검색어로 검색한 프로그램을 담아둔 ArrayList
+	 *  
+	 */
 	private void showProgramList(ArrayList<Program> list) {
+//		System.out.println("showProgramList()");
+		int index = 1; // 프로그램 번호
+		System.out.println("[번호]  [프로그램 이름]\t\t\t[강사명]    [강의실]    [시작 날짜]\t[종료 날짜]\t[정원]\t  [현재상태]\t[가격]");
 		
 		if(list.size() == 0) { // 검색 결과가 없다면
 			System.out.println("검색 결과가 존재하지 않습니다");
 		} else {
+			
 			for(Program p : list) { // 검색 결과가 있을때 출력내용 생성
 				System.out.println();
 				int count = 0; // 현재 수강중인 인원
@@ -128,18 +132,65 @@ public class ProgramManage {
 				}
 				
 				//  [프로그램 이름]   [강사명]    [강의실]     [시작 날짜]   [종료 날짜]   [정원]   [현재상태]     [가격]
-				System.out.println("[프로그램 이름]\t[강사명]\t[강의실]\t[시작 날짜]\t[종료 날짜]\t[정원]\t[현재상태]\t[가격]");
-				System.out.printf("%s\t%s\t%s\t%s\t%s\t(%d$%d)\t%s\t%s");
+				System.out.printf("%3d\t%-15s\t%5s\t%s\t%s\t%s\t(%d/%d)\t    %s\t %,d원"
+												, index
+												, p.getName()
+												, p.getTeacher()
+												, p.getClassRoom()
+												, p.getStartDate()
+												, p.getEndDate()
+												, count , p.getCapacity()
+												, state
+												, p.getPrice());
+				index++;
 			}
-		}
-		
-		
-				
+			System.out.println();
+			System.out.println("검색어에 대한 프로그램 출력 완료");
+			
+			System.out.println("1. 프로그램 신청하기\t 2. 뒤로가기");
+			System.out.print("번호를 입력하세요 : ");
+			int num = selectNum();
+			
+			if(num == 1) {
+				System.out.print("신청할 프로그램의 번호 입력 : ");
+				num = selectNum();
+			} else if (num == 2) {
+//				clearPage();
+			} else {
+				pause();
+			}
+			
+			
+			
+		}		
 	}
 	
 	// 연령별 추천 리스트를 출력
 	// 테마별 추천 리스트를 출력
 	// 월별 프로그램을 출력
+	
+	
+	
+	// 번호를 입력받는 메서드
+	private static int selectNum() {
+		
+		// 사용자에게 번호를 입력받는다
+		Scanner scan = new Scanner(System.in);
+		System.out.println();
+		return Integer.parseInt(scan.nextLine());
+	}
+	
+	// 일시정지
+	private static void pause() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("잘못된 숫자입니다. 엔터키를 누르면 이전화면으로 돌아갑니다.");
+		scan.nextLine();
+		for(int i=0 ; i<10 ; i++) {
+			System.out.println();
+		}
+	}
+
+	priva
 	
 	// 프로그램.txt에서 데이터를 읽어온다
 	private ArrayList<Program> loadProgramData(String path) {
@@ -228,4 +279,6 @@ public class ProgramManage {
 			return null;
 		}
 	}
+
+
 }
