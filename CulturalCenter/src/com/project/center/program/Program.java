@@ -8,7 +8,7 @@ public class Program {
 	private String classRoom;
 	private String startDate;
 	private String endDate;
-	private int capacity;
+	private int capacity; // 수강정원
 	private int price;
 	
 	public Program(String code, String name, String teacher, String classRoom, String startDate, String endDate,
