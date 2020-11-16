@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Scanner;
 
 import com.project.center.user.User;
@@ -47,11 +48,15 @@ public class ProgramManage {
 				System.out.println("검색어를 입력하세요 : ");
 				String text = getSearchString();
 				showSearchList(text);
-
+				break;
 			} else if(num == 2) {
-				System.out.println("연령별");
+				System.out.println("자신 나이에 맞게");
+				showAgeResult();
+				pause();
 			} else if(num == 3) {
 				System.out.println("테마별");
+				showThemeResult();
+				// 테마별 목록 (
 			} else if(num == 4) {
 				System.out.println("월별");
 			} else if(num == 5){
@@ -122,49 +127,62 @@ public class ProgramManage {
 //		System.out.println("showProgramList()");
 		while (true) {
 			this.pshowList.clear(); // 검색결과 리스트 초기화
-			System.out.printf("<검색결과> '%s'로 검색한 결과 입니다\n", text);
-			
-			System.out.println("[번호]  [프로그램 이름]\t\t\t[강사명]    [강의실]    [시작 날짜]\t[종료 날짜]\t[정원]\t  [현재상태]\t[가격]");
 			
 			if(list.size() == 0) { // 검색 결과가 없다면
 				System.out.println("검색 결과가 존재하지 않습니다");
 				break;
 			} else {
+				System.out.printf("<검색결과> '%s'로 검색한 결과 입니다\n", text);
+				System.out.println("[번호]  [프로그램 이름]\t\t\t[강사명]    [강의실]    [시작 날짜]\t[종료 날짜]\t[정원]\t  [현재상태]\t[가격]");
 				
 				// 프로그램 목록을 출력하고 pshowList에 출력데이터를 담는다
 				showProgramList(list);
 				
 				System.out.println();
-				System.out.println("검색어에 대한 프로그램 출력 완료");
 				
-				System.out.println("1. 프로그램 신청하기\t 2. 뒤로가기");
-				System.out.print("번호를 입력하세요 : ");
-				int num = selectNum();
-				System.out.println("pshowList size : " + pshowList.size());
+				// 신청 설정하는 메서드
+				setApplyProgram();
+				break;
 				
-				if(num == 1) { // 프로그램 신청하기
-					System.out.print("신청할 프로그램의 번호 입력 : ");
-					int programNum = selectNum();
-					if( programNum > 0 && programNum <= pshowList.size()) {
-						// 올바른 프로그램 번호 입력
-						// 프로그램 신청을 진행하는 메서드
-						applyProgram(this.pshowList.get(programNum-1));
-						break;
-					} else {
-						// 올바르지 않은 프로그램 번호 입력
-						System.out.println("올바르지 않은 번호입니다");
-					}
-					
-				} else if (num == 2) { // 뒤로가기
-					System.out.println("showSearchresult 메서드 뒤로가기");
-					break;
-				} else {
-					System.out.println("showSearchresult 메서드 pause");
-					pause();
-					break;
-				}
 			}
 		}		
+	}
+	
+	/**
+	 * 	프로그램 신청 설정하는 메서드
+	 *  @param list : 출력할 리스트
+	 *  
+	 */
+	private void setApplyProgram() {
+		while(true) {
+			System.out.println("1. 프로그램 신청하기\t 2. 뒤로가기");
+			System.out.print("번호를 입력하세요 : ");
+			int num = selectNum();
+			System.out.println("pshowList size : " + pshowList.size());
+			
+			if(num == 1) { // 프로그램 신청하기
+				System.out.print("신청할 프로그램의 번호 입력 : ");
+				int programNum = selectNum();
+				if( programNum > 0 && programNum <= pshowList.size()) {
+					// 올바른 프로그램 번호 입력
+					
+					// 프로그램 신청을 진행하는 메서드
+					applyProgram(this.pshowList.get(programNum-1));
+					break;
+				} else {
+					// 올바르지 않은 프로그램 번호 입력
+					System.out.println("올바르지 않은 번호입니다");
+				}
+				
+			} else if (num == 2) { // 뒤로가기
+				System.out.println("showSearchresult 메서드 뒤로가기");
+				break;
+			} else {
+				System.out.println("showSearchresult 메서드 pause");
+				pause();
+				break;
+			}
+		}
 	}
 	
 	/**
@@ -267,8 +285,87 @@ public class ProgramManage {
 
 
 
-	// 연령별 추천 리스트를 출력
-	// 테마별 추천 리스트를 출력
+	/**
+	 * 	연령별 추천 리스트를 출력 
+	 *  
+	 */
+	private void showAgeResult() {
+		
+		// 생년월일로 나이 계산
+		String birthYear = this.user.getBirth().substring(0, 4);
+		Calendar now = Calendar.getInstance();
+		int age =  now.get(Calendar.YEAR) - Integer.parseInt(birthYear);
+		String ageCode = "";
+		
+		// 나이 -> 나이코드
+		if(age >= 13 && age < 20) {
+			ageCode = "TA";
+		} else if (age >= 20 && age <= 40) {
+			ageCode = "AD";
+		} else if (age > 40) {
+			ageCode = "OD";
+		}
+		
+		
+		// 나이코드에 맞는 결과를 담을 리스트
+		ArrayList<Program> resultList = new ArrayList<Program>();
+
+		// 나이코드에 맞는 프로그램을 리스트에 저장
+		for (Program data : this.pList) {
+			// 연령코드랑 일치하면 리스트에 저장
+			if (data.getCode().substring(0, 2).equals(ageCode)) {
+				resultList.add(data);
+			}
+		}
+	
+		while (true) {
+			this.pshowList.clear();
+			
+			if(resultList.size() == 0) { // 결과가 없다면
+				System.out.println("연령에 맞는추천 프로그램이 없습니다");
+				break;
+			} else {
+				System.out.println("[번호]  [프로그램 이름]\t\t\t[강사명]    [강의실]    [시작 날짜]\t[종료 날짜]\t[정원]\t  [현재상태]\t[가격]");
+				
+				// 연령별 프로그램 목록을 출력하고 pshowList에 출력데이터를 담는다
+				showProgramList(resultList);
+				
+				System.out.println();
+				
+				// 신청 설정하는 메서드
+				setApplyProgram();
+				break;
+				
+			}
+		
+		}
+		
+		
+	}
+	
+	
+	/**
+	 * 	테마별 추천 리스트를 출력 
+	 *  
+	 */
+	private void showThemeResult() {
+		String themeCode = getTheme();
+		
+	}
+	
+	private String getTheme() {
+		System.out.println("[테마를 선택하세요]");
+		System.out.println("1. 요리/t2. 스포츠");
+		System.out.println("3. 언어/t4. 건강");
+		System.out.println("5. 원예/t6. 미술");
+		System.out.println("7. 댄스/t8. 악기");
+		System.out.println("9. 컴퓨터/t0. 뒤로가기");
+		
+		return "";
+	}
+	
+	
+	// 
 	// 월별 프로그램을 출력
 	
 	
@@ -292,7 +389,7 @@ public class ProgramManage {
 	// 일시정지
 	private static void pause() {
 		Scanner scan = new Scanner(System.in);
-		System.out.println("잘못된 숫자입니다. 엔터키를 누르면 이전화면으로 돌아갑니다.");
+		System.out.println("일시정지");
 		scan.nextLine();
 		for(int i=0 ; i<10 ; i++) {
 			System.out.println();

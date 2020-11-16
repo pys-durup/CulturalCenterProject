@@ -23,7 +23,10 @@ public class ProgramPayment {
 	// ProgramList >[프로그램 이름][강사명][강의실][시작 날짜][종료 날짜][정원][현재상태][가격]
 	// ProgramPaymentInfo > 결제코드, 프로그램코드, 회원번호, 결제일, 가격, 결제수단
 	
-	// 결제 진행하는 메서드
+	/**
+	 * 	프로그램 결제가 진행되는 메서드
+	 *  
+	 */
 	public void createPayment() {
 		/*
 			[신청 프로그램 정보]
@@ -38,7 +41,7 @@ public class ProgramPayment {
 		System.out.printf("적립 마일리지 : %,d점\n", (int)(this.paymentProgram.getPrice() * 0.05));
 		
 		System.out.println("결제 수단을 선택하세요");
-		System.out.println("1. 휴대폰  2. 카드");
+		System.out.println("1. 휴대폰  2. 카드  3.결제 취소하기");
 		System.out.print("번호를 입력하세요 : ");
 		int num = selectNum();
 		
@@ -51,10 +54,18 @@ public class ProgramPayment {
 		}else if (num == 2) { // 카드
 			cardPayment();
 			
+		}else if (num == 3) {
+			// 뒤로가기
+			pause();
+		}else {
+			//올바르지 않은 번호
 		}
 	}
 	
-	// 휴대폰 결제 메서드
+	/**
+	 * 	휴대폰 결제 메서드
+	 *  
+	 */
 	private boolean phonePayment() {
 		System.out.println("휴대폰 결제 메서드 입니다");
 		System.out.print("'-'를 제외한 휴대폰 번호를 입력하세요 : ");
@@ -66,6 +77,7 @@ public class ProgramPayment {
 			System.out.println("결제 성공 > 프로그램결제정보.txt에 추가하는 메서드");
 			// 오늘 날짜
 			Calendar now = Calendar.getInstance();
+			
 			// 저장할 데이터 생성
 			// 결제코드, 프로그램코드, 회원번호, 결제일, 가격, 결제수단
 			String paymentData = "CODE" + ","
@@ -84,14 +96,22 @@ public class ProgramPayment {
 		}
 	}
 	
-	// 카드 결제 메서드
+	/**
+	 * 	카드 결제 메서드
+	 *  
+	 */
 	private boolean cardPayment() {
 		System.out.println("카드 결제 메서드 입니다");
 		pause();
 		return false;
 	}
 	
-	// 프로그램결제정보.txt에 추가하는 메서드
+	// 
+	/**
+	 * 	프로그램결제정보.txt에 결제내용 추가하는 메서드
+	 *  @param data : 결제를 완료한 데이터
+	 *  
+	 */
 	private void savePaymentData(String data) {
 		try {
 			System.out.println("savePaymentData method");
