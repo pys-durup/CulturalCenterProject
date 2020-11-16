@@ -297,6 +297,10 @@ public class EmployeeManage {
 		
 		while (loop) {
 			
+			resultEditedPassword = "";
+			resultEditedMonthlyIncome = "";
+			resultEditedPosition = "";
+			
 			System.out.println("=========================[직원 정보 수정]=========================");
 			System.out.println();
 			System.out.println("직원 정보 수정을 위해, 수정할 직원의 사원 코드를 입력해주세요.");
@@ -403,7 +407,7 @@ public class EmployeeManage {
 						
 					}
 					
-					dummy = dummy.substring(0, dummy.length()- 3);
+					dummy = dummy.substring(0, dummy.length()- 2);
 					editFlag = true;
 				
 				} else {
