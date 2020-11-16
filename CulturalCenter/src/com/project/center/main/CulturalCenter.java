@@ -2,6 +2,7 @@ package com.project.center.main;
 
 import java.util.Scanner;
 
+import com.project.center.user.UserLogin;
 import com.project.center.user.UserRegister;
 
 public class CulturalCenter {
@@ -22,6 +23,7 @@ public class CulturalCenter {
 			
 			if(Num == 1) { // 로그인
 				System.out.println("로그인 선택");
+				UserLogin.checkUser();
 				// 로그인처리 메서드
 				// public void isLogin()? 로그인처리?
 				// public void createAccount(){} 로그인 성공하면?

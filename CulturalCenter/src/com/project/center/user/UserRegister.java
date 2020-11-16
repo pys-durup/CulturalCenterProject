@@ -121,7 +121,7 @@ public class UserRegister {
 			
 			System.out.println("회원가입이 완료되었습니다.!");
 			
-			
+			reader.close();
 			writer.close();
 			
 
