@@ -1,5 +1,7 @@
 package com.project.center.main;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.Scanner;
 
 public class CulturalCenter {
@@ -90,6 +92,9 @@ public class CulturalCenter {
 					
 				} else if(userType == 2) {
 					// 직원에게 보여질 메뉴 출력
+					System.out.println("직원메뉴");
+							
+					
 				} else if(userType == 3) {
 					// 관리자이게 보여질 메뉴 출력
 				}
@@ -100,6 +105,8 @@ public class CulturalCenter {
 			
 		
 	} //main
+	
+
 	
 	// 번호를 입력받는 메서드
 	private static int selectNum() {
