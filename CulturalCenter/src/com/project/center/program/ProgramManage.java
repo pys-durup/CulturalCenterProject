@@ -44,21 +44,20 @@ public class ProgramManage {
 			System.out.print("번호를 입력하세요 : ");
 			int num = selectNum();
 			
-			if(num == 1) {
+			if(num == 1) { // 검색어로 찾기
 				System.out.println("검색어를 입력하세요 : ");
 				String text = getSearchString();
 				showSearchList(text);
 				break;
-			} else if(num == 2) {
-				System.out.println("자신 나이에 맞게");
+			} else if(num == 2) { // 연령별 목록
 				showAgeResult();
-				pause();
-			} else if(num == 3) {
+				pause(); 
+			} else if(num == 3) { // 테마별 목록
 				System.out.println("테마별");
 				showThemeResult();
-				// 테마별 목록 (
-			} else if(num == 4) {
+			} else if(num == 4) { // 월별 목록
 				System.out.println("월별");
+				showMonthResult();
 			} else if(num == 5){
 				System.out.println("뒤로가기");
 				break;
@@ -217,7 +216,7 @@ public class ProgramManage {
 											,p.getPrice()));
 											
 			//  [프로그램 이름]   [강사명]    [강의실]     [시작 날짜]   [종료 날짜]   [정원]   [현재상태]     [가격]
-			System.out.printf("%3d\t%-15s\t%5s\t%s\t%s\t%s\t(%d/%d)\t    %s\t %,d원"
+			System.out.printf("%3d\t%-20s\t%5s\t%s\t%s\t%s\t(%d/%d)\t    %s\t %,d원"
 					, index
 					, p.getName()
 					, p.getTeacher()
@@ -433,7 +432,80 @@ public class ProgramManage {
 	 * 	월별 프로그램을 출력하는 메서드
 	 *  
 	 */ 
-	// 
+	private void showMonthResult() {
+		while(true) {
+			String yearMonth = getYearMonth();
+			System.out.println("yearMonth : " + yearMonth);
+			System.out.println("Plist startDate : " + pList.get(1).getStartDate());
+			System.out.println(pList.get(1).getStartDate().indexOf(yearMonth));
+			pause();
+			if(yearMonth != "") {
+				// 선택한 년월에 맞는 결과를 담을 리스트
+				ArrayList<Program> resultList = new ArrayList<Program>();
+
+				// 선택한 년월에 맞는 프로그램을 리스트에 저장
+				for (Program data : this.pList) {
+					// 선택한 년월이랑 일치하면 리스트에 저장
+					if (data.getStartDate().indexOf(yearMonth) >= 0) {
+						resultList.add(data);
+					}
+				}
+				
+				while (true) {
+					this.pshowList.clear();
+					
+					if(resultList.size() == 0) { // 결과가 없다면
+						System.out.println("해당 월에는 프로그램이 없습니다");
+						break;
+					} else {
+						System.out.println("[번호]  [프로그램 이름]\t\t\t[강사명]    [강의실]    [시작 날짜]\t[종료 날짜]\t[정원]\t  [현재상태]\t[가격]");
+						
+						// 테마코드별 프로그램 목록을 출력하고 pshowList에 출력데이터를 담는다
+						showProgramList(resultList);
+						
+						System.out.println();
+						
+						// 신청 설정하는 메서드
+						setApplyProgram();
+						break;
+						
+					}
+				}
+	
+			} else {
+				// 뒤로가기
+				System.out.println("뒤로가기");
+				pause();
+				break;
+			}
+		}
+	}
+	
+	/**
+	 * 	사용자가 선택한 번호를 년-월로 변환해서 리턴하는 메서드
+	 *  
+	 */
+	private String getYearMonth() {
+		System.out.println("[월을 선택하세요]");
+		System.out.println("1. 2020-12");
+		System.out.println("2. 2021-01");
+		System.out.println("3. 2021-02");
+		System.out.println("4. 2021-03");
+		System.out.println("5. 뒤로가기");
+		
+		System.out.println();
+		System.out.print("번호를 선택하세요 :");
+		int num = selectNum();
+		
+		switch (num) {
+			case 1: return "2020-12";
+			case 2: return "2021-1";
+			case 3: return "2021-2";
+			case 4: return "2021-3";
+			case 5: return "";			
+			default: return ""; 
+		}
+	}
 	
 	
 	// 페이지 클리어
