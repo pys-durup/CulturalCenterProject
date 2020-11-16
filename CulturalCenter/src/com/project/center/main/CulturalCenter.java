@@ -2,7 +2,10 @@ package com.project.center.main;
 
 import java.util.Scanner;
 
+import com.project.center.user.UserRegister;
+
 public class CulturalCenter {
+	
 	public static void main(String[] args) {
 		
 		// 유저, 직원, 관리자
@@ -27,6 +30,7 @@ public class CulturalCenter {
 				
 			} else if(Num == 2) { // 회원가입
 				System.out.println("회원가입 선택");
+				//UserRegister.insertUser();
 				// 회원가입처리 메서드
 				// 회원 가입 완료후 다시 메인화면으로
 			} else if(Num == 3) {
