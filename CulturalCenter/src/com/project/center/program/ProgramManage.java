@@ -6,7 +6,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.project.center.main.Path;
+import data.Path;
+
 
 public class ProgramManage {
 	
