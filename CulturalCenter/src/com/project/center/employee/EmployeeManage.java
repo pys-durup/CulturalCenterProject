@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -26,7 +27,7 @@ public class EmployeeManage {
 			String masterID = masterList[0];
 			String masterPassword = masterList[1];
 			
-			System.out.println("==========================[직원 관리]==========================");
+			System.out.println("============================[직원 관리]===========================");
 			System.out.println();
 			System.out.printf("\t직원 관리 메뉴에 접근하기 위해, 관리자 아이디와\n"
 					+ "\t\t비밀번호를 다시 입력해주세요.\n");
@@ -63,7 +64,7 @@ public class EmployeeManage {
 		
 		while (check) {
 			
-			System.out.println("==========================[직원 관리]==========================");
+			System.out.println("============================[직원 관리]===========================");
 			System.out.println();
 			System.out.println("관리자님, 반갑습니다. 원하시는 메뉴를 입력해주세요.");
 			System.out.println();
@@ -96,7 +97,7 @@ public class EmployeeManage {
 
 	private void insertEmployee() {
 		
-		System.out.println("==========================[직원 등록]==========================");
+		System.out.println("============================[직원 등록]===========================");
 		System.out.println();
 		System.out.printf("이름\t\t:");
 		String inputName = scan.nextLine();
@@ -241,12 +242,49 @@ public class EmployeeManage {
 		
 	}
 
-	private void updateEmployee() {
-	}
 
 	private void findEmployee() {
+		
+		System.out.println("=========================[직원 정보 조회]=========================");
+		System.out.println();
+		System.out.println("====[사원코드]====[직원이름]====[월 급여]====[직책]====[입사일]===");
+		
+		try {
+
+			BufferedReader reader = new BufferedReader(new FileReader(Path.EMPLOYEELIST));
+			
+			String line = null;
+			String[] list = new String[6];
+			
+			while ((line = reader.readLine()) != null) {
+				
+				list = line.split(",");
+				
+				System.out.printf("     %s       %s\t%s(원)   %s\t%s\n"
+								,list[0]
+								,list[1]
+								,list[4]
+								,list[2]
+								,list[5]);
+			}
+			
+			reader.close();
+			
+			System.out.println("=========================[직원 조회 완료]=========================");
+			System.out.println();
+			System.out.println("\t\t엔터를 누르시면 메인 메뉴로 돌아갑니다.");
+			System.out.println();
+			scan.nextLine();
+
+		} catch (Exception e) {
+			System.out.println("EmployeeManage.findEmployee()");
+			e.printStackTrace();
+		}
+		
 	}
 	
+	private void updateEmployee() {
+	}
 	
 	
 	
