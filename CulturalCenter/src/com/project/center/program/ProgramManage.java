@@ -6,19 +6,26 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.project.center.main.Path;
+import com.project.center.user.User;
+
+import data.Path;
+
 
 public class ProgramManage {
 	
 	private ArrayList<Program> pList; // 프로그램 정보 출력을위해 필요
 	private ArrayList<ProgramStudent> psList; // 정원, 프로그램모집상태 위해 필요
 	private ArrayList<ProgramList> pshowList; // 프로그램 조회용
+	private User user; // 유저 객체
 
 	public ProgramManage() {
 		// 생성과 동시에 데이터를 읽어옴
 		this.pList = loadProgramData(Path.PROGRAMLIST);
 		this.psList = loadPsData(Path.PROGRAMSTUDENT);
 		this.pshowList = new ArrayList<ProgramList>();
+		// 테스트용 유저 객체
+		this.user = new User("50001", "tteesstt", "tteesstt", "1993-08-17", "1", "01077743635", "주소", "1");
+		//String code, String id, String pw, String birth, String gender, String tel, String address, String group)
 	}
 
 
@@ -102,7 +109,7 @@ public class ProgramManage {
 		}
 		
 		// 검색 결과를 출력하는 메서드
-		showProgramList(resultList, text);
+		showSearchresult(resultList, text);
 		
 	}
 	
@@ -111,71 +118,48 @@ public class ProgramManage {
 	 *  @param list : 검색어로 검색한 프로그램을 담아둔 ArrayList
 	 *  @param text : 검색한 검색어
 	 */
-	private void showProgramList(ArrayList<Program> list, String text) {
+	private void showSearchresult(ArrayList<Program> list, String text) {
 //		System.out.println("showProgramList()");
 		while (true) {
+			this.pshowList.clear(); // 검색결과 리스트 초기화
 			System.out.printf("<검색결과> '%s'로 검색한 결과 입니다\n", text);
-			int index = 1; // 프로그램 선택용 번호
+			
 			System.out.println("[번호]  [프로그램 이름]\t\t\t[강사명]    [강의실]    [시작 날짜]\t[종료 날짜]\t[정원]\t  [현재상태]\t[가격]");
 			
 			if(list.size() == 0) { // 검색 결과가 없다면
 				System.out.println("검색 결과가 존재하지 않습니다");
+				break;
 			} else {
 				
-				for(Program p : list) { // 검색 결과가 있을때 출력내용 생성
-					System.out.println();
-					int count = 0; // 현재 수강중인 인원
-					String state = ""; // 현재 프로그램 모집상태(모집중 / 마감)
-					
-					for(ProgramStudent ps : this.psList) {
-						if(p.getCode().equals(ps.getCode())) {
-							count = ps.getCount();
-							state = ps.getState();
-							break;
-						}
-					}
-					// 출력을 위한 ArrayList<ProgramList> 에 정보들을 넣어놓는다
-					this.pshowList.add(new ProgramList(p.getCode()
-													,p.getName()
-													,p.getTeacher()
-													,p.getClassRoom()
-													,p.getStartDate()
-													,p.getEndDate()
-													,count
-													,p.getCapacity()
-													,state
-													,p.getPrice()));
-													
-					//  [프로그램 이름]   [강사명]    [강의실]     [시작 날짜]   [종료 날짜]   [정원]   [현재상태]     [가격]
-					System.out.printf("%3d\t%-15s\t%5s\t%s\t%s\t%s\t(%d/%d)\t    %s\t %,d원"
-							, index
-							, p.getName()
-							, p.getTeacher()
-							, p.getClassRoom()
-							, p.getStartDate()
-							, p.getEndDate()
-							, count , p.getCapacity()
-							, state
-							, p.getPrice());
-					index++;
-				}
+				// 프로그램 목록을 출력하고 pshowList에 출력데이터를 담는다
+				showProgramList(list);
+				
 				System.out.println();
 				System.out.println("검색어에 대한 프로그램 출력 완료");
 				
 				System.out.println("1. 프로그램 신청하기\t 2. 뒤로가기");
 				System.out.print("번호를 입력하세요 : ");
 				int num = selectNum();
+				System.out.println("pshowList size : " + pshowList.size());
 				
 				if(num == 1) { // 프로그램 신청하기
 					System.out.print("신청할 프로그램의 번호 입력 : ");
-					num = selectNum();
-					// 프로그램 신청을 진행하는 메서드
-					applyProgram(this.pshowList.get(num-1));
-		
+					int programNum = selectNum();
+					if( programNum > 0 && programNum <= pshowList.size()) {
+						// 올바른 프로그램 번호 입력
+						// 프로그램 신청을 진행하는 메서드
+						applyProgram(this.pshowList.get(programNum-1));
+						break;
+					} else {
+						// 올바르지 않은 프로그램 번호 입력
+						System.out.println("올바르지 않은 번호입니다");
+					}
+					
 				} else if (num == 2) { // 뒤로가기
-					clearPage();
+					System.out.println("showSearchresult 메서드 뒤로가기");
 					break;
 				} else {
+					System.out.println("showSearchresult 메서드 pause");
 					pause();
 					break;
 				}
@@ -184,12 +168,60 @@ public class ProgramManage {
 	}
 	
 	/**
+	 * 	프로그램 목록을 출력하고 ArrayList<ProgramList> pshowList에 출력데이터를 담는다
+	 *  @param list : 출력할 리스트
+	 *  
+	 */
+	private void showProgramList(ArrayList<Program> list) {
+		int index = 1;
+		for(Program p : list) { // 검색 결과가 있을때 출력내용 생성
+			System.out.println();
+			int count = 0; // 현재 수강중인 인원
+			String state = ""; // 현재 프로그램 모집상태(모집중 / 마감)
+			
+			for(ProgramStudent ps : this.psList) {
+				if(p.getCode().equals(ps.getCode())) {
+					count = ps.getCount();
+					state = ps.getState();
+					break;
+				}
+			}
+			// 출력을 위한 ArrayList<ProgramList> 에 정보들을 넣어놓는다
+			this.pshowList.add(new ProgramList(p.getCode()
+											,p.getName()
+											,p.getTeacher()
+											,p.getClassRoom()
+											,p.getStartDate()
+											,p.getEndDate()
+											,count
+											,p.getCapacity()
+											,state
+											,p.getPrice()));
+											
+			//  [프로그램 이름]   [강사명]    [강의실]     [시작 날짜]   [종료 날짜]   [정원]   [현재상태]     [가격]
+			System.out.printf("%3d\t%-15s\t%5s\t%s\t%s\t%s\t(%d/%d)\t    %s\t %,d원"
+					, index
+					, p.getName()
+					, p.getTeacher()
+					, p.getClassRoom()
+					, p.getStartDate()
+					, p.getEndDate()
+					, count , p.getCapacity()
+					, state
+					, p.getPrice());
+			index ++;
+
+		}
+	}
+	
+	
+	/**
 	 * 	프로그램 신청을 진행하는 메서드
 	 *  @param program : 사용자가 선택한 ProgramList 객체
 	 *  
 	 */
 	private void applyProgram(ProgramList program) {
-		
+		System.out.println("applyProgram method in");
 		/*
 			프로그램 이름 : 테스트 프로그램 
 			강사명 : 테스트
@@ -218,6 +250,10 @@ public class ProgramManage {
 			
 			if(num == 1) {
 				// 프로그램 결제 메서드
+				// ProgramList program객체를 넘겨준다
+				ProgramPayment pp = new ProgramPayment(program, user);
+				pp.createPayment();
+				break;
 			} else if(num == 2) { // 뒤로가기
 				break;
 			} else {
@@ -230,23 +266,19 @@ public class ProgramManage {
 	}
 
 
-	
-	
-	
-	
+
 	// 연령별 추천 리스트를 출력
 	// 테마별 추천 리스트를 출력
 	// 월별 프로그램을 출력
 	
 	
-	
+	// 페이지 클리어
 	private void clearPage() {
 		for(int i=0 ; i<15 ; i++) {
 			System.out.println();
 		}
 		
 	}
-
 
 	// 번호를 입력받는 메서드
 	private static int selectNum() {
