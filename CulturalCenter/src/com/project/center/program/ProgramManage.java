@@ -286,7 +286,7 @@ public class ProgramManage {
 
 
 	/**
-	 * 	연령별 추천 리스트를 출력 
+	 * 	연령별 추천 리스트를 출력하는 메서드
 	 *  
 	 */
 	private void showAgeResult() {
@@ -345,14 +345,61 @@ public class ProgramManage {
 	
 	
 	/**
-	 * 	테마별 추천 리스트를 출력 
+	 * 	테마별 추천 리스트를 출력하는 메서드
 	 *  
 	 */
 	private void showThemeResult() {
-		String themeCode = getTheme();
+		while(true) {
+			// 사용자가 선택한 번호를 테마코드로 변환해서 가져온다
+			String themeCode = getTheme();
+			
+			if(themeCode != "") {
+				// 테마코드에 맞는 결과를 담을 리스트
+				ArrayList<Program> resultList = new ArrayList<Program>();
+
+				// 테마코드에 맞는 프로그램을 리스트에 저장
+				for (Program data : this.pList) {
+					// 테마코드랑 일치하면 리스트에 저장
+					if (data.getCode().substring(2, 4).equals(themeCode)) {
+						resultList.add(data);
+					}
+				}
+				
+				while (true) {
+					this.pshowList.clear();
+					
+					if(resultList.size() == 0) { // 결과가 없다면
+						System.out.println("테마에 맞는추천 프로그램이 없습니다");
+						break;
+					} else {
+						System.out.println("[번호]  [프로그램 이름]\t\t\t[강사명]    [강의실]    [시작 날짜]\t[종료 날짜]\t[정원]\t  [현재상태]\t[가격]");
+						
+						// 테마코드별 프로그램 목록을 출력하고 pshowList에 출력데이터를 담는다
+						showProgramList(resultList);
+						
+						System.out.println();
+						
+						// 신청 설정하는 메서드
+						setApplyProgram();
+						break;
+						
+					}
+				}
+	
+			} else {
+				// 뒤로가기
+				System.out.println("뒤로가기");
+				pause();
+				break;
+			}
+		}
 		
 	}
 	
+	/**
+	 * 	사용자가 선택한 번호를 테마코드로 변환해서 리턴하는 메서드
+	 *  
+	 */
 	private String getTheme() {
 		System.out.println("[테마를 선택하세요]");
 		System.out.println("1. 요리/t2. 스포츠");
@@ -361,12 +408,32 @@ public class ProgramManage {
 		System.out.println("7. 댄스/t8. 악기");
 		System.out.println("9. 컴퓨터/t0. 뒤로가기");
 		
-		return "";
+		System.out.println();
+		System.out.print("테마 번호를 선택하세요 :");
+		int num = selectNum();
+		
+		switch (num) {
+			case 1: return "01";
+			case 2: return "02";
+			case 3: return "03";
+			case 4: return "04";
+			case 5: return "05";
+			case 6: return "06";
+			case 7: return "07";
+			case 8: return "08";
+			case 9: return "09";
+			case 0: return "";
+			default: return ""; 
+		}
+
 	}
 	
 	
+	/**
+	 * 	월별 프로그램을 출력하는 메서드
+	 *  
+	 */ 
 	// 
-	// 월별 프로그램을 출력
 	
 	
 	// 페이지 클리어
