@@ -6,6 +6,7 @@ public class UserManage {
 	
 	public static void main(String[] args) {
 
+		//UserInfo u1 = new UserInfo();
 		
 		while(true)	{
 			
@@ -15,8 +16,8 @@ public class UserManage {
 			int Num = selectNum(); 
 			
 			if(Num == 1) {
-				System.out.println("\t1. 회원 목록 조회");
-				//UserInfo()
+				//System.out.println("\t1. 회원 목록 조회");
+				UserInfo uInfo = new UserInfo(); 
 				break;
 				
 			} else if(Num == 2) { 
@@ -42,9 +43,7 @@ public class UserManage {
 		
 		
 		System.out.println("프로그램 진행 . . . .");
-		while (true) {
-			
-		}
+	
 		
 		
 		
@@ -76,15 +75,17 @@ public class UserManage {
 	
 
 	// 일시정지
-	private static void pause() {
+	public static void pause() {
 		
 		Scanner scan = new Scanner(System.in);
-		System.out.println("잘못된 숫자입니다. 엔터키를 누르면 이전화면으로 돌아갑니다.");
+		System.out.println("\n 엔터키를 누르면 이전화면으로 돌아갑니다...");
 		scan.nextLine();
 		for(int i=0 ; i<10 ; i++) {
 			System.out.println();
 		}
 		
 	}
+	
+	
 
 }//UserManage

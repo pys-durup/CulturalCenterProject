@@ -4,28 +4,35 @@ public class User {
 	
 	private String code;
 	private String name;
+	private String birth;
 	private String id;
 	private String pw;
-	private String birth;
 	private String gender;
 	private String tel;
-	private String address;
 	private String group;
+	private String address;
 	
-
-	
-	public User(String code, String name, String id, String pw, String birth, String gender, String tel, String address, String group) {
+	public User(String code, String name, String birth, String id, String pw, String gender, String tel, String group,
+			String address) {
+		super();
 		this.code = code;
 		this.name = name;
+		this.birth = birth;
 		this.id = id;
 		this.pw = pw;
-		this.birth = birth;
 		this.gender = gender;
 		this.tel = tel;
-		this.address = address;
 		this.group = group;
+		this.address = address;
 	}
 	
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getCode() {
 		return code;
 	}
