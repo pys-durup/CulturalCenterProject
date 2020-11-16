@@ -12,8 +12,6 @@ public class User {
 	private String group;
 	private String address;
 	
-
-	
 	public User(String code, String name, String birth, String id, String pw, String gender, String tel, String group,
 			String address) {
 		super();
@@ -40,6 +38,12 @@ public class User {
 	}
 	public void setCode(String code) {
 		this.code = code;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getId() {
 		return id;

@@ -6,8 +6,14 @@ public class TempMain {
 		
 		EmployeeManage m = new EmployeeManage();
 		
-		m.checkEmployeeManage();
-		m.viewEmployeeManage();
+		boolean loop = true;
+		
+		while (loop) {
+			
+			m.checkEmployeeManage();
+			m.viewEmployeeManage();
+			
+		}
 		
 	}
 	

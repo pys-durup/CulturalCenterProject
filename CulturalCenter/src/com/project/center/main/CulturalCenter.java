@@ -30,7 +30,7 @@ public class CulturalCenter {
 				
 			} else if(Num == 2) { // 회원가입
 				System.out.println("회원가입 선택");
-				//UserRegister.insertUser();
+				UserRegister.infoRegister();
 				// 회원가입처리 메서드
 				// 회원 가입 완료후 다시 메인화면으로
 			} else if(Num == 3) {
