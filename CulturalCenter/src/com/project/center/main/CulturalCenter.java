@@ -2,10 +2,8 @@ package com.project.center.main;
 
 import java.util.Scanner;
 
-
-import com.project.center.program.ProgramManage;
+import com.project.center.user.UserLogin;
 import com.project.center.user.UserRegister;
-
 
 public class CulturalCenter {
 	
@@ -25,6 +23,7 @@ public class CulturalCenter {
 			
 			if(Num == 1) { // 로그인
 				System.out.println("로그인 선택");
+				UserLogin.checkUser();
 				// 로그인처리 메서드
 				// public void isLogin()? 로그인처리?
 				// public void createAccount(){} 로그인 성공하면?
@@ -33,7 +32,7 @@ public class CulturalCenter {
 				
 			} else if(Num == 2) { // 회원가입
 				System.out.println("회원가입 선택");
-				//UserRegister.insertUser();
+				UserRegister.infoRegister();
 				// 회원가입처리 메서드
 				// 회원 가입 완료후 다시 메인화면으로
 			} else if(Num == 3) {
@@ -67,8 +66,6 @@ public class CulturalCenter {
 						
 					} else if (Num == 2) {
 						System.out.println("프로그램 신청");
-						ProgramManage pm = new ProgramManage();
-						pm.createApplyProgram();
 						
 					} else if (Num == 3) {
 						System.out.println("신청한 프로그램");

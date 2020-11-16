@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
-import com.project.center.user.User;
 
+import com.project.center.user.User;
 import data.Path;
 
 

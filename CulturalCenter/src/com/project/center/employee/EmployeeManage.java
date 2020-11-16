@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -99,10 +98,13 @@ public class EmployeeManage {
 		
 		System.out.println("============================[직원 등록]===========================");
 		System.out.println();
+		System.out.println("이름은 한글 2자 ~ 5자로 입력해야 합니다.");
 		System.out.printf("이름\t\t:");
 		String inputName = scan.nextLine();
+		System.out.println("비밀번호는 10 ~ 16자 이내의 영어 대소문자, 숫자만 사용하여 입력해야 합니다.");
 		System.out.printf("비밀번호\t:");
 		String inputPassword = scan.nextLine();
+		System.out.println("급여는 반점(,)없이 숫자로만 입력해주세요.");
 		System.out.printf("월 급여\t\t:");
 		String inputMonthlyIncome = scan.nextLine();
 		System.out.printf("직책\t\t:");
@@ -284,6 +286,176 @@ public class EmployeeManage {
 	}
 	
 	private void updateEmployee() {
+		
+		boolean loop = true;
+		boolean check = false;
+		boolean escapeCheck = false;
+		int inputCharCode = 0;
+		String resultEditedPassword = "";
+		String resultEditedMonthlyIncome = "";
+		String resultEditedPosition = "";
+		
+		while (loop) {
+			
+			resultEditedPassword = "";
+			resultEditedMonthlyIncome = "";
+			resultEditedPosition = "";
+			
+			System.out.println("=========================[직원 정보 수정]=========================");
+			System.out.println();
+			System.out.println("직원 정보 수정을 위해, 수정할 직원의 사원 코드를 입력해주세요.");
+			System.out.print("수정할 직원의 사원 코드 입력 : ");
+			String inputCode = scan.nextLine();
+			
+			try {
+				
+				BufferedReader reader = new BufferedReader(new FileReader(Path.EMPLOYEELIST));
+				
+				String line = null;
+				
+				while ((line = reader.readLine()) != null) {
+					if(inputCode.equals(line.substring(0, 8))) {
+						check = true;
+						System.out.println(line.substring(0, 8));
+						break;
+					} 
+				}
+				
+				if (check) {
+					
+					System.out.println("수정할 직원의 비밀번호, 시급, 직책을 입력해주세요.");
+					System.out.println();
+					System.out.println("비밀번호는 10 ~ 16자 이내의 영어 대소문자, 숫자만을 이용하여 입력해주세요.");
+					System.out.printf("비밀번호 :");
+					String inputEditedPassword = scan.nextLine();
+					System.out.println("급여는 반점(,)없이 숫자로만 입력해주세요.");
+					System.out.printf("월 급여 :");
+					String inputEditedMonthlyIncome = scan.nextLine();
+					System.out.printf("직책 :");
+					resultEditedPosition = scan.nextLine();
+					System.out.println();
+					
+					if (inputEditedPassword.length() == 0
+							|| inputEditedMonthlyIncome.length() == 0) {
+						check = false;
+					}
+					
+					for (int i=0; i<inputEditedPassword.length(); i++) {
+						
+						if (inputEditedPassword.length()<10 || inputEditedPassword.length()>16) {
+							check = false;
+							break;
+						}
+						
+						inputCharCode = (int)inputEditedPassword.charAt(i);
+						
+						if ((inputCharCode>=65 && inputCharCode<=90) 
+						|| (inputCharCode>=97 && inputCharCode<=122) 
+						||(inputCharCode>=48 && inputCharCode<=57)) {
+							resultEditedPassword += inputEditedPassword.charAt(i);
+						} else {
+							check = false;
+							break;
+						}
+						//check = true;
+						
+					}
+					
+					for (int i=0; i<inputEditedMonthlyIncome.length(); i++) {
+						
+						inputCharCode = (int)inputEditedMonthlyIncome.charAt(i);
+						
+						if (inputCharCode>=48 && inputCharCode<=57) {
+							resultEditedMonthlyIncome += inputEditedMonthlyIncome.charAt(i);
+						} else {
+							check = false;
+							break;
+						}
+						
+						//check = true;
+						
+					}
+					
+				}
+				reader.close();
+				
+				String dummy = "";
+				boolean editFlag = false;
+				String[] list = new String[6];
+				BufferedReader readerAgain = new BufferedReader(new FileReader(Path.EMPLOYEELIST));
+				
+				if (check) {
+				
+				
+					line = null;
+					while((line = readerAgain.readLine()) != null) {
+						
+						list = line.split(",");
+						if (inputCode.equals(list[0])) {
+							dummy += String.format(
+									"%s,%s,%s,%s,%s,%s"
+									,list[0] ,list[1]
+											,resultEditedPosition
+											,resultEditedPassword
+											,resultEditedMonthlyIncome
+											,list[5]) + "\r\n";
+							
+						} else {
+							dummy += line + "\r\n";
+						}
+						
+						
+					}
+					
+					dummy = dummy.substring(0, dummy.length()- 2);
+					editFlag = true;
+				
+				} else {
+					System.out.println("잘못된 정보를 입력하셨습니다!");
+					System.out.println();
+					System.out.println("1. 다시 입력하기");
+					System.out.println();
+					System.out.println("2. 메인 메뉴로 돌아가기");
+					System.out.println();
+					System.out.print("메뉴 입력 :");
+					String menuInput = scan.nextLine();
+					
+					if(menuInput.equals("2")) {
+						loop = false;
+					} else if(menuInput.equals("1")) {
+						loop = true;
+					} else {
+						System.out.println("잘못된 메뉴 입력입니다! 엔터를 누르면 메인 메뉴로 돌아갑니다.");
+						scan.nextLine();
+						loop = false;
+					}
+				}
+				
+				if(editFlag) {
+					
+					readerAgain.close();
+					BufferedWriter writer = new BufferedWriter(new FileWriter(Path.EMPLOYEELIST));
+					
+					writer.write(dummy);
+					
+					System.out.printf("해당 직원의 정보 수정이 완료되었습니다.");
+					System.out.println();
+					System.out.println("엔터를 누르시면 메인 메뉴로 돌아갑니다.");
+					writer.close();
+					loop = false;
+					scan.nextLine();
+					System.out.println();
+					
+				} 
+				
+			} catch (Exception e) {
+				System.out.println("EmployeeManage.updateEmployee()");
+				e.printStackTrace();
+			}
+			
+			
+		} //반복문(loop) 및 사원코드 유효성 검사
+
 	}
 	
 	
