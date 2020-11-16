@@ -1,7 +1,10 @@
 package com.project.center.employee;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.Calendar;
 import java.util.Scanner;
 
 import data.Path;
@@ -34,6 +37,8 @@ public class EmployeeManage {
 			String inputPassword = scan.nextLine();
 			System.out.println();
 			
+			reader.close();
+			
 			if (inputID.equals(masterID) && inputPassword.equals(masterPassword)) {
 				check = true;
 			} else {
@@ -45,6 +50,7 @@ public class EmployeeManage {
 				scan.nextLine();
 				check = false;
 			}
+		
 
 		} catch (Exception e) {
 			System.out.println("EmployeeManage.checkEmployeeManage()");
@@ -66,6 +72,7 @@ public class EmployeeManage {
 			System.out.println();
 			System.out.print("메뉴 입력 :");
 			String inputMenu = scan.nextLine();
+			System.out.println();
 			
 			switch(inputMenu) {
 				case "1":
@@ -87,16 +94,160 @@ public class EmployeeManage {
 		
 	}
 
-	private void findEmployee() {
+	private void insertEmployee() {
+		
+		System.out.println("==========================[직원 등록]==========================");
+		System.out.println();
+		System.out.printf("이름\t\t:");
+		String inputName = scan.nextLine();
+		System.out.printf("비밀번호\t:");
+		String inputPassword = scan.nextLine();
+		System.out.printf("월 급여\t\t:");
+		String inputMonthlyIncome = scan.nextLine();
+		System.out.printf("직책\t\t:");
+		String inputPosition = scan.nextLine();
+		System.out.println();
+		
+		Employee recruit = new Employee();
+		
+		boolean check = false;
+		int inputCharCode;
+		String resultName = "";
+		String resultPassword = "";
+		String resultMonthlyIncome = "";
+		
+		//직원의 이름은 한글 2자 이상 5자로 입력해야 한다.
+		for (int i=0; i<inputName.length(); i++) {
+
+			if (inputName.length()<2 || inputName.length()>5) {
+				check = false;
+				break;
+			}
+			
+			inputCharCode = (int)inputName.charAt(i);
+			
+			if ((inputCharCode>=44032 && inputCharCode<=55203)) {
+				resultName += inputName.charAt(i);
+			} else {
+				check = false;
+				break;
+			}
+			
+			check = true;
+			
+		}
+		
+		//비밀번호는 10 ~ 16자 이내의 영어 대소문자, 숫자만 사용하여 입력해야한다.
+		for (int i=0; i<inputPassword.length(); i++) {
+			
+			if (inputPassword.length()<10 || inputPassword.length()>16) {
+				check = false;
+				break;
+			}
+			
+			inputCharCode = (int)inputPassword.charAt(i);
+			
+			if ((inputCharCode>=65 && inputCharCode<=90) ||
+				(inputCharCode>=97 && inputCharCode<=122) ||
+				(inputCharCode>=48 && inputCharCode<=57)) {
+				resultPassword += inputPassword.charAt(i);
+			} else {
+				check = false;
+				break;
+			}
+			
+			//check = true;
+			
+		}
+		
+		//월 급여는 숫자로만 입력해야한다.
+		for (int i=0; i<inputMonthlyIncome.length(); i++) {
+			
+			inputCharCode = (int)inputMonthlyIncome.charAt(i);
+			
+			if (inputCharCode>=48 && inputCharCode<=57) {
+				resultMonthlyIncome += inputMonthlyIncome.charAt(i);
+			} else {
+				check = false;
+				break;
+			}
+			
+			//check = true;
+			
+		}
+		
+		//사원 코드와 입사날짜를 계산합니다.
+		Calendar today = Calendar.getInstance();
+		String employeeCode = today.get(Calendar.YEAR) + getRegistrationNumber();
+	
+		String startDate = String.format("%04d-%02d-%02d"
+											,today.get(Calendar.YEAR)
+											,today.get(Calendar.MONTH) + 1
+											,today.get(Calendar.DATE));
+		
+
+		if (check) {
+			recruit.setCode(employeeCode);
+			recruit.setName(resultName);
+			recruit.setPosition(inputPosition);
+			recruit.setPassword(resultPassword);
+			recruit.setMonthlyIncome(resultMonthlyIncome);
+			recruit.setStartDate(startDate);
+
+			recruit.setEmployeeIntoData();
+			
+			System.out.printf("\t%s %s의 등록을 완료하였습니다.\n", resultName, inputPosition);
+			System.out.println("\t엔터를 누르시면, 메인 메뉴로 돌아갑니다.");
+			scan.nextLine();
+			
+		} else {
+			System.out.println();
+			System.out.println("\t\t\t*** 경고 ***\t\t");
+			System.out.println("\t  올바르지 않은 직원 정보를 입력하셨습니다!");
+			System.out.println("\t   엔터를 눌러 메인화면으로 이동해주세요.");
+			System.out.println("\t\t\t*** 경고 ***\t\t");
+			scan.nextLine();
+		}
+		
+	}
+
+	private String getRegistrationNumber() {
+		
+		String result = null;
+		String[] list = { "00000000", "", "", "", "", "" };
+		
+		try {
+
+			BufferedReader reader = new BufferedReader(new FileReader(Path.EMPLOYEELIST));
+			
+			String line = null;
+			
+			while ((line = reader.readLine()) != null) {
+				result = list[0].substring(4, 8);
+				list = line.split(",");
+			}
+			
+			reader.close();
+			
+		} catch (Exception e) {
+			System.out.println("EmployeeManage.getRegistrationNumber()");
+			e.printStackTrace();
+		}
+		
+		int temp = Integer.parseInt(result) + 2;
+		result = String.format("%04d", temp);
+		
+		return result;
+		
 	}
 
 	private void updateEmployee() {
 	}
 
-	private void insertEmployee() {
+	private void findEmployee() {
 	}
 	
 	
 	
 	
-}//직원관리 메서드
+}
