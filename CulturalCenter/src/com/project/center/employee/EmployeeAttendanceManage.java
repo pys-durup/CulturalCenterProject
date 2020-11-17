@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -327,8 +329,162 @@ public class EmployeeAttendanceManage {
 		}
 		
 	}
+	
+	public void findEmployeeAttendanceList() {
+		
+		Scanner scan = new Scanner(System.in);
+		boolean loop = true;
+		while (loop) {
+			
+			System.out.println("============================[근태 조회]===========================");
+			System.out.println("관리자님, 반갑습니다.");
+			System.out.println("근태 상황을 조회할 직원의 사원코드를 입력해주세요.");
+			System.out.println();
+			System.out.println("아무것도 입력하지 않으시고 엔터를 입력하시면 메인메뉴로 돌아갑니다.");
+			System.out.println();
+			System.out.print("사원 코드 입력 :");
+			String inputCode = scan.nextLine();
+			System.out.println();
+			
+			try {
+				
+				BufferedReader reader = new BufferedReader(new FileReader(Path.EMPLOYEEATTENDANCE));
+				
+				String line = null;
+				String[] list = new String[6];
+				boolean failureCheck = true;
+				
+				while ((line = reader.readLine()) != null) {
+					list = line.split(",");
+					if (inputCode.equals(list[0])) {
+						viewEmployeeAttendanceList(inputCode);
+						
+						failureCheck = false;
+						loop = false;
+						break;
+					}
+				}
+				
+				if (failureCheck) {
+					System.out.println("잘못된 사원코드를 입력하셨습니다!");
+					System.out.println("엔터를 누르시면, 메인 메뉴로 돌아갑니다.");
+					scan.nextLine();
+				}
+				
+				reader.close();
+				
+			} catch (Exception e) {
+				System.out.println("EmployeeAttendanceManage.findEmployeeAttendanceList()");
+				e.printStackTrace();
+			}
+			
+		}
+		
+	}
+
+	private void viewEmployeeAttendanceList(String inputCode) {
+		
+		Scanner scan = new Scanner(System.in);
+		EmployeeAttendance employeeAttendance = new EmployeeAttendance();
+		
+		
+		try {
+			
+			ArrayList<EmployeeAttendance> attendanceBoard = new ArrayList<EmployeeAttendance>();
+			
+			BufferedReader reader2 = new BufferedReader(new FileReader(Path.EMPLOYEEATTENDANCE));
+			
+			String line = null;
+			String[] list = new String[6];
+			int m = 0;
+			
+			while ((line = reader2.readLine()) != null) {
+				list = line.split(",");
+				System.out.println(inputCode);
+				System.out.println(list[0]);
+				if (inputCode.equals(list[0])) {
+					employeeAttendance.setCode(list[0]);
+					employeeAttendance.setName(list[1]);
+					employeeAttendance.setDate(list[2]);
+					employeeAttendance.setCommuteTime(list[3]);
+					employeeAttendance.setWorkingTime(list[4]);
+					employeeAttendance.setAttendance(list[5]);
+					attendanceBoard.add(employeeAttendance);
+					employeeAttendance = new EmployeeAttendance();
+				}
+			}
+			
+			int pageMove = 0;
+			
+			for(int pageIndex = 0; pageIndex<attendanceBoard.size() / 60; pageIndex+=pageMove) {
+				
+				System.out.println("[사원코드]====[직원이름]====[출근일자]====[근무시간]====[근태상황]");
+				
+				for(int i=pageIndex; i<pageIndex + 60; i++) {
+					
+					System.out.printf("%s\t%s\t\t%s\t%s\t%s\n"
+										,attendanceBoard.get(i).getCode()
+										,attendanceBoard.get(i).getName()
+										,attendanceBoard.get(i).getDate()
+										,attendanceBoard.get(i).getWorkingTime()
+										,attendanceBoard.get(i).getAttendance()
+										);
+					
+				}
+				System.out.println();
+				System.out.printf("\t- %d 페이지 -", pageIndex);
+				System.out.println();
+				System.out.println("1. 다음 페이지");
+				System.out.println("2. 이전 페이지");
+				System.out.println("3. 메인 메뉴로 돌아가기");
+				System.out.print("메뉴 입력 :");
+				switch (scan.nextLine()) {
+				
+					case "1"
+					: if (pageIndex >= attendanceBoard.size() / 60) {
+						System.out.println("현재 페이지가 마지막 페이지 입니다.");
+						System.out.println("엔터를 누르시고 메뉴를 다시 입력해주세요.");
+						scan.nextLine();
+						break;
+					} else {
+						pageMove++;
+						break;
+					}
+					
+					case "2"
+					: if (pageIndex <= 0) {
+						System.out.println("현재 페이지가 첫 페이지 입니다.");
+						System.out.println("엔터를 누르시고 메뉴를 다시 입력해주세요.");
+						scan.nextLine();
+						break;
+					} else {
+						pageMove--;
+						break;
+					}
+					
+					default
+					: break;
+				};
+				
+			}
+			
+			reader2.close();
+			
+
+		} catch (Exception e) {
+			System.out.println("EmployeeAttendanceManage.viewEmployeeAttendanceList()");
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+	}
 
 }
+
+
 
 
 

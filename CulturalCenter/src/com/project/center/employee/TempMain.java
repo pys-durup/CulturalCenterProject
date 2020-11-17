@@ -19,10 +19,12 @@ public class TempMain {
 //			m.checkEmployeeManage();
 //			m.viewEmployeeManage();
 //			
-			if(n.isEmployeeAccess()) {
-				n.viewEmployeeAttendance();
-				loop = false;
-			};
+//			if(n.isEmployeeAccess()) {
+//				n.viewEmployeeAttendance();
+//				loop = false;
+//			};
+			
+			n.findEmployeeAttendanceList();
 			System.out.println("메인메뉴");
 			
 //			
