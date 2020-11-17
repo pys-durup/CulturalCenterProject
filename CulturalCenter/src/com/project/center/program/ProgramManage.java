@@ -25,7 +25,7 @@ public class ProgramManage {
 		this.psList = loadPsData(Path.PROGRAMSTUDENT);
 		this.pshowList = new ArrayList<ProgramList>();
 		// 테스트용 유저 객체
-		this.user = new User("50001", "tteesstt", "tteesstt", "1993-08-17", "1", "01077743635", "주소", "1");
+		this.user = new User("50001", "tteesstt", "tteesstt", "1993-08-17", "1", "01077743635", "주소", "1", null);
 		//String code, String id, String pw, String birth, String gender, String tel, String address, String group)
 	}
 
