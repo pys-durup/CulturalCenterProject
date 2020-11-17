@@ -10,6 +10,11 @@ import java.util.Scanner;
 import data.Path;
 
 public class UserManage {
+
+	/**
+	 * @author Daeun
+	 * 		관리자모드 - 회원관리
+	 */
 	
 	//회원 정보 담는 ulist와 초기화
 	private static ArrayList<User> uList = new ArrayList<User>();
@@ -33,7 +38,7 @@ public class UserManage {
 				
 			} else if(Num == 2) { 
 				//System.out.println("\t2. 회원 정보 검색");
-				updateUser();
+				searchUser();
 				//break;
 				
 			} else if(Num == 3) { 
@@ -379,8 +384,8 @@ public class UserManage {
 	
 	
 	
-	
-	private static void updateUser() {
+	//회원 검색 메서드 - 회원번호를 입력받아 회원 정보를 호출한다.
+	private static void searchUser() {
 		
 		try {
 

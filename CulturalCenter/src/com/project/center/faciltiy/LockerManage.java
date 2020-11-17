@@ -11,23 +11,26 @@ import com.project.center.user.User;
 import data.Path;
 
 public class LockerManage {
-
-	//회원 정보 담는 ulist와 초기화
-	private static ArrayList<Locker> l = new ArrayList<Locker>();
-
 	
+	/**
+	 * @author Daeun
+	 * 		관리자모드 - 사물함관리
+	 */
+	
+	//락커 사용 현황 정보를 담는 l ArrayList
+	private static ArrayList<Locker> l = new ArrayList<Locker>();
 	
 	public static void main(String[] args) throws IOException {
 		
-		//lockerPrint l = new lockerPrint();
 		
-		lockerPrint();
+		
+		readLocker();
 		printLocker();
 		
 	}//main(임시)
 	
 	
-	public static void lockerPrint() throws IOException {
+	public static void readLocker() throws IOException {
 
 		System.out.println("============================================================================");
 		System.out.println("                                   사 물 함");
@@ -71,33 +74,37 @@ public class LockerManage {
 	}//락커 읽어오기
 	
 	
-	private static void printLocker() {
+	private static void printLocker() throws IOException {
 		
-//		//1일을 요일 위치와 맞추기 위해 탭 추가
-//		for (int i=0; i<10; i++) {
-//			System.out.print("\t");
-//		}
-//		
-//		//날짜 출력
-//		for (int i=1; i<10; i++) {
-//			System.out.printf("%4d\t", i);
-//			
-//			//현재 출력하는 날짜(i)가 토요일인지?
-//			//if (i % 7 == 3) {
-//			if ((i + day_of_week) % 7 == 0) {
-//				System.out.println();
-//			}
-//			
-//		}
+		//1부터 100찍기 [사물함번호] 연습
+		int j = 0;
+		for (int i = 1; i <= 100; i ++) {
+
+			System.out.printf("%3d\t", i);
+			j++;
+			
+			if (j % 10 == 0) // 10으로 나누어 떨어지면 개행
+			{
+				System.out.println();
+				System.out.println();
+			}
+		}
+
 		
-		for (int i=0; i<10; i++) {
-			for (int j=0; j<10; j++) {
-				if (j!=9) {
-					System.out.printf("%5d\t", j+1);
-				} else {
-					System.out.println("\n");
-					
-				}
+		readLocker();
+		
+		System.out.print();
+		
+		int b = 0;
+		for (int i = 1; i <= 100; i ++) {
+			
+			System.out.printf("%3d\t", i);
+			b++;
+			
+			if (b % 10 == 0) // 10으로 나누어 떨어지면 개행
+			{
+				System.out.println();
+				System.out.println();
 			}
 		}
 		
