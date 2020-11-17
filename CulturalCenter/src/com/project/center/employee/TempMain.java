@@ -13,16 +13,20 @@ public class TempMain {
 		
 		Calendar c = Calendar.getInstance();
 		
-		System.out.println(String.format("%tF", c));
-		
 		//관리자의 기능
-//		while (loop) {
+		while (loop) {
 //			
 //			m.checkEmployeeManage();
 //			m.viewEmployeeManage();
 //			
+			if(n.isEmployeeAccess()) {
+				n.viewEmployeeAttendance();
+				loop = false;
+			};
+			System.out.println("메인메뉴");
+			
 //			
-//		}
+		}
 		
 	}
 	
