@@ -18,6 +18,9 @@ public class UserManage {
 			if(Num == 1) {
 				//System.out.println("\t1. 회원 목록 조회");
 				UserInfo uInfo = new UserInfo(); 
+=======
+				UserInfo uInfo = new UserInfo();
+>>>>>>> Stashed changes
 				uInfo.getUserInfo();
 				uInfo.viewUserList();
 				break;
