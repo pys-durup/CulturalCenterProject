@@ -22,15 +22,16 @@ public class ProgramRegistrationList {
 	private ArrayList<ProgramState> psList;
 	private ArrayList<Program> pList;
 	private ArrayList<ProgramAttendance> paList;
+	private ArrayList<ProgramStudent> pstList;
 	private User login;
 	
 	public ProgramRegistrationList() {
-		this.login = new User("50001", "박영수", "1993-08-17","tteesstt", "tteesstt",  "1", "01077743635",  "1" , "주소");
+		this.login = new User("7848", "박영수", "1993-08-17","tteesstt", "tteesstt",  "1", "01077743635",  "1" , "주소");
 	}
 	
 	public ProgramRegistrationList(User login) {
 		// 테스트용 유저 객체
-		this.login = new User("50001", "박영수", "1993-08-17","tteesstt", "tteesstt",  "1", "01077743635",  "1" , "주소");
+		this.login = new User("7848", "박영수", "1993-08-17","tteesstt", "tteesstt",  "1", "01077743635",  "1" , "주소");
 		//this.login = login;
 	}
 
@@ -42,6 +43,7 @@ public class ProgramRegistrationList {
 			
 			if(selectNum == 1) { // 1. 수업 현황
 				System.out.println("진행중인 프로그램 코드 : " + myProgramState());
+				showGoingProgram(myProgramState());
 				pause();
 			} else if (selectNum == 2) { // 2. 수업 이력
 				myProgramHistory();
@@ -55,14 +57,35 @@ public class ProgramRegistrationList {
 		}
 	}
 
+	private void showGoingProgram(String programCode) {
+		this.paList = loadProgramAttendance(Path.PROGRAMATTENDANCE);
+		
+//		System.out.println(this.paList.get(108).getCode());
+//		System.out.println(this.paList.get(108).getDate());
+		System.out.println(this.paList.get(452).getAttendance());
+		System.out.println(this.paList.get(782).getAttendance());
+		System.out.println(this.paList.get(452).getAttendance());
+		System.out.println(this.paList.get(487).getAttendance());
+		System.out.println(this.paList.get(18).getAttendance());
+		System.out.println(this.paList.get(7).getAttendance());
+		System.out.println("로그인한 회원의 회원번호 " + login.getCode());
+		
+		for(ProgramAttendance ps : paList) {
+			if(ps.getCode().equals(programCode)) {
+				System.out.println(ps.getDate() + " 출결 : " + ps.getAttendance().get(login.getCode()));
+			}
+		}
+		
+	}
+
 	/**
 	 *  수업 현황
 	 * 
 	 */
 	private String myProgramState() {
 		this.paymentList = loadProgramPaymentData(Path.PROGRAMPAYMENT); // 프로그램결제.txt 데이터
-		this.psList = loadProgramStateData(Path.PROGRAMPAYMENT); // 프로그램상태.txt 데이터
-		this.pList = loadProgramData(Path.PROGRAMLIST);
+		this.psList = loadProgramStateData(Path.PROGRAMSTATE); // 프로그램상태.txt 데이터
+		this.pList = loadProgramData(Path.PROGRAMLIST); // 프로그램.txt 데이터
 		String haveProgramCode = "";
 		
 		// 결제 내역에 내가 구매한 프로그램이 있는지? 
@@ -73,7 +96,7 @@ public class ProgramRegistrationList {
 			for(String code : myPayment) {
 				for(ProgramState ps : this.psList) {
 					if(code.equals(ps.getCode()) && ps.getState().equals("진행중")) {
-						// 진행중인 프로그램이 있다면
+	  					// 진행중인 프로그램이 있다면
 						haveProgramCode = ps.getCode();
 						System.out.println("진행중인 프로그램이 있다");
 						return haveProgramCode;
@@ -81,12 +104,12 @@ public class ProgramRegistrationList {
 				}
 			}
 			System.out.println("결제한프로그램이 있는데 진행중이지 않을때");
-			return haveProgramCode;
+			return null;
 		} else {
 			System.out.println("결제내역이 존재하지 않음");
 			System.out.println("진행중인 프로그램이 없습니다");
 			pause();
-			return haveProgramCode;
+			return null;
 		}
 	}
 	
@@ -293,57 +316,73 @@ public class ProgramRegistrationList {
 	}	
 	
 	// 프로그램출결.txt에서 데이터를 읽어온다
-//	public ArrayList<ProgramAttendance> loadProgramAttendance(String path) {
-//		File file = new File(path);
-//		
-//		ArrayList<ProgramStudent> psList = loadProgramStudentData(Path.PROGRAMSTUDENT);
-//		
-//		for(ProgramStudent ps : psList ) {
-//			if(this.login.get)
-//			String[] users = temp[3].split("■");
-//			for (int i = 0; i < users.length; i++) {
-//				userCodes.add(users[i]);
-//			}
-//		}
-//		
-//		
-//		if (file.exists()) {
-//
-//			try {
-//				
-//				ArrayList<ProgramAttendance> list = new ArrayList<ProgramAttendance>();
-//				BufferedReader reader = new BufferedReader(new FileReader(path));
-//
-//				String line = null;
-//
-//				// String code, String date, HashMap<String, Boolean>
-//				while ((line = reader.readLine()) != null) {
-//					String[] temp = line.split(",");
-//					ArrayList<String> userCodes = new ArrayList<String>();
-//
-//					String[] attendance = temp[2].split("■");
-//					for (int i = 0; i < attendance.length; i++) {
-//						userCodes.add(attendance[i]);
-//					}
-//					
-//					String[] temp = line.split(",");
-//					list.add(new ProgramState(temp[0], temp[1], temp[2], temp[3]));
-//				}
-//
-//				reader.close();
-//				return list;
-//
-//			} catch (Exception e) {
-//				// TODO: handle exception
-//				System.out.println("primaryMyPath.enloadData()");
-//				e.printStackTrace();
-//				return null;
-//			}
-//
-//		} else {
-//			System.out.println("파일이 존재하지 않음");
-//			return null;
-//		}
+	public ArrayList<ProgramAttendance> loadProgramAttendance(String path) {
+		// HashMap <프로그램코드, 프로그램수강하는 회원번호>
+		HashMap<String, ArrayList<String>> code = new HashMap<String, ArrayList<String>>();
+		
+		
+		
+		File file = new File(path);
+
+		if (file.exists()) {
+
+			try {
+				BufferedReader reader = new BufferedReader(new FileReader(Path.PROGRAMSTUDENT));
+
+				String line = null;
+
+				while ((line = reader.readLine()) != null) {
+					ArrayList<String> userCodes = new ArrayList<String>();
+					String[] temp = line.split(",");
+					String[] users = temp[3].split("■");
+					
+					for (int i = 0; i < users.length; i++) {
+						userCodes.add(users[i]);
+					}
+					code.put(temp[0], userCodes); // HashMap <프로그램코드, 프로그램수강하는 회원번호>
+					
+				}
+				
+				System.out.println("code 내용 확인 : " + code.get("AD090108"));
+
+				reader.close();
+				
+				
+				ArrayList<ProgramAttendance> list = new ArrayList<ProgramAttendance>();
+				reader = new BufferedReader(new FileReader(path));
+
+				line = null;
+				
+				// String code, String date, HashMap<String, Boolean>
+				while ((line = reader.readLine()) != null) {
+					HashMap<String, String> attendanceHash = new HashMap<String, String>();
+					ArrayList<String> userCodes = new ArrayList<String>();
+					String[] temp = line.split(",");
+					userCodes = code.get(temp[0]); // 해당 프로그램 코드의 수강생 리스트
+
+					String[] attendance = temp[2].split("■"); // 수강리스트 별 출결정보
+					for (int i = 0; i < attendance.length; i++) {
+						attendanceHash.put(userCodes.get(i), attendance[i]);
+					}
+					
+					list.add(new ProgramAttendance(temp[0], temp[1], attendanceHash));
+				}
+
+				reader.close();
+				return list;
+
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("primaryMyPath.enloadData()");
+				e.printStackTrace();
+				return null;
+			}
+
+		} else {
+			System.out.println("파일이 존재하지 않음");
+			return null;
+		}
+	}
 
 	
 	// 일시정지
