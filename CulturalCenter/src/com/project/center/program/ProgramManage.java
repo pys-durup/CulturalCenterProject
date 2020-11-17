@@ -258,7 +258,6 @@ public class ProgramManage {
 	 *  
 	 */
 	private void showProgramList(ArrayList<Program> list) {
-		int index = 1;
 		this.pshowList.clear(); // 초기화
 		for(Program p : list) { // 검색 결과가 있을때 출력내용 생성
 			System.out.println();
@@ -283,20 +282,6 @@ public class ProgramManage {
 											,p.getCapacity()
 											,state
 											,p.getPrice()));
-											
-//			//  [프로그램 이름]   [강사명]    [강의실]     [시작 날짜]   [종료 날짜]   [정원]   [현재상태]     [가격]
-//			System.out.printf("%3d\t%-20s\t%5s\t%s\t%s\t%s\t(%d/%d)\t    %s\t %,d원"
-//					, index
-//					, p.getName()
-//					, p.getTeacher()
-//					, p.getClassRoom()
-//					, p.getStartDate()
-//					, p.getEndDate()
-//					, count , p.getCapacity()
-//					, state
-//					, p.getPrice());
-//			index ++;
-
 		}
 	}
 	
