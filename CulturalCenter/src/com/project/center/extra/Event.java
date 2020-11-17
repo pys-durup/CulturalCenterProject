@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import com.project.center.faciltiy.Seminar;
+
 public class Event {
 	
 	
@@ -70,12 +72,14 @@ public class Event {
 	}
 	
 	
+		
+	
 	
 	//이벤트 목록조회
 	public static void findEventList() {
 		
 		System.out.println("이벤트 목록");
-		System.out.println("[No]\t[제목]\t\t\t\t\t\t\t[시작일]\t[종료일]\t[마일리지]");
+		System.out.println("[No]\t[제목]\t\t\t\t\t\t[시작일]\t[종료일]\t[마일리지]");
 		
 		int index = 0;
 		
@@ -91,7 +95,7 @@ public class Event {
 				String[] temp = line.split(",");
 				
 				index++;
-				System.out.printf("%2d\t%-40s\t%-7s\t%-7s\t%s\r\n"
+				System.out.printf("%d\t%-30s\t%-7s\t%-7s\t%s\r\n"
 								, index //No
 								, temp[1] //제목
 								, temp[2] //시작일
@@ -108,6 +112,12 @@ public class Event {
 			e.printStackTrace();
 		}
 		
+	
+		
+		
+		
+		
+		
 		
 		
 	}
@@ -123,18 +133,30 @@ public class Event {
 				= new BufferedWriter(new FileWriter("src\\data\\이벤트.txt", true)); // 이어쓰기모드
 			
 			Scanner scan = new Scanner(System.in);
-
-			System.out.print("제목 : ");
-			String title = scan.nextLine();
-	
-			System.out.print("시작일 : ");
-			String start = scan.nextLine();
 			
-			System.out.print("종료일 : ");
-			String end = scan.nextLine();
+			boolean loop = true;
+//			while(loop) {
+				
+				System.out.print("제목 : ");
+				String title = scan.nextLine();
+//				if (title.length() <= 20) {
+//					
+//				} else {
+//					System.out.println("잘못된 입력입니다.");
+//					
+//				}
+				
+				System.out.print("시작일 : ");
+				String start = scan.nextLine();
+				
+				System.out.print("종료일 : ");
+				String end = scan.nextLine();
+				
+				System.out.print("마일리지 : ");
+				String mileage = scan.nextLine();
+		
+//			}
 			
-			System.out.print("마일리지 : ");
-			String mileage = scan.nextLine();
 
 			
 			writer.write(String.format("%d,%s,%s,%s,%s\r\n"
@@ -148,9 +170,7 @@ public class Event {
 			writer.close();
 			
 			System.out.println("저장 완료");
-			pause();
-			
-			
+					
 		} catch (IOException e) {
 			System.out.println("insertNotice Exception");
 			e.printStackTrace();
@@ -171,6 +191,23 @@ public class Event {
 		
 	}
 	
+	
+	
+//	private static String birthCheck(String birth) {
+//
+//		//XXXXXXXX 일 경우 번호 중간에 하이픈 추가
+//		if (birth.length() == 8) {
+//			birth = String.format("%s-%s-%s"
+//									, birth.substring(0, 4)
+//									, birth.substring(4, 6)
+//									, birth.substring(6, 8));
+//		} else if (birth.length() == 10) { //XXXX-XX-XX 일 경우는 넘김
+//		} else {
+//			System.out.println("생년월일의 형식은 XXXX-XX-XX 입니다.");
+//			insertUser();
+//		}
+//		return birth;
+//	}
 	
 
 
