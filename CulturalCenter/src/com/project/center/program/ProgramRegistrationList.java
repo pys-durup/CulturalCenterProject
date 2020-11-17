@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -41,7 +42,7 @@ public class ProgramRegistrationList {
 			// 사용자가 선택한 번호
 			int selectNum = userSelectNum();
 			
-			if(selectNum == 1) { // 1. 수업 현황
+			if(selectNum == 1) { // 1. 진행중인 프로그램
 				System.out.println("진행중인 프로그램 코드 : " + myProgramState());
 				showGoingProgram(myProgramState());
 				pause();
@@ -58,24 +59,107 @@ public class ProgramRegistrationList {
 	}
 
 	private void showGoingProgram(String programCode) {
+	
+		String programName = "";
+		String teacher = "";
+		String classRoom = "";
+		String startDate = "";
+		String endDate = "";
+		int classDays = 0; // 수업일수
+		int attendanceDays = 0; // 출석일수
+		int absentDays = 0; // 결석일수 
+		int allClassDays = 0; // 총 수업일수 
+		Calendar now = Calendar.getInstance(); // 오늘
+		
+		// 추가적인 작업이 이루어지면 여기서 while문
 		this.paList = loadProgramAttendance(Path.PROGRAMATTENDANCE);
-		
-//		System.out.println(this.paList.get(108).getCode());
-//		System.out.println(this.paList.get(108).getDate());
-		System.out.println(this.paList.get(452).getAttendance());
-		System.out.println(this.paList.get(782).getAttendance());
-		System.out.println(this.paList.get(452).getAttendance());
-		System.out.println(this.paList.get(487).getAttendance());
-		System.out.println(this.paList.get(18).getAttendance());
-		System.out.println(this.paList.get(7).getAttendance());
+		this.pList = loadProgramData(Path.PROGRAMLIST);
 		System.out.println("로그인한 회원의 회원번호 " + login.getCode());
+//		System.out.println(this.paList.get(108).getCode());
 		
+		// 프로그램 정보 가져오기
+		for(Program p : this.pList) {
+			if(p.getCode().equals(programCode)) {
+				programName = p.getName();
+				teacher = p.getTeacher();
+				classRoom = p.getClassRoom();
+				startDate = p.getStartDate();
+				endDate = p.getEndDate();
+				break;
+			}
+			
+		}
+		Calendar calStartDate = stringToCal(startDate);
+		Calendar calEndDate = stringToCal(endDate);
+		
+//		System.out.printf("%tF", calStartDate);
+//		System.out.printf("%tF", calEndDate);
+		
+		// 총 수업일수 구하기
+		while(!calStartDate.after(calEndDate)) {
+			int day = calStartDate.get(Calendar.DAY_OF_WEEK); // 1이면 일요일 7이면 토요일
+			if((day != Calendar.SATURDAY) && (day != Calendar.SUNDAY)) {
+				allClassDays++; // 총수업일수 증가
+			}
+			calStartDate.add(Calendar.DATE, 1); // 하루 증가
+		}
+		
+		
+		// 진행중인 프로그램의 출결정보 구하기
 		for(ProgramAttendance ps : paList) {
 			if(ps.getCode().equals(programCode)) {
-				System.out.println(ps.getDate() + " 출결 : " + ps.getAttendance().get(login.getCode()));
+//				System.out.println(ps.getDate() + " 출결 : " + ps.getAttendance().get(login.getCode()));
+				classDays++; // 수업일수 증가
+				if(ps.getAttendance().get(login.getCode()).equals("T")) {
+					attendanceDays++;  // 출석일수 증가
+				} else {
+					absentDays++; // 결석일수 증가
+				}
 			}
 		}
 		
+		System.out.println("[진행중인 프로그램]");
+		System.out.println("프로그램 이름 : " + programName);
+		System.out.println("강사명 : " + teacher);
+		System.out.println("강의실 : " + classRoom);
+		System.out.println("시작일 : " + startDate);
+		System.out.println("종료일 : " + endDate);
+		
+//		System.out.println("출석일수 : " + attendanceDays);
+//		System.out.println("결석일수 : " + absentDays);
+//		System.out.println("수업일수 : " + classDays);
+//		System.out.println("총 수업일수 : " + allClassDays); 
+		
+//		System.out.printf("출석률 : %f",attendanceDays/(float)classDays);
+//		System.out.printf("진행률 : %f",classDays/(float)allClassDays);
+		
+		float rate1 = attendanceDays/(float)classDays;
+		float rate2 = classDays/(float)allClassDays;
+		
+		// □ ■  출석/수업일수 > 출석률   수업일수/총수업 > 진행률
+		int count = 25;
+		// 출석률
+		System.out.printf("<수업출석률(%d%%)>\n",(int)(rate1*100));
+		for(int i=0 ; i<count*rate1 ; i++) {
+			System.out.print("■");
+		}
+		for(int i=0 ; i<count-(count*rate1) ; i++) {
+			System.out.print("□");
+		}
+		System.out.printf("(%d/%d)\n", attendanceDays, classDays);
+		// 진행률
+		System.out.printf("<수업진행률(%d%%)>\n",(int)(rate2*100));
+		for(int i=0 ; i<count*rate2 ; i++) {
+			System.out.print("■");
+		}
+		for(int i=0 ; i<count-(count*rate2) ; i++) {
+			System.out.print("□");
+		}
+		System.out.printf("(%d/%d)\n", classDays, allClassDays);
+		
+		System.out.println();
+		System.out.println("1. ㅁㅁㅁㅁ 2. 뒤로가기");
+		System.out.print("번호를 입력하세요 : ");
 	}
 
 	/**
@@ -145,7 +229,7 @@ public class ProgramRegistrationList {
 
 	// 목록에서 선택한 번호 리턴 
 	private int userSelectNum() {
-		System.out.println("1. 수업 현황");
+		System.out.println("1. 진행중 프로그램");
 		System.out.println("2. 수업 이력");
 		System.out.println("3. 수업 환불");
 		System.out.println();
@@ -343,7 +427,7 @@ public class ProgramRegistrationList {
 					
 				}
 				
-				System.out.println("code 내용 확인 : " + code.get("AD090108"));
+//				System.out.println("code 내용 확인 : " + code.get("AD090108"));
 
 				reader.close();
 				
@@ -382,6 +466,20 @@ public class ProgramRegistrationList {
 			System.out.println("파일이 존재하지 않음");
 			return null;
 		}
+	}
+	
+	// String -> Calendar
+	public static Calendar stringToCal(String s) {
+		// "YYYY-MM-DD"
+		String[] list = s.split("-");
+		int year = Integer.parseInt(list[0]);
+		int month = Integer.parseInt(list[1]);
+		int date = Integer.parseInt(list[2]);
+
+		Calendar temp = Calendar.getInstance();
+		temp.set(year, month - 1, date);
+		return temp;
+
 	}
 
 	
