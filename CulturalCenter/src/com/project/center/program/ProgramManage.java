@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
-
 import com.project.center.user.User;
+
 import data.Path;
 
 
@@ -323,6 +323,7 @@ public class ProgramManage {
 				// 프로그램 결제 메서드
 				// ProgramList program객체를 넘겨준다
 				ProgramPayment pp = new ProgramPayment(program, user);
+				// 프로그램 결제 진행 메서드 호출 *************************
 				pp.createPayment();
 				break;
 			} else if(num == 2) { // 뒤로가기

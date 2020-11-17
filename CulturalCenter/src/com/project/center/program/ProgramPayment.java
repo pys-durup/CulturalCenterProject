@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import com.project.center.user.User;
 
@@ -53,12 +54,16 @@ public class ProgramPayment {
 		
 		if (num == 1) {// 휴대폰
 			if(phonePayment()) { // 휴대폰 결제 성공시
-				System.out.println("결제 성공");
+				System.out.println("휴대폰 결제 성공");
 			} else { // 휴대폰 결제 실패시
-				System.out.println("결제 실패");
+				System.out.println("휴대폰 결제 실패");
 			}
 		}else if (num == 2) { // 카드
-			cardPayment();
+			if(cardPayment()) { // 카드 결제 성공시
+				System.out.println("카드 결제 성공");
+			} else { // 카드 결제 실패시
+				System.out.println("카드 결제 실패");
+			}
 			
 		}else if (num == 3) {
 			// 뒤로가기
@@ -80,8 +85,10 @@ public class ProgramPayment {
 		
 		if(this.user.getTel().equals(phone)) {
 			// 휴대폰 결제 성공 > 프로그램결제정보.txt에 추가하는 메서드
+			// ============================ 결제에서 중복되는 부분 =====================================================
 			// 오늘 날짜
 			Calendar now = Calendar.getInstance();
+			
 			
 			// 저장할 데이터 생성
 			// 결제코드, 프로그램코드, 회원번호, 결제일, 가격, 결제수단
@@ -106,6 +113,7 @@ public class ProgramPayment {
 			modifyStudentData(paymentObject);
 			System.out.println("결제에 성공했습니다");
 			pause();
+			// ============================ 결제에서 중복되는 부분 =====================================================
 			return true;
 		} else { // 휴대폰 결제 실패
 			return false;
@@ -118,8 +126,57 @@ public class ProgramPayment {
 	 */
 	private boolean cardPayment() {
 		System.out.println("카드 결제 메서드 입니다");
-		pause();
-		return false;
+		System.out.print("'-'를 포함한 카드번호를 입력하세요 : ");
+		Scanner scan = new Scanner(System.in);
+		String cardNum = scan.nextLine();
+		
+		// 카드번호 16자리인지만 검사
+		if(Pattern.matches("[0-9]{16}", cardNum.replace("-", ""))) {
+			// 카드 비밀번호 입력받는다
+			System.out.print("카드 비밀번호를 입력하세요 : ");
+			scan = new Scanner(System.in);
+			String password = scan.nextLine();
+			if(password.equals("1234")) { 
+				
+				// ============================ 결제에서 중복되는 부분 =====================================================
+				// 오늘 날짜
+				Calendar now = Calendar.getInstance();
+				
+				
+				// 저장할 데이터 생성
+				// 결제코드, 프로그램코드, 회원번호, 결제일, 가격, 결제수단
+				String paymentData = "CODE" + ","
+											+ this.paymentProgram.getCode() + ","// 프로그램 코드
+											+ this.user.getCode() + ","
+											+ calToStirng(now) + ","
+											+ this.paymentProgram.getPrice() + ","
+											+ "2" + "\n";
+				
+				// String paymentCode, String programCode, String userCode, String paymentDate, int price, String paymentType
+				// ProgramPaymentInfo 결제정보 객체 생성
+				ProgramPaymentInfo paymentObject = new ProgramPaymentInfo("CODE"
+																		,this.paymentProgram.getCode()
+																		,this.user.getCode()
+																		,calToStirng(now)
+																		,this.paymentProgram.getPrice()
+																		,"2");
+				// 프로그램결제정보.txt에 결제내용 추가하는 메서드
+				savePaymentData(paymentData);
+				// 프로그램수강생.txt 파일 수정하는 메서드
+				modifyStudentData(paymentObject);
+				System.out.println("결제에 성공했습니다");
+				pause();
+				// ============================ 결제에서 중복되는 부분 =====================================================
+				return true;
+			} else {
+				System.out.println("카드 비밀번호가 일치하지 않음");
+				return false;
+			}
+		} else {
+			System.out.println("실패");
+			return false;
+		}
+		
 	}
 	
 	// 
@@ -152,7 +209,8 @@ public class ProgramPayment {
 		String programCode = paymentInfo.getProgramCode(); // 결제한 프로그램의 코드
 		String userCdoe = paymentInfo.getUserCode(); // 결제한 사람의 회원 번호
 		for(ProgramStudent ps : this.psList) {
-			if(ps.getCode().equals(programCode)) { 
+			if(ps.getCode().equals(programCode)) {
+				ps.setCount(ps.getCount()+1); // 수강정원 1 증가
 				ps.getUserCodes().add(userCdoe); // 수강생 목록에 추가
 			}
 		}
