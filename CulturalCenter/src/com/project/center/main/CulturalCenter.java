@@ -2,6 +2,9 @@ package com.project.center.main;
 
 import java.util.Scanner;
 
+
+import com.project.center.user.UserMyPage;
+import com.project.center.user.User;
 import com.project.center.program.ProgramManage;
 import com.project.center.user.UserLogin;
 import com.project.center.user.UserRegister;
@@ -11,6 +14,7 @@ public class CulturalCenter {
 	public static void main(String[] args) {
 		
 		// 유저, 직원, 관리자
+		User login = null;
 		
 		while(true)	{
 			int userType = 1; // 1 = 회원 2 = 직원 3 = 관리자
@@ -24,7 +28,7 @@ public class CulturalCenter {
 			
 			if(Num == 1) { // 로그인
 				System.out.println("로그인 선택");
-				UserLogin.checkUser();
+				login = UserLogin.checkUser();
 				// 로그인처리 메서드
 				// public void isLogin()? 로그인처리?
 				// public void createAccount(){} 로그인 성공하면?
@@ -51,6 +55,7 @@ public class CulturalCenter {
 			}
 			
 			System.out.println("프로그램 진행 . . . .");
+			System.out.println("사용자 : " + login.getName());
 			
 			
 			while (true) {
@@ -64,6 +69,7 @@ public class CulturalCenter {
 					
 					if(Num == 1) {
 						System.out.println("회원정보 조회");
+						UserMyPage.showMyPage(login);
 						
 					} else if (Num == 2) {
 						System.out.println("프로그램 신청");

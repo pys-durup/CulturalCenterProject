@@ -25,10 +25,11 @@ public class UserRegister {
 		System.out.println("5. ID는 중복된 아이디 사용이 불가능합니다.");
 		System.out.println("6. PW는 10~16자만 가능합니다.");
 		System.out.println("7. PW는 영어대소문자, 숫자, 특수문자만 사용가능합니다.");
-		System.out.println("8. 이름은 2~5자 한글만 사용 가능합니다.");
-		System.out.println("9. 전화번호는 '-' 유무와 상관없이 작성가능합니다.");
-		System.out.println("10. 생년월일은 'ex)XXXX-XX-XX' 의 형식입니다.");
-		System.out.println("11. 주소는 'ex)XX시 XX구 XX동' 의 형식입니다.");
+		System.out.println("8. PW는 ID와 동일할 수 없습니다.");
+		System.out.println("9. 이름은 2~5자 한글만 사용 가능합니다.");
+		System.out.println("10. 전화번호는 '-' 유무와 상관없이 작성가능합니다.");
+		System.out.println("11. 생년월일은 'ex)XXXX-XX-XX' 의 형식입니다.");
+		System.out.println("12. 주소는 'ex)XX시 XX구 XX동' 의 형식입니다.");
 		System.out.println("===================================================");
 		
 		System.out.println("회원가입 하시겠습니까? (Y/N)");
@@ -86,7 +87,7 @@ public class UserRegister {
 			System.out.print("비밀번호 : ");
 			pw = scan.nextLine();
 			//비밀번호 유효성 검사
-			pwCheck(pw);
+			pwCheck(id, pw);
 			
 			System.out.print("생년월일 : ");
 			birth = scan.nextLine();
@@ -130,6 +131,7 @@ public class UserRegister {
 			e.printStackTrace();
 		}	
 	}
+
 
 	//그룹 유효성 검사
 	private static void groupCheck(String group) {
@@ -208,9 +210,7 @@ public class UserRegister {
 		return birth;
 	}
 
-	//비밀번호 유효성 체크
-	private static void pwCheck(String pw) {
-		
+	private static void pwCheck(String id, String pw) {
 		//비밀번호는 10-16자만 가능
 		if (pw.length() < 8 || pw.length() > 16) {
 			System.out.println("비밀번호는 10-16자 입니다.");
@@ -225,8 +225,14 @@ public class UserRegister {
 				insertUser();
 			}
 		}
+		
+		//아이디와 비밀번호는 동일할 수 없음
+		if (pw.equals(id)) {
+			System.out.println("아이디와 비밀번호는 동일할 수 없습니다.");
+			insertUser();
+		}
 	}
-
+	
 	//아이디 유효성 체크
 	private static void idCheck(String id, BufferedReader reader) throws IOException {
 		
