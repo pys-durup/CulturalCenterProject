@@ -2,8 +2,10 @@ package com.project.center.main;
 
 import java.util.Scanner;
 
+
 import com.project.center.user.UserMyPage;
 import com.project.center.user.User;
+import com.project.center.program.ProgramManage;
 import com.project.center.user.UserLogin;
 import com.project.center.user.UserRegister;
 
@@ -71,6 +73,8 @@ public class CulturalCenter {
 						
 					} else if (Num == 2) {
 						System.out.println("프로그램 신청");
+						ProgramManage pm = new ProgramManage();
+						pm.createApplyProgram();
 						
 					} else if (Num == 3) {
 						System.out.println("신청한 프로그램");
