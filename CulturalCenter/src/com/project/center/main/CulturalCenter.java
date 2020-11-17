@@ -169,10 +169,10 @@ public class CulturalCenter {
 	
 	// 직원 회원의 메뉴를 출력하는 메서드
 	public static void showEmployeeMain() {
-		
+
 	}
 	
-	// 직원 회원의 메뉴를 출력하는 메서드
+	// 관리자의 메뉴를 출력하는 메서드
 	public static void showManageMain() {
 		
 	}
