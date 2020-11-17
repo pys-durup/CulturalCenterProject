@@ -9,21 +9,23 @@ import data.Path;
 
 public class UserInfo {
 	
-	Scanner scan = new Scanner(System.in);
 	
 	//회원 정보 담는 ulist와 초기화
 	private static ArrayList<User> uList = new ArrayList<User>();
 
 	
-	//관리자가 메뉴에서 회원 정보조회 시작할 때 생성자로 매서드 실행
-	public UserInfo() {
-		getUserInfo();
-		viewUserList();
-	}
+
+//	public UserInfo() {
+//		getUserInfo();
+//		viewUserList();
+//	}
+
 	
+
 	//회원정보를 회원정보.txt에서 읽어오는 메서드
-	private void getUserInfo() {
+	public void getUserInfo() {
 		
+		Scanner scan = new Scanner(System.in);
 		uList.clear();
 		
 		try {
@@ -50,9 +52,11 @@ public class UserInfo {
 											temp[7].equals("2") ? "차상위" : "기초" //계층
 								, temp[8]));	//주소));
 				
+				
 			}
 
 			reader.close();
+			
 			
 		} catch (Exception e) {
 			System.out.println("UserInfo.getUserInfo()");
@@ -63,7 +67,10 @@ public class UserInfo {
 	
 	
 	//전체 회원 정보를 조회하는 메서드 
-	private void viewUserList() {
+	public void viewUserList() {
+
+		Scanner scan = new Scanner(System.in);
+
 		
 		for (int i=0; i<uList.size()/100+1;) {
 
@@ -94,7 +101,7 @@ public class UserInfo {
 				
 				System.out.println("-------------------------------------------------------------------------------");
 	
-				System.out.printf("\t\t\t현재 %d 페이지 입니다. 최대 %d 페이지까지 있습니다.\n\n", i+1, uList.size()/20+1);
+				System.out.printf("\t\t\t현재 %d 페이지 입니다. 최대 %d 페이지까지 있습니다.\n\n", i+1, uList.size()/100+1);
 				System.out.println("\t\t\t1. 이전 페이지");
 				System.out.println("\t\t\t2. 다음 페이지");
 				System.out.println("\t\t\t3. 원하는 페이지로");
@@ -123,49 +130,28 @@ public class UserInfo {
 				} else if (sel.equals("3")) {	//원하는 페이지로 이동
 					System.out.printf("\t\t\t원하는 페이지를 입력하세요. : ");
 					
-					String pageN = scan.nextLine();
-					
-					//int pageN = Integer.parseInt(scan.nextLine());	//원하는 페이지 pageN변수에 저장
-					
+					String pageN = scan.nextLine();		//원하는 페이지 pageN변수에 저장
+
 					//TODO pageN에 음수 또는 최대페이지 초과해서 입력할 때 (->유효성검사)
-					//pageN가 0미만,
-//					if (pageN>uList.size()/100+1 || pageN<0) {
-//						System.out.println("\t\t\t없는 페이지입니다. 다시 입력해주세요.");
-//						UserManage.pause();						
-//					}
-//					if (i<uList.size()/100+1 && i>=0) {	
-//						if (Integer.parseInt(pageN)<0 || Integer.parseInt(pageN)>uList.size()/100 + 1) {
-//							i = Integer.parseInt(pageN) - 1;
-//						} else {
-//							System.out.println("\t\t\t없는 페이지입니다.");
-//							UserManage.pause();
-//						}
-//					} else {
-//						System.out.println("\t\t\t없는 페이지입니다. 다시 입력해주세요.");
+//					if (i>uList.size()/100 + 1 && i<0) {
+//						System.out.println("\t\t\t없는 페이지입니다.");
 //						UserManage.pause();
+//					} else {
+//						if (Integer.parseInt(pageN)>uList.size() || Integer.parseInt(pageN)<0) {
+//							System.out.println("없다");
+//						} else {
+//						i = Integer.parseInt(pageN) - 1;
+//					
+//						}
 //					}
-					
 					
 					if (i>uList.size()/100 + 1 && i<0) {
 						System.out.println("\t\t\t없는 페이지입니다.");
 						UserManage.pause();
 					} else {
-						if (Integer.parseInt(pageN)>uList.size() || Integer.parseInt(pageN)<0) {
-							System.out.println("없다");
-						} else {
 						i = Integer.parseInt(pageN) - 1;
-					
-						}
 					}
 					
-//					
-//					if (i>uList.size()/100 + 1 && i<0) {
-//						System.out.println("\t\t\t없는 페이지입니다.");
-//						UserManage.pause();
-//					} else {
-//						i = Integer.parseInt(pageN) - 1;
-//					}
-//					
 				} else if (sel.equals("4")) {	//뒤로가기
 					break;
 				}

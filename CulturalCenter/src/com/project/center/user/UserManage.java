@@ -6,7 +6,6 @@ public class UserManage {
 	
 	public static void main(String[] args) {
 
-		//UserInfo u1 = new UserInfo();
 		
 		while(true)	{
 			
@@ -17,7 +16,10 @@ public class UserManage {
 			
 			if(Num == 1) {
 				//System.out.println("\t1. 회원 목록 조회");
+
 				UserInfo uInfo = new UserInfo(); 
+				uInfo.getUserInfo();
+				uInfo.viewUserList();
 				break;
 				
 			} else if(Num == 2) { 
@@ -32,6 +34,8 @@ public class UserManage {
 				
 			} else if(Num == 4) { 
 				System.out.println("\t4. 회원 정보 삭제");
+				UserDelete dUser = new UserDelete();
+				dUser.deleteUser();
 				//UserDelete()
 				break;
 				
