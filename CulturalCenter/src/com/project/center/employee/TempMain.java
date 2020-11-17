@@ -13,17 +13,19 @@ public class TempMain {
 		
 		Calendar c = Calendar.getInstance();
 		
-		//관리자의 기능
 		while (loop) {
-//			
+			
+			//관리자의 기능
 //			m.checkEmployeeManage();
 //			m.viewEmployeeManage();
-//			
+			
+			//직원의 기능
 //			if(n.isEmployeeAccess()) {
 //				n.viewEmployeeAttendance();
 //				loop = false;
 //			};
 			
+			//관리자의 기능 중, 직원 근태 조회
 			n.findEmployeeAttendanceList();
 			System.out.println("메인메뉴");
 			

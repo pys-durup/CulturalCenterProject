@@ -385,12 +385,10 @@ public class EmployeeAttendanceManage {
 	private void viewEmployeeAttendanceList(String inputCode) {
 		
 		Scanner scan = new Scanner(System.in);
-		EmployeeAttendance employeeAttendance = new EmployeeAttendance();
-		
 		
 		try {
 			
-			ArrayList<EmployeeAttendance> attendanceBoard = new ArrayList<EmployeeAttendance>();
+			ArrayList<String[]> attendanceBoard = new ArrayList<String[]>();
 			
 			BufferedReader reader2 = new BufferedReader(new FileReader(Path.EMPLOYEEATTENDANCE));
 			
@@ -400,39 +398,34 @@ public class EmployeeAttendanceManage {
 			
 			while ((line = reader2.readLine()) != null) {
 				list = line.split(",");
-				System.out.println(inputCode);
-				System.out.println(list[0]);
 				if (inputCode.equals(list[0])) {
-					employeeAttendance.setCode(list[0]);
-					employeeAttendance.setName(list[1]);
-					employeeAttendance.setDate(list[2]);
-					employeeAttendance.setCommuteTime(list[3]);
-					employeeAttendance.setWorkingTime(list[4]);
-					employeeAttendance.setAttendance(list[5]);
-					attendanceBoard.add(employeeAttendance);
-					employeeAttendance = new EmployeeAttendance();
+					attendanceBoard.add(list);
 				}
 			}
-			
+									
 			int pageMove = 0;
 			
-			for(int pageIndex = 0; pageIndex<attendanceBoard.size() / 60; pageIndex+=pageMove) {
+			for(int pageIndex = 0; pageIndex<attendanceBoard.size() / 20 + 1; pageIndex+=pageMove) {
 				
 				System.out.println("[사원코드]====[직원이름]====[출근일자]====[근무시간]====[근태상황]");
 				
-				for(int i=pageIndex; i<pageIndex + 60; i++) {
+				for(int i=pageIndex * 20; i<20 + pageIndex * 20; i++) {
 					
-					System.out.printf("%s\t%s\t\t%s\t%s\t%s\n"
-										,attendanceBoard.get(i).getCode()
-										,attendanceBoard.get(i).getName()
-										,attendanceBoard.get(i).getDate()
-										,attendanceBoard.get(i).getWorkingTime()
-										,attendanceBoard.get(i).getAttendance()
+					if (i == attendanceBoard.size()) {
+						break;
+					}
+					
+					System.out.printf("%s       %s       %s        %s         %s\n"
+										,attendanceBoard.get(i)[0]
+										,attendanceBoard.get(i)[1]
+										,attendanceBoard.get(i)[2]
+										,attendanceBoard.get(i)[4]
+										,attendanceBoard.get(i)[5]
 										);
 					
 				}
 				System.out.println();
-				System.out.printf("\t- %d 페이지 -", pageIndex);
+				System.out.printf("\t\t\t- %d 페이지 -", pageIndex + 1);
 				System.out.println();
 				System.out.println("1. 다음 페이지");
 				System.out.println("2. 이전 페이지");
@@ -441,13 +434,14 @@ public class EmployeeAttendanceManage {
 				switch (scan.nextLine()) {
 				
 					case "1"
-					: if (pageIndex >= attendanceBoard.size() / 60) {
+					: if (pageIndex == (attendanceBoard.size() / 20)) {
 						System.out.println("현재 페이지가 마지막 페이지 입니다.");
 						System.out.println("엔터를 누르시고 메뉴를 다시 입력해주세요.");
+						pageMove = 0;
 						scan.nextLine();
 						break;
 					} else {
-						pageMove++;
+						pageMove = 1;
 						break;
 					}
 					
@@ -455,10 +449,12 @@ public class EmployeeAttendanceManage {
 					: if (pageIndex <= 0) {
 						System.out.println("현재 페이지가 첫 페이지 입니다.");
 						System.out.println("엔터를 누르시고 메뉴를 다시 입력해주세요.");
+						
+						pageMove = 0;
 						scan.nextLine();
 						break;
 					} else {
-						pageMove--;
+						pageMove = -1;
 						break;
 					}
 					
