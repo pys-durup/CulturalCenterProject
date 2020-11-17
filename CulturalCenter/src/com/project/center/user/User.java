@@ -11,12 +11,11 @@ public class User {
 	private String tel;
 	private String group;
 	private String address;
-	
+	private int type;
 
 
 	public User(String code, String name, String birth, String id, String pw, String gender, String tel, String group,
 			String address) {
-		super();
 		this.code = code;
 		this.name = name;
 		this.birth = birth;
@@ -28,6 +27,10 @@ public class User {
 		this.address = address;
 	}
 	
+	public User(String id, String pw) {
+		this.id = id;
+		this.pw = pw;
+	}
 
 	public String getCode() {
 		return code;
@@ -100,6 +103,15 @@ public class User {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+	
 	
 	
 }

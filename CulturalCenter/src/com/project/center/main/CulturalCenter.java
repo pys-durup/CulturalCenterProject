@@ -17,7 +17,7 @@ public class CulturalCenter {
 		User login = null;
 		
 		while(true)	{
-			int userType = 1; // 1 = 회원 2 = 직원 3 = 관리자
+			// 1 = 회원 2 = 직원 3 = 관리자
 			int Num;
 			
 			// 메인화면 1. 로그인 2.회원가입	3.종료
@@ -62,7 +62,7 @@ public class CulturalCenter {
 				
 				
 				// 1. 회원일때 2. 직원일때 3. 관리자 일때
-				if(userType == 1) {
+				if(login.getType() == 1) {
 					// 회원에게 보여질 메뉴 출력
 					showUserMain();
 					Num = selectNum();
@@ -103,10 +103,16 @@ public class CulturalCenter {
 					
 
 					
-				} else if(userType == 2) {
+				} else if(login.getType() == 2) {
 					// 직원에게 보여질 메뉴 출력
-				} else if(userType == 3) {
+				} else if(login.getType() == 3) {
 					// 관리자이게 보여질 메뉴 출력
+					showManageMain();
+					Num = selectNum();
+					if (Num == 1) {
+						System.out.println("관리자 로그인에 성공했습니다.");
+						break;
+					}
 				}
 			}
 		}
@@ -175,12 +181,12 @@ public class CulturalCenter {
 	
 	// 직원 회원의 메뉴를 출력하는 메서드
 	public static void showEmployeeMain() {
-		
+		System.out.println("직원 로그인");
 	}
 	
 	// 직원 회원의 메뉴를 출력하는 메서드
 	public static void showManageMain() {
-		
+		System.out.println("관리자 로그인");
 	}
 
 } // class 
