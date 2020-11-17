@@ -24,21 +24,25 @@ public class ProgramRegistrationList {
 	private ArrayList<ProgramAttendance> paList;
 	private User login;
 	
-	
+	public ProgramRegistrationList() {
+		this.login = new User("50001", "박영수", "1993-08-17","tteesstt", "tteesstt",  "1", "01077743635",  "1" , "주소");
+	}
 	
 	public ProgramRegistrationList(User login) {
-
-		this.login = login;
+		// 테스트용 유저 객체
+		this.login = new User("50001", "박영수", "1993-08-17","tteesstt", "tteesstt",  "1", "01077743635",  "1" , "주소");
+		//this.login = login;
 	}
 
-	private void createProgramRegistorList() {
+	public void createProgramRegistorList() {
 		
 		while(true) {
 			// 사용자가 선택한 번호
 			int selectNum = userSelectNum();
 			
 			if(selectNum == 1) { // 1. 수업 현황
-				myProgramState();
+				System.out.println("진행중인 프로그램 코드 : " + myProgramState());
+				pause();
 			} else if (selectNum == 2) { // 2. 수업 이력
 				myProgramHistory();
 			} else if (selectNum == 3) { // 3. 수업 환불
@@ -51,16 +55,39 @@ public class ProgramRegistrationList {
 		}
 	}
 
-	// 수업 현황
-	private void myProgramState() {
-		// 프로그램결제.txt 데이터
-		this.paymentList = loadProgramPaymentData(Path.PROGRAMPAYMENT);
+	/**
+	 *  수업 현황
+	 * 
+	 */
+	private String myProgramState() {
+		this.paymentList = loadProgramPaymentData(Path.PROGRAMPAYMENT); // 프로그램결제.txt 데이터
+		this.psList = loadProgramStateData(Path.PROGRAMPAYMENT); // 프로그램상태.txt 데이터
+		this.pList = loadProgramData(Path.PROGRAMLIST);
+		String haveProgramCode = "";
 		
 		// 결제 내역에 내가 구매한 프로그램이 있는지? 
-		ArrayList<String> myPayment = new ArrayList<String>();
-		myPayment = havePaymentHistory();
+		ArrayList<String> myPayment = havePaymentHistory();
+		System.out.println(myPayment);
 		
-		
+		if(myPayment.size() > 0) { // 결제내역 존재
+			for(String code : myPayment) {
+				for(ProgramState ps : this.psList) {
+					if(code.equals(ps.getCode()) && ps.getState().equals("진행중")) {
+						// 진행중인 프로그램이 있다면
+						haveProgramCode = ps.getCode();
+						System.out.println("진행중인 프로그램이 있다");
+						return haveProgramCode;
+					}
+				}
+			}
+			System.out.println("결제한프로그램이 있는데 진행중이지 않을때");
+			return haveProgramCode;
+		} else {
+			System.out.println("결제내역이 존재하지 않음");
+			System.out.println("진행중인 프로그램이 없습니다");
+			pause();
+			return haveProgramCode;
+		}
 	}
 	
 	// 결제 내역에 내가 구매한 프로그램이 있는지? 
@@ -70,18 +97,24 @@ public class ProgramRegistrationList {
 		for(ProgramPaymentInfo p : this.paymentList) {
 			// 결제내역 회원번호 = 로그인 회원번호
 			if(p.getUserCode().equals(this.login.getCode())) { 
-				temp.add(p.getProgramCode());
+				temp.add(p.getProgramCode()); // 신청내역에 있는 코드들을 담는다
 			}
 		}
 		return temp;
 	}
 
-	// 수업 이력
+	/**
+	 *  수업 이력
+	 * 
+	 */
 	private void myProgramHistory() {
 		
 	}
 
-	// 수업 환불
+	/**
+	 *  수업 환불
+	 * 
+	 */
 	private void myProgramRefund() {
 		
 	}
@@ -105,6 +138,9 @@ public class ProgramRegistrationList {
 		System.out.println();
 		return Integer.parseInt(scan.nextLine());
 	}
+	
+	
+	
 	
 	// 프로그램.txt에서 데이터를 읽어온다
 	private ArrayList<Program> loadProgramData(String path) {
@@ -309,6 +345,16 @@ public class ProgramRegistrationList {
 //			return null;
 //		}
 
+	
+	// 일시정지
+	private static void pause() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("일시정지");
+		scan.nextLine();
+		for(int i=0 ; i<20 ; i++) {
+			System.out.println();
+		}
+	}
 }
 	
 	
