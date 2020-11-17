@@ -6,7 +6,6 @@ public class UserManage {
 	
 	public static void main(String[] args) {
 
-		//UserInfo u1 = new UserInfo();
 		
 		while(true)	{
 			
@@ -17,6 +16,7 @@ public class UserManage {
 			
 			if(Num == 1) {
 				//System.out.println("\t1. 회원 목록 조회");
+<<<<<<< Updated upstream
 				UserInfo uInfo = new UserInfo(); 
 =======
 				UserInfo uInfo = new UserInfo();
