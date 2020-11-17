@@ -124,7 +124,6 @@ public class ProgramManage {
 	 *  @param text : 검색한 검색어
 	 */
 	private void showSearchresult(ArrayList<Program> list, String text) {
-//		System.out.println("showProgramList()");
 		while (true) {
 			this.pshowList.clear(); // 검색결과 리스트 초기화
 			
@@ -206,10 +205,18 @@ public class ProgramManage {
 				int programNum = selectNum();
 				if( programNum > 0 && programNum <= pshowList.size()) {
 					// 올바른 프로그램 번호 입력
+					// 프로그램의 수강인원이 가득 찬 경우 신청을 못한다
+					if(this.pshowList.get(programNum-1).getCount() != this.pshowList.get(programNum-1).getCapacity()) {
+						// 프로그램 신청을 진행하는 메서드
+						applyProgram(this.pshowList.get(programNum-1));
+						break;
+					} else {
+						// 신청 실패
+						System.out.println("모집이 마감된 프로그램 입니다");
+						pause();
+						break;
+					}
 					
-					// 프로그램 신청을 진행하는 메서드
-					applyProgram(this.pshowList.get(programNum-1));
-					break;
 				} else {
 					// 올바르지 않은 프로그램 번호 입력
 					System.out.println("올바르지 않은 번호입니다");
@@ -585,7 +592,7 @@ public class ProgramManage {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("일시정지");
 		scan.nextLine();
-		for(int i=0 ; i<10 ; i++) {
+		for(int i=0 ; i<20 ; i++) {
 			System.out.println();
 		}
 	}
