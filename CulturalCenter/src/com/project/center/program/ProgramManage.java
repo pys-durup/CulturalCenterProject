@@ -52,7 +52,6 @@ public class ProgramManage {
 				break;
 			} else if(num == 2) { // 연령별 목록
 				showAgeResult();
-				pause(); 
 			} else if(num == 3) { // 테마별 목록
 				System.out.println("테마별");
 				showThemeResult();

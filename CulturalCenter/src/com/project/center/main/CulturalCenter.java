@@ -71,7 +71,7 @@ public class CulturalCenter {
 						pm.createApplyProgram();
 						
 					} else if (Num == 3) {
-						System.out.println("신청한 프로그램");
+						System.out.println("프로그램 등록현황");
 						
 					} else if (Num == 4) {
 						System.out.println("진행중인 프로그램");
