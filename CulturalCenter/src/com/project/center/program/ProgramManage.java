@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
-
 import com.project.center.user.User;
+
 import data.Path;
 
 
@@ -25,8 +25,9 @@ public class ProgramManage {
 		this.psList = loadPsData(Path.PROGRAMSTUDENT);
 		this.pshowList = new ArrayList<ProgramList>();
 		// 테스트용 유저 객체
-		this.user = new User("50001", "tteesstt", "tteesstt", "1993-08-17", "1", "01077743635", "주소", "1");
-		//String code, String id, String pw, String birth, String gender, String tel, String address, String group)
+		this.user = new User("50001", "박영수", "1993-08-17","tteesstt", "tteesstt",  "1", "01077743635",  "1" , "주소");
+		//String code, String name, String birth, String id, String pw, String gender, String tel, String group, String address)
+
 	}
 
 
@@ -123,7 +124,6 @@ public class ProgramManage {
 	 *  @param text : 검색한 검색어
 	 */
 	private void showSearchresult(ArrayList<Program> list, String text) {
-//		System.out.println("showProgramList()");
 		while (true) {
 			this.pshowList.clear(); // 검색결과 리스트 초기화
 			
@@ -132,7 +132,7 @@ public class ProgramManage {
 				break;
 			} else {
 				System.out.printf("<검색결과> '%s'로 검색한 결과 입니다\n", text);
-				System.out.println("[번호]  [프로그램 이름]\t\t\t[강사명]    [강의실]    [시작 날짜]\t[종료 날짜]\t[정원]\t  [현재상태]\t[가격]");
+//				System.out.println("[번호]  [프로그램 이름]\t\t\t[강사명]    [강의실]    [시작 날짜]\t[종료 날짜]\t[정원]\t  [현재상태]\t[가격]");
 				
 				// 프로그램 목록을 출력하고 pshowList에 출력데이터를 담는다
 				showProgramList(list);
@@ -153,31 +153,106 @@ public class ProgramManage {
 	 *  
 	 */
 	private void setApplyProgram() {
+		
+		int index = 1;
+		int startIndex = 1;
+		int endIndex = 10;
+		int pagesize = 10; // 10개씩 출력
+		
+		if(this.pshowList.size() < 10) {
+			endIndex = this.pshowList.size();
+		} 
+
 		while(true) {
-			System.out.println("1. 프로그램 신청하기\t 2. 뒤로가기");
+			
+			int size = this.pshowList.size();
+			System.out.println("프로그램의 개수 : " + size);
+			
+			System.out.println("[번호]  [프로그램 이름]\t\t\t[강사명]    [강의실]    [시작 날짜]\t[종료 날짜]\t[정원]\t  [현재상태]\t[가격]");
+			for(int i=startIndex ; i<=endIndex ; i++) {
+				//  [프로그램 이름]   [강사명]    [강의실]     [시작 날짜]   [종료 날짜]   [정원]   [현재상태]     [가격]
+				System.out.printf("%3d\t%-20s\t%5s\t%s\t%s\t%s\t(%d/%d)\t    %s\t %,d원\n"
+						, index
+						, this.pshowList.get(i-1).getName()
+						, this.pshowList.get(i-1).getTeacher()
+						, this.pshowList.get(i-1).getClassRoom()
+						, this.pshowList.get(i-1).getStartDate()
+						, this.pshowList.get(i-1).getEndDate()
+						, this.pshowList.get(i-1).getCount() , this.pshowList.get(i-1).getCapacity()
+						, this.pshowList.get(i-1).getState()
+						, this.pshowList.get(i-1).getPrice());
+					index ++;					
+			}
+
+			// 여기서부터 작업 시작 
+			System.out.println("현재 index -> " + index);
+			System.out.println("현재 startIndex -> " + startIndex);
+			System.out.println("현재 endIndex -> " + endIndex);
+			
+			// 검색 개수에 따라서 개수 조절
+			if(this.pshowList.size() < 10) {
+				System.out.println("1. 프로그램 신청하기\t 4. 뒤로가기");
+			} else {
+				System.out.println("1. 프로그램 신청하기\t 2. 이전 목록 3. 다음 목록 4. 뒤로가기");
+			}
+			
 			System.out.print("번호를 입력하세요 : ");
 			int num = selectNum();
 			System.out.println("pshowList size : " + pshowList.size());
 			
-			if(num == 1) { // 프로그램 신청하기
+			if(num == 1) { // 1. 프로그램 신청하기
 				System.out.print("신청할 프로그램의 번호 입력 : ");
 				int programNum = selectNum();
 				if( programNum > 0 && programNum <= pshowList.size()) {
 					// 올바른 프로그램 번호 입력
+					// 프로그램의 수강인원이 가득 찬 경우 신청을 못한다
+					if(this.pshowList.get(programNum-1).getCount() != this.pshowList.get(programNum-1).getCapacity()) {
+						// 프로그램 신청을 진행하는 메서드
+						applyProgram(this.pshowList.get(programNum-1));
+						break;
+					} else {
+						// 신청 실패
+						System.out.println("모집이 마감된 프로그램 입니다");
+						pause();
+						break;
+					}
 					
-					// 프로그램 신청을 진행하는 메서드
-					applyProgram(this.pshowList.get(programNum-1));
-					break;
 				} else {
 					// 올바르지 않은 프로그램 번호 입력
 					System.out.println("올바르지 않은 번호입니다");
 				}
 				
-			} else if (num == 2) { // 뒤로가기
-				System.out.println("showSearchresult 메서드 뒤로가기");
+			} else if (num == 2) { // 2. 이전 목록
+				if(index == 11) {
+					System.out.println("처음 페이지 입니다");
+					index = 1;
+					pause();
+				} else if (size == endIndex) {
+					int tempNum = index - startIndex;
+					index -= (pagesize + tempNum);
+					startIndex -= pagesize;
+					endIndex -= tempNum;
+				} else {
+					index -= pagesize * 2;
+					startIndex -= pagesize;
+					endIndex -= pagesize;
+				}
+			} else if (num == 3) { // 3. 다음 목록
+				if(endIndex/10 == size/10 && size != endIndex) { // 끝의 전페이지 인경우
+					startIndex += pagesize;
+					endIndex += (size - startIndex + 1);
+					
+				} else if(size == endIndex ) { // 끝페이지인 경우
+					System.out.println("마지막페이지 입니다");
+					index -= (endIndex - startIndex + 1);
+					pause();
+				} else { 
+					startIndex += pagesize;
+					endIndex += pagesize;
+				}
+			} else if (num == 4) { // 4. 뒤로가기
 				break;
 			} else {
-				System.out.println("showSearchresult 메서드 pause");
 				pause();
 				break;
 			}
@@ -185,12 +260,12 @@ public class ProgramManage {
 	}
 	
 	/**
-	 * 	프로그램 목록을 출력하고 ArrayList<ProgramList> pshowList에 출력데이터를 담는다
-	 *  @param list : 출력할 리스트
+	 * 	ArrayList<ProgramList> pshowList에 출력데이터를 담는다
+	 *  @param list : 담을 리스트
 	 *  
 	 */
 	private void showProgramList(ArrayList<Program> list) {
-		int index = 1;
+		this.pshowList.clear(); // 초기화
 		for(Program p : list) { // 검색 결과가 있을때 출력내용 생성
 			System.out.println();
 			int count = 0; // 현재 수강중인 인원
@@ -214,20 +289,6 @@ public class ProgramManage {
 											,p.getCapacity()
 											,state
 											,p.getPrice()));
-											
-			//  [프로그램 이름]   [강사명]    [강의실]     [시작 날짜]   [종료 날짜]   [정원]   [현재상태]     [가격]
-			System.out.printf("%3d\t%-20s\t%5s\t%s\t%s\t%s\t(%d/%d)\t    %s\t %,d원"
-					, index
-					, p.getName()
-					, p.getTeacher()
-					, p.getClassRoom()
-					, p.getStartDate()
-					, p.getEndDate()
-					, count , p.getCapacity()
-					, state
-					, p.getPrice());
-			index ++;
-
 		}
 	}
 	
@@ -269,6 +330,7 @@ public class ProgramManage {
 				// 프로그램 결제 메서드
 				// ProgramList program객체를 넘겨준다
 				ProgramPayment pp = new ProgramPayment(program, user);
+				// 프로그램 결제 진행 메서드 호출 *************************
 				pp.createPayment();
 				break;
 			} else if(num == 2) { // 뒤로가기
@@ -530,7 +592,7 @@ public class ProgramManage {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("일시정지");
 		scan.nextLine();
-		for(int i=0 ; i<10 ; i++) {
+		for(int i=0 ; i<20 ; i++) {
 			System.out.println();
 		}
 	}
