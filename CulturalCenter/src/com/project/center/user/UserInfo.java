@@ -15,14 +15,14 @@ public class UserInfo {
 	private static ArrayList<User> uList = new ArrayList<User>();
 
 	
-	//관리자가 메뉴에서 회원 정보조회 시작할 때 생성자로 매서드 실행
-	public UserInfo() {
-		getUserInfo();
-		viewUserList();
-	}
-	
+//	//관리자가 메뉴에서 회원 정보조회 시작할 때 생성자로 매서드 실행
+//	public UserInfo() {
+//		getUserInfo();
+//		viewUserList();
+//	}
+
 	//회원정보를 회원정보.txt에서 읽어오는 메서드
-	private void getUserInfo() {
+	public void getUserInfo() {
 		
 		uList.clear();
 		
@@ -63,7 +63,7 @@ public class UserInfo {
 	
 	
 	//전체 회원 정보를 조회하는 메서드 
-	private void viewUserList() {
+	public void viewUserList() {
 		
 		for (int i=0; i<uList.size()/100+1;) {
 
@@ -94,7 +94,7 @@ public class UserInfo {
 				
 				System.out.println("-------------------------------------------------------------------------------");
 	
-				System.out.printf("\t\t\t현재 %d 페이지 입니다. 최대 %d 페이지까지 있습니다.\n\n", i+1, uList.size()/20+1);
+				System.out.printf("\t\t\t현재 %d 페이지 입니다. 최대 %d 페이지까지 있습니다.\n\n", i+1, uList.size()/100+1);
 				System.out.println("\t\t\t1. 이전 페이지");
 				System.out.println("\t\t\t2. 다음 페이지");
 				System.out.println("\t\t\t3. 원하는 페이지로");
