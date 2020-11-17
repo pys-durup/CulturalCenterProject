@@ -8,7 +8,7 @@ public class UserSelect {
 	
 	private static ArrayList<User> uList = new ArrayList<User>();
 	
-	u1.
+
 	
 
 	

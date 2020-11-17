@@ -12,7 +12,7 @@ public class UserDelete {
 	private static ArrayList<User> uList = new ArrayList<User>();
 	
 	UserInfo u = new UserInfo();
-	
+	//ArrayList<User> uList = u.uList;
 	Scanner scan = new Scanner(System.in);
 
 	
@@ -23,7 +23,6 @@ public class UserDelete {
 
 			boolean flag = false;
 			
-			u.getUserInfo();
 			
 			BufferedWriter writer = new BufferedWriter (new FileWriter(Path.USERLIST, true));
 			

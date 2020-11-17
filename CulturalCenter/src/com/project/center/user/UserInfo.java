@@ -14,21 +14,14 @@ public class UserInfo {
 	private static ArrayList<User> uList = new ArrayList<User>();
 
 	
-<<<<<<< Updated upstream
-//	//관리자가 메뉴에서 회원 정보조회 시작할 때 생성자로 매서드 실행
-=======
-	//관리자가 메뉴에서 회원 정보조회 시작할 때 생성자로 매서드 실행
->>>>>>> Stashed changes
+
 //	public UserInfo() {
 //		getUserInfo();
 //		viewUserList();
 //	}
-<<<<<<< Updated upstream
 
-=======
 	
-	
->>>>>>> Stashed changes
+
 	//회원정보를 회원정보.txt에서 읽어오는 메서드
 	public void getUserInfo() {
 		
@@ -75,10 +68,9 @@ public class UserInfo {
 	
 	//전체 회원 정보를 조회하는 메서드 
 	public void viewUserList() {
-<<<<<<< Updated upstream
-=======
+
 		Scanner scan = new Scanner(System.in);
->>>>>>> Stashed changes
+
 		
 		for (int i=0; i<uList.size()/100+1;) {
 
