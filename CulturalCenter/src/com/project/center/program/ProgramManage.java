@@ -30,6 +30,7 @@ public class ProgramManage {
 	}
 
 
+	
 	/**
 	 *  프로그램 신청이 진행되는 메서드
 	 * 
