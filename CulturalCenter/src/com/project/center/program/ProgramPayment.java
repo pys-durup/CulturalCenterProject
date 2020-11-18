@@ -20,11 +20,16 @@ public class ProgramPayment {
 	private ProgramList paymentProgram;
 	private User user; // 로그인 한 유저
 	private ArrayList<ProgramStudent> psList;
+
 	
 	public ProgramPayment(ProgramList paymentProgram, User user) {
 		this.paymentProgram = paymentProgram;
 		this.user = user;
 		psList = loadProgramStudentData();
+	}
+	
+	public ProgramPayment(User user) {
+		this.user = user;
 	}
 	
 	// ProgramList >[프로그램 이름][강사명][강의실][시작 날짜][종료 날짜][정원][현재상태][가격]
@@ -297,6 +302,168 @@ public class ProgramPayment {
 		
 	}
 	
+	/**
+	 * 	환불 진행 메서드
+	 *  
+	 */
+	public void programRefund(Program program, ArrayList<ProgramPaymentInfo> paymentList) {
+		
+		while(true) {
+			
+			System.out.println("[결제 정보]");
+			System.out.println("프로그램이름 :" + program.getName());
+			String paymentType = "";
+			ProgramPaymentInfo refundInfo = null; // 프로그램환불.txt에 저장할 객체
+			Calendar now = Calendar.getInstance(); // 오늘
+			int index = 0;
+			
+			// 결제정보.txt 에서 제거할 인덱스 탐색
+			for(int i=0 ; i<paymentList.size() ; i++) {
+				if(paymentList.get(i).getProgramCode().equals(program.getCode()) && paymentList.get(i).getUserCode().equals(this.user.getCode())){
+					paymentType = paymentList.get(i).getPaymentType(); // 결제시 사용한 결제수단 > 환불
+					index = i;
+					System.out.printf("결제일 : %s\n", paymentList.get(i).getPaymentDate());
+					System.out.printf("가격 : %,d원\n",paymentList.get(i).getPrice());
+					System.out.printf("결제수단 : %s\n" ,paymentList.get(i).getPaymentType().equals("1") ? "휴대폰" : "카드");
+					refundInfo = new ProgramPaymentInfo("TTTT"
+							, paymentList.get(i).getProgramCode()
+							, paymentList.get(i).getUserCode()
+							, calToStirng(now)
+							, paymentList.get(i).getPrice()
+							, paymentList.get(i).getPaymentType());
+				}
+			}
+
+	
+			System.out.println("1. 계속진행하기 2. 뒤로가기");
+			System.out.print("번호를 입력하세요 : ");
+			int num = selectNum();
+			
+			if(num == 1) { // 환불진행
+				if(paymentType.equals("1")) { // 휴대폰결제 환불
+					System.out.println("휴대폰결제 환불을 진행합니다");
+					System.out.print("휴대폰번호 입력(- 제외) : ");
+					String phone = selectString();
+					if(phone.equals(this.user.getTel())) {
+						// 환불계속진행
+					} else {
+						System.out.println("휴대폰번호가 일치하지 않습니다");
+						System.out.println("환불신청을 취소합니다");
+						pause();
+						break;
+					}
+					
+				} else { // 카드결제 환불
+					System.out.println("카드결제 환불을 진행합니다");
+					System.out.print("카드번호 입력 : ");
+					String card = selectString();
+					if(card.equals(this.user.getTel())) {
+						// 환불계속진행
+					} else {
+						System.out.println("카드번호가 일치하지 않습니다");
+						System.out.println("환불신청을 취소합니다");
+						pause();
+						break;
+					}
+				}
+				
+				// 여기서 환불진행
+				
+				// 환불한 프로그램 결제내역을 삭제
+				paymentList.remove(index);
+				
+				
+				// 프로그램수강생.txt 에서 제거 (프로그램코드로 탐색후 지워야함)
+				ArrayList<ProgramStudent> psList = ProgramRegistrationList.loadProgramStudentData(Path.PROGRAMSTUDENT);
+				
+				for(ProgramStudent ps : psList) {
+					if(ps.getCode().equals(program.getCode())) {
+						ps.getUserCodes().remove(this.user.getCode());
+					}
+				}
+				
+				
+				// 결제정보.txt에 저장할 데이터
+				String paymentdata = "";
+				for(ProgramPaymentInfo pinfo : paymentList) {
+					paymentdata += pinfo.getPaymentCode() + ","
+							+ pinfo.getProgramCode() + ","
+							+ pinfo.getUserCode() + ","
+							+ pinfo.getPaymentDate() + ","
+							+ pinfo.getPrice() + ","
+							+ pinfo.getPaymentType() + "\n";
+				}
+				
+				// paymentdata를 결제정보.txt에 다시 저장
+				saveData(paymentdata, Path.PROGRAMPAYMENT, false);
+				
+				
+				
+				
+				// psList를 프로그램수강생.txt에 다시 저장
+				// 저장할 데이터를 만든다
+				String data="";
+				for(ProgramStudent ps : psList) {
+					String userCodedata = "";
+					ArrayList<String> temp = ps.getUserCodes();
+					for(int i=0 ; i < temp.size() ; i++) {
+						userCodedata += temp.get(i);
+						if(i != temp.size() - 1) {
+							userCodedata+="■";
+						}
+					}
+					data += ps.getCode() + "," + ps.getCount() + "," + ps.getState() + "," + userCodedata + "\n";
+				}
+				
+				// this.psList의 data를 프로그램수강생.txt 파일에 저장하는 메서드
+				saveProgramsStudentData(data);
+				
+				
+				// TTTT,AD070199,5474,2020-11-13,200000,1
+				// 프로그램환불.txt에 추가 : refundInfo객체
+				String refundData = refundInfo.getPaymentCode() + ","
+						+ refundInfo.getProgramCode() + ","
+						+ refundInfo.getUserCode() + ","
+						+ refundInfo.getPaymentDate() + ","
+						+ refundInfo.getPrice() + ","
+						+ refundInfo.getPaymentType() + "\n";
+				
+				
+				
+				// refundData를 프로그램환불.txt에 저장
+				saveData(refundData, Path.PROGRAMREFUND, true);
+				
+				System.out.println("환불이 완료되었습니다");
+				pause();
+				break;
+				
+			} else if(num == 2) { // 뒤로가기
+				break;
+			} else {
+				break;
+			}
+		}
+	}
+	
+	// 데이터를 저장하는 메서드
+	private void saveData(String data, String path, Boolean append) {
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(path, append));
+			
+			writer.write(data);
+			
+			writer.close();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("primaryProgramPayment.ensavePaymemtData()");
+			e.printStackTrace();
+		}
+	}
+	
+
+	
+	
 	
 	// Calendar -> String
 	public static String calToStirng(Calendar c) {
@@ -317,14 +484,20 @@ public class ProgramPayment {
 
 		// 사용자에게 번호를 입력받는다
 		Scanner scan = new Scanner(System.in);
-		System.out.println();
 		return Integer.parseInt(scan.nextLine());
+	}
+	
+	private static String selectString() {
+
+		// 사용자에게 번호를 입력받는다
+		Scanner scan = new Scanner(System.in);
+		return scan.nextLine();
 	}
 
 	// 일시정지
 	private static void pause() {
 		Scanner scan = new Scanner(System.in);
-		System.out.println("일시정지");
+		System.out.println("엔터키를 누르면 돌아갑니다.");
 		scan.nextLine();
 		clearPage();
 

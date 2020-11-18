@@ -144,6 +144,7 @@ public class ProgramRegistrationList {
 	
 	// 종료된 프로그램의 정보를 출력한다
 	private void showExitProgram(Program program) {
+		
 		String programName = program.getName();
 		String teacher = program.getTeacher();
 		String classRoom = program.getClassRoom();
@@ -182,40 +183,42 @@ public class ProgramRegistrationList {
 		}
 		
 		// 종료된 프로그램 정보 출력
-		clear();
-		System.out.println("[종료된 프로그램]");
-		System.out.println("프로그램 이름 : " + programName);
-		System.out.println("강사명 : " + teacher);
-		System.out.println("강의실 : " + classRoom);
-		System.out.println("시작일 : " + startDate);
-		System.out.println("종료일 : " + endDate);
-		
-		// □■  출석/수업일수 > 출석률   수업일수/총수업 > 진행률
-		float rate1 = attendanceDays/(float)classDays;
-		float rate2 = classDays/(float)allClassDays;
-		int count = 25;
-		// 출석률
-		System.out.printf("<수업출석률(%d%%)>\n", (int) (rate1 * 100));
-		for (int i = 0; i < count * rate1; i++) {
-			System.out.print("■");
+		while(true) {
+			clear();
+			System.out.println("[종료된 프로그램]");
+			System.out.println("프로그램 이름 : " + programName);
+			System.out.println("강사명 : " + teacher);
+			System.out.println("강의실 : " + classRoom);
+			System.out.println("시작일 : " + startDate);
+			System.out.println("종료일 : " + endDate);
+			
+			// □■  출석/수업일수 > 출석률   수업일수/총수업 > 진행률
+			float rate1 = attendanceDays/(float)classDays;
+			float rate2 = classDays/(float)allClassDays;
+			int count = 25;
+			// 출석률
+			System.out.printf("<수업출석률(%d%%)>\n", (int) (rate1 * 100));
+			for (int i = 0; i < count * rate1; i++) {
+				System.out.print("■");
+			}
+			for (int i = 0; i < count - (count * rate1); i++) {
+				System.out.print("□");
+			}
+			System.out.printf("(%d/%d)\n", attendanceDays, classDays);
+			// 진행률
+			System.out.printf("<수업진행률(%d%%)>\n", (int) (rate2 * 100));
+			for (int i = 0; i < count * rate2; i++) {
+				System.out.print("■");
+			}
+			for (int i = 0; i < count - (count * rate2); i++) {
+				System.out.print("□");
+			}
+			System.out.printf("(%d/%d)\n", classDays, allClassDays);
+			
+			System.out.println();
+			pause();
+			break;
 		}
-		for (int i = 0; i < count - (count * rate1); i++) {
-			System.out.print("□");
-		}
-		System.out.printf("(%d/%d)\n", attendanceDays, classDays);
-		// 진행률
-		System.out.printf("<수업진행률(%d%%)>\n", (int) (rate2 * 100));
-		for (int i = 0; i < count * rate2; i++) {
-			System.out.print("■");
-		}
-		for (int i = 0; i < count - (count * rate2); i++) {
-			System.out.print("□");
-		}
-		System.out.printf("(%d/%d)\n", classDays, allClassDays);
-		
-		System.out.println("1. ㅁㅁㅁㅁ 2. 뒤로가기");
-		System.out.print("번호를 입력하세요 : ");
-		int num = selectNum();
 	}
 
 	// 진행중인 프로그램의 정보를 출력한다
@@ -413,8 +416,6 @@ public class ProgramRegistrationList {
 		}
 	}
 
-	
-
 	/**
 	 *  수업 환불(시작전 프로그램의 코드를 구한다)
 	 * 
@@ -496,8 +497,9 @@ public class ProgramRegistrationList {
 				System.out.print("환불신청을 하려는 프로그램의 번호 : ");
 				int indexNum = selectNum();
 				if(indexNum > 0 && indexNum <=tempList.size()) {
-					// 선택한 번호의 종료된 프로그램 내용 출력
+					// 선택한 번호의 환불하려는 내용 출력
 					showrefundProgram(tempList.get(indexNum-1));
+					break;
 				} else {
 					System.out.println("올바르지 않은 입력");
 					break;
@@ -523,6 +525,8 @@ public class ProgramRegistrationList {
 		String endDate = program.getEndDate();
 		
 		
+		
+		
 		// 환불하려는 프로그램 정보 출력
 		while(true) {
 			clear();
@@ -538,6 +542,10 @@ public class ProgramRegistrationList {
 			int num = selectNum();
 			if(num == 1) {
 				// 환불을 신청하는 메서드
+				this.paymentList = loadProgramPaymentData(Path.PROGRAMPAYMENT);
+				ProgramPayment pp = new ProgramPayment(this.login);
+				pp.programRefund(program, this.paymentList);
+				break;
 			} else if (num == 2) {
 				pause();
 				break;
@@ -572,7 +580,7 @@ public class ProgramRegistrationList {
 	
 	
 	// 프로그램.txt에서 데이터를 읽어온다
-	private ArrayList<Program> loadProgramData(String path) {
+	private static ArrayList<Program> loadProgramData(String path) {
 
 		ArrayList<Program> list = new ArrayList<Program>();
 		File file = new File(path);
@@ -609,7 +617,7 @@ public class ProgramRegistrationList {
 	}
 	
 	// 프로그램수강생.txt에서 데이터를 읽어온다
-	private ArrayList<ProgramStudent> loadProgramStudentData(String path) {
+	public static ArrayList<ProgramStudent> loadProgramStudentData(String path) {
 
 		File file = new File(path);
 
@@ -630,7 +638,10 @@ public class ProgramRegistrationList {
 						userCodes.add(users[i]);
 					}
 
-					list.add(new ProgramStudent(temp[0], Integer.parseInt(temp[1]), temp[2], userCodes));
+					list.add(new ProgramStudent(temp[0]
+									, Integer.parseInt(temp[1])
+									, temp[2]
+									, userCodes));
 				}
 
 				reader.close();
@@ -650,7 +661,7 @@ public class ProgramRegistrationList {
 	}
 
 	// 프로그램상태.txt에서 데이터를 읽어온다
-	public ArrayList<ProgramState> loadProgramStateData(String path) {
+	public static ArrayList<ProgramState> loadProgramStateData(String path) {
 		File file = new File(path);
 
 		if (file.exists()) {
@@ -683,7 +694,7 @@ public class ProgramRegistrationList {
 	}
 	
 	// 프로그램결제.txt에서 데이터를 읽어온다
-	public ArrayList<ProgramPaymentInfo> loadProgramPaymentData(String path) {
+	public static ArrayList<ProgramPaymentInfo> loadProgramPaymentData(String path) {
 		
 		File file = new File(path);
 
@@ -722,7 +733,7 @@ public class ProgramRegistrationList {
 	}	
 	
 	// 프로그램출결.txt에서 데이터를 읽어온다
-	public ArrayList<ProgramAttendance> loadProgramAttendance(String path) {
+	public static ArrayList<ProgramAttendance> loadProgramAttendance(String path) {
 		// HashMap <프로그램코드, 프로그램수강하는 회원번호>
 		HashMap<String, ArrayList<String>> code = new HashMap<String, ArrayList<String>>();
 		
