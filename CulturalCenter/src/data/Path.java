@@ -7,7 +7,7 @@ public class Path {
 	public static final String USERLIST = "src\\data\\회원정보.txt";
 	public static final String DELETEUSERLIST = "src\\data\\회원삭제정보.txt";
 	public static final String EMPLOYEELIST = "src\\data\\직원정보.txt";
-	public static final String EMPLOYEEATTENDANCE = "src\\data\\직원근태정보";
+	public static final String EMPLOYEEATTENDANCE = "src\\data\\직원근태정보.txt";
 	public static final String CLASSROOM = "src\\data\\강의실.txt";
 	public static final String PROGRAMLIST = "src\\data\\프로그램.txt";
 	public static final String PROGRAMSTUDENT = "src\\data\\프로그램수강생.txt";
