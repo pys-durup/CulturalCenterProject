@@ -110,13 +110,13 @@ public class UserInfo {
                   i--;
                } else {
                   System.out.println("\t\t\t더 이상 페이지를 이전으로 넘길 수 없습니다.");
-                  UserManageTemp.pause();
+                  //UserManageTemp.pause();
                }
             } else if (sel.equals("2")) {   //다음 페이지로 가기
                //현재 페이지가 마지막 페이지일 경우 다음장으로 불가능, 아닐경우 가능
                if (i>=uList.size()/100+1) {
                   System.out.println("\t\t\t더 이상 페이지를 다음으로 넘길 수 없습니다.");
-                  UserManageTemp.pause();
+                  //UserManageTemp.pause();
                } else {
                   i++;
                }
@@ -148,7 +148,7 @@ public class UserInfo {
                
                if (i>uList.size()/100 + 1 && i<0) {
                   System.out.println("\t\t\t없는 페이지입니다.");
-                  UserManageTemp.pause();
+                  //UserManageTemp.pause();
                } else {
                   if (Integer.parseInt(pageN)>uList.size() || Integer.parseInt(pageN)<0) {
                      System.out.println("없다");

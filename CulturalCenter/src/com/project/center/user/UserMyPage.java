@@ -84,7 +84,7 @@ public class UserMyPage {
 			
 		//그 외에 다른걸 누른다면 다시 회원 정보 조회 화면 보여주기	
 		} else {
-			System.out.println("잘못된 번호입니다. 다시 입력해주십시오.");
+			System.out.println("잘못된 입력입니다. 다시 입력해주십시오.");
 			selectUser(login);
 		}
 	}
