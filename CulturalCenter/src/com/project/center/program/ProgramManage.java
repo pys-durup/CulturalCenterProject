@@ -24,8 +24,9 @@ public class ProgramManage {
 		this.pList = loadProgramData(Path.PROGRAMLIST);
 		this.psList = loadPsData(Path.PROGRAMSTUDENT);
 		this.pshowList = new ArrayList<ProgramList>();
+		this.user = null;
 		// 테스트용 유저 객체
-		this.user = new User("50001", "박영수", "1993-08-17","tteesstt", "tteesstt",  "1", "01077743635",  "1" , "주소");
+		//this.user = new User("50001", "박영수", "1993-08-17","tteesstt", "tteesstt",  "1", "01077743635",  "1" , "주소");
 		//String code, String name, String birth, String id, String pw, String gender, String tel, String group, String address)
 	}
 
@@ -35,8 +36,8 @@ public class ProgramManage {
 	 *  프로그램 신청이 진행되는 메서드
 	 * 
 	 */
-	public void createApplyProgram() {
-	
+	public void createApplyProgram(User user) {
+		this.user = user;
 		while(true) {
 			// 프로그램 신청 메뉴
 			showMenu();
@@ -52,7 +53,6 @@ public class ProgramManage {
 				break;
 			} else if(num == 2) { // 연령별 목록
 				showAgeResult();
-				pause(); 
 			} else if(num == 3) { // 테마별 목록
 				System.out.println("테마별");
 				showThemeResult();
@@ -168,10 +168,10 @@ public class ProgramManage {
 			int size = this.pshowList.size();
 			System.out.println("프로그램의 개수 : " + size);
 			
-			System.out.println("[번호]  [프로그램 이름]\t\t\t[강사명]    [강의실]    [시작 날짜]\t[종료 날짜]\t[정원]\t  [현재상태]\t[가격]");
+			System.out.println("[번호]  [프로그램 이름]\t\t\t\t [강사명]     [강의실]    [시작 날짜]\t[종료 날짜]\t [정원]   j [현재상태] [가격]");
 			for(int i=startIndex ; i<=endIndex ; i++) {
 				//  [프로그램 이름]   [강사명]    [강의실]     [시작 날짜]   [종료 날짜]   [정원]   [현재상태]     [가격]
-				System.out.printf("%3d\t%-20s\t%5s\t%s\t%s\t%s\t(%d/%d)\t    %s\t %,d원\n"
+				System.out.printf("%3d\t%-25s\t%5s\t%s\t   %s\t%s\t(%d/%d)\t    %s\t %,d원\n"
 						, index
 						, this.pshowList.get(i-1).getName()
 						, this.pshowList.get(i-1).getTeacher()
