@@ -47,7 +47,7 @@ public class ProgramManage {
 			int num = selectNum();
 			
 			if(num == 1) { // 검색어로 찾기
-				System.out.println("검색어를 입력하세요 : ");
+				System.out.print("검색어를 입력하세요 : ");
 				String text = getSearchString();
 				showSearchList(text);
 				break;
@@ -75,12 +75,14 @@ public class ProgramManage {
 	 * 
 	 */
 	private void showMenu() {
-		
+		clear();
+		System.out.println("[프로그램 신청]");
 		System.out.println("1. 검색어로 찾기");
 		System.out.println("2. 연령별 추천 목록");
 		System.out.println("3. 테마별 추천 목록");
 		System.out.println("4. 월별 선택");
 		System.out.println("5. 뒤로가기");
+		System.out.println();
 	}
 	
 	
@@ -119,7 +121,7 @@ public class ProgramManage {
 	}
 	
 	/**
-	 * 	검색 결과를 출력하는 메서드 
+	 * 	검색 결과를 담아두는 메서드
 	 *  @param list : 검색어로 검색한 프로그램을 담아둔 ArrayList
 	 *  @param text : 검색한 검색어
 	 */
@@ -148,7 +150,7 @@ public class ProgramManage {
 	}
 	
 	/**
-	 * 	프로그램 신청 설정하는 메서드
+	 * 	프로그램 리스트 출력 & 프로그램 신청 설정하는 메서드
 	 *  @param list : 출력할 리스트
 	 *  
 	 */
@@ -166,6 +168,7 @@ public class ProgramManage {
 		while(true) {
 			
 			int size = this.pshowList.size();
+			clear();
 			System.out.println("프로그램의 개수 : " + size);
 			
 			System.out.println("[번호]  [프로그램 이름]\t\t\t\t [강사명]     [강의실]    [시작 날짜]\t[종료 날짜]\t [정원]   j [현재상태] [가격]");
@@ -184,21 +187,22 @@ public class ProgramManage {
 					index ++;					
 			}
 
-			// 여기서부터 작업 시작 
-			System.out.println("현재 index -> " + index);
-			System.out.println("현재 startIndex -> " + startIndex);
-			System.out.println("현재 endIndex -> " + endIndex);
+			// 중간점검
+//			System.out.println("현재 index -> " + index);
+//			System.out.println("현재 startIndex -> " + startIndex);
+//			System.out.println("현재 endIndex -> " + endIndex);
 			
 			// 검색 개수에 따라서 개수 조절
+			System.out.println();
 			if(this.pshowList.size() < 10) {
 				System.out.println("1. 프로그램 신청하기\t 4. 뒤로가기");
 			} else {
-				System.out.println("1. 프로그램 신청하기\t 2. 이전 목록 3. 다음 목록 4. 뒤로가기");
+				System.out.println("1. 프로그램 신청하기 2. 이전 목록 3. 다음 목록 4. 뒤로가기");
 			}
 			
 			System.out.print("번호를 입력하세요 : ");
 			int num = selectNum();
-			System.out.println("pshowList size : " + pshowList.size());
+//			System.out.println("pshowList size : " + pshowList.size());
 			
 			if(num == 1) { // 1. 프로그램 신청하기
 				System.out.print("신청할 프로그램의 번호 입력 : ");
@@ -313,7 +317,7 @@ public class ProgramManage {
 
 		 */
 		while(true) {
-			
+			clear();
 			System.out.println("[선택한 프로그램의 상세정보]");
 			System.out.printf("프로그램 이름 : %s\n", program.getName());
 			System.out.printf("강사명 : %s\n",program.getTeacher());
@@ -323,7 +327,8 @@ public class ProgramManage {
 			System.out.printf("정원 : %d/%d\n", program.getCount() , program.getCapacity());
 			System.out.printf("가격 : %,d원\n",program.getPrice());
 			System.out.println();
-			System.out.println("1.프로그램 결제하기  2.뒤로가기");
+			System.out.println("1.프로그램 결제하기  2.취소하기");
+			System.out.print("번호를 입력하세요 : ");
 			int num = selectNum();
 			
 			if(num == 1) {
@@ -449,8 +454,6 @@ public class ProgramManage {
 	
 			} else {
 				// 뒤로가기
-				System.out.println("뒤로가기");
-				pause();
 				break;
 			}
 		}
@@ -462,12 +465,13 @@ public class ProgramManage {
 	 *  
 	 */
 	private String getTheme() {
-		System.out.println("[테마를 선택하세요]");
-		System.out.println("1. 요리/t2. 스포츠");
-		System.out.println("3. 언어/t4. 건강");
-		System.out.println("5. 원예/t6. 미술");
-		System.out.println("7. 댄스/t8. 악기");
-		System.out.println("9. 컴퓨터/t0. 뒤로가기");
+		clear();
+		System.out.println("    [테마를 선택하세요]");
+		System.out.println("1. 요리\t\t2. 스포츠");
+		System.out.println("3. 언어\t\t4. 건강");
+		System.out.println("5. 원예\t\t6. 미술");
+		System.out.println("7. 댄스\t\t8. 악기");
+		System.out.println("9. 컴퓨터\t0. 뒤로가기");
 		
 		System.out.println();
 		System.out.print("테마 번호를 선택하세요 :");
@@ -583,7 +587,6 @@ public class ProgramManage {
 		
 		// 사용자에게 번호를 입력받는다
 		Scanner scan = new Scanner(System.in);
-		System.out.println();
 		return Integer.parseInt(scan.nextLine());
 	}
 	
@@ -683,6 +686,12 @@ public class ProgramManage {
 		} else {
 			System.out.println("파일이 존재하지 않음");
 			return null;
+		}
+	}
+	
+	private void clear() {
+		for(int i=0 ; i<40 ; i++) {
+			System.out.println();
 		}
 	}
 

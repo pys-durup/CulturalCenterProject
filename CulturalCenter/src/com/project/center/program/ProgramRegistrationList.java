@@ -216,7 +216,6 @@ public class ProgramRegistrationList {
 			System.out.printf("(%d/%d)\n", classDays, allClassDays);
 			
 			System.out.println();
-			pause();
 			break;
 		}
 	}
@@ -355,7 +354,6 @@ public class ProgramRegistrationList {
 			return null;
 		} else {
 //			System.out.println("결제내역이 존재하지 않음");
-			pause();
 			return null;
 		}
 	}
@@ -411,7 +409,6 @@ public class ProgramRegistrationList {
 			
 		} else {
 			System.out.println("결제내역이 존재하지 않음");
-			pause();
 			return null;
 		}
 	}
@@ -428,7 +425,7 @@ public class ProgramRegistrationList {
 
 		// 결제 내역에 내가 구매한 프로그램이 있는지?
 		ArrayList<String> myPayment = havePaymentHistory();
-		System.out.println("구매했던 프로그램 들" + myPayment);
+//		System.out.println("구매했던 프로그램 들" + myPayment);
 		
 		if (myPayment.size() > 0) { // 결제내역 존재하면
 			for (String code : myPayment) {
@@ -450,7 +447,6 @@ public class ProgramRegistrationList {
 			
 		} else {
 			System.out.println("결제내역이 존재하지 않음");
-			pause();
 			return null;
 		}
 	}
