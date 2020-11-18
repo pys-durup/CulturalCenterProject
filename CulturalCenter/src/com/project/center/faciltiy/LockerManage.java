@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 
 import com.project.center.user.User;
 
@@ -26,9 +27,9 @@ public class LockerManage {
 		
 	public static void main(String[] args) throws IOException {
 		
-		readLocker();
+		//readLocker();
 		//printLocker();
-		//rocker();
+		rocker();
 		
 		
 	}//main(임시)
@@ -61,37 +62,48 @@ public class LockerManage {
 						, ltemp[1] // 회원번호
 						, ltemp[2] // 시작일
 						, ltemp[3])); // 끝일
-
-				while ((line = userReader.readLine()) != null) {
-
-					String[] utemp = line.split(","); // 회원정보 임시 배열
-
-					u.add(new User(utemp[0] // 회원번호
-							, utemp[1])); // 회원이름
-
-					//System.out.println(ltemp[1]);
-					//System.out.println(utemp[0]);
-
-					if (ltemp[1].equals(utemp[0])) {
-
-						System.out.printf("(%3s)", ltemp[0]);
-						System.out.printf("%3s\t", utemp[1]);
-						break;
-					}
-
-				}
 				
-				//String lock = ltemp[0];
-
-				b++;
-
-				if (b % 10 == 0) // 10으로 나누어 떨어지면 개행
-				{
-					System.out.println();
-					System.out.println();
-				}
-
 			}
+			
+			while ((line = userReader.readLine()) != null) {
+				
+				String[] utemp = line.split(","); // 회원정보 임시 배열
+				
+				u.add(new User(utemp[0] // 회원번호
+							, utemp[1])); // 회원이름
+				
+			}
+			
+			
+			Calendar c = Calendar.getInstance();
+			String present = String.format("%tF", c);
+			
+			for (int i=0; i<l.size(); i++) {
+				
+				for (int j=0; j<u.size(); j++) {
+					
+					if (l.get(i).getUserCode().equals(u.get(j).getCode())) {
+
+						System.out.printf("[%3s]", l.get(i).getLockerNum());
+						b++;
+
+						if (present.compareTo(l.get(i).getStartDate())>0 
+								&& present.compareTo(l.get(i).getEndDate())<0) {
+							
+							System.out.printf("%s\t", u.get(j).getName());
+						} else {
+							System.out.print("  □\t");
+						}
+	
+	
+						if (b % 10 == 0) {// 10으로 나누어 떨어지면 개행
+							System.out.println();
+							System.out.println();
+						}
+					}
+				}
+			}
+			
 			
 			
 
@@ -177,7 +189,7 @@ public class LockerManage {
 					}
 					
 					
-					System.out.println(l.get(0).getUserCode());
+					//System.out.println(l.get(0).getUserCode());
 //					
 //					//Arraylist 담은 객체 출력
 //					for (int i=0; i<l.size(); i++) {
