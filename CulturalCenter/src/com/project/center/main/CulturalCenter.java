@@ -56,6 +56,7 @@ public class CulturalCenter {
 			
 			System.out.println("프로그램 진행 . . . .");
 			System.out.println("사용자 : " + login.getName());
+			System.out.println("아이디 : " + login.getId());
 			
 			
 			while (true) {

@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Scanner;
 
-import com.project.center.main.CulturalCenter;
-
 import data.Path;
 
 public class UserLogin {
@@ -39,7 +37,7 @@ public class UserLogin {
 			//관리자 로그인
 			while((line = manageList.readLine()) != null) {
 				String[] list = line.split(",");
-				if (id.equals("master") && pw.equals("imtheboss123")) {
+				if (id.equals(list[0]) && pw.equals(list[1])) {
 					manage = new User(list[0], list[1]);
 					manage.setType(3);
 					manageList.close();
@@ -52,7 +50,7 @@ public class UserLogin {
 			//직원 로그인
 			while((line = employeeList.readLine()) != null) {
 				String[] list = line.split(",");
-				if (id.equals("?????") && pw.equals("?????")) {
+				if (id.equals(list[0]) && pw.equals(list[1])) {
 					employee = new User(list[0], list[1]);
 					employee.setType(2);
 					manageList.close();
