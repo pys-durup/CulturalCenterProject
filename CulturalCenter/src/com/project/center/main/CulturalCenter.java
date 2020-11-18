@@ -82,11 +82,11 @@ public class CulturalCenter {
 					} else if (Num == 2) {
 						System.out.println("프로그램 신청");
 						ProgramManage pm = new ProgramManage();
-						pm.createApplyProgram(user);
+						pm.createApplyProgram(login);
 						
 					} else if (Num == 3) {
 						System.out.println("프로그램 등록현황");
-						ProgramRegistrationList pr = new ProgramRegistrationList(user);
+						ProgramRegistrationList pr = new ProgramRegistrationList(login);
 						pr.createProgramRegistorList();
 
 						
