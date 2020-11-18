@@ -17,18 +17,6 @@ public class EmployeeAttendanceManage {
 	private boolean check = false;
 	EmployeeAttendance employee = new EmployeeAttendance();
 	
-	private void mainToByFailure() {
-		Scanner scan = new Scanner(System.in);
-		System.out.println("\t\t\t*** 경고 ***\t\t");
-		System.out.println("\t잘못된 정보를"
-						+ " 입력했습니다!");
-		System.out.println("\t  엔터를 눌러 메인화면으로"
-						+ " 이동해주세요.");
-		System.out.println("\t\t\t*** 경고 ***\t\t");
-		System.out.println();
-		scan.nextLine();
-	}
-	
 	public void viewEmployeeAttendance(User login) {
 		
 		employee.setCode(login.getId());
@@ -58,16 +46,13 @@ public class EmployeeAttendanceManage {
 			updateEmployeeAttendance();
 			break;
 		case "3":
-			mainTo();
+			System.out.println("근태 기록을 종료합니다.");
 			break;
 		default:
 			System.out.println("근태 기록을 종료합니다.");
 			break;
 		}
 		
-	}
-
-	private void mainTo() {
 	}
 
 	private void setEmployeeAttendanceByClockIn() {
