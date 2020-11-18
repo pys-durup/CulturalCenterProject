@@ -17,8 +17,8 @@ public class EmployeeAttendance {
 	public EmployeeAttendance() {
 		this.code = null;
 		this.name = null;
-		this.date = "9999-99-99";
-		this.commuteTime = "99:99";
+		this.date = null;
+		this.commuteTime = null;
 		this.workingTime = "99:99";
 		this.attendance = "결근";
 	}
@@ -75,7 +75,7 @@ public class EmployeeAttendance {
 		
 		try {
 
-			BufferedWriter writer = new BufferedWriter(new FileWriter(Path.EMPLOYEELIST, true));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(Path.EMPLOYEEATTENDANCE, true));
 			
 			writer.newLine();
 			writer.write(String.format("%s,%s,%s,%s,%s,%s"

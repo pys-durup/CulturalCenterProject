@@ -28,10 +28,10 @@ public class ProgramManage {
 		// 테스트용 유저 객체
 		//this.user = new User("50001", "박영수", "1993-08-17","tteesstt", "tteesstt",  "1", "01077743635",  "1" , "주소");
 		//String code, String name, String birth, String id, String pw, String gender, String tel, String group, String address)
-
 	}
 
 
+	
 	/**
 	 *  프로그램 신청이 진행되는 메서드
 	 * 

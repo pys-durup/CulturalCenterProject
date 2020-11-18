@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -61,6 +62,7 @@ public class EmployeeManage {
 	
 	public void viewEmployeeManage() {
 		
+		boolean toMain = false;
 		while (check) {
 			
 			System.out.println("============================[직원 관리]===========================");
@@ -86,9 +88,13 @@ public class EmployeeManage {
 					break;
 				default:
 					System.out.println("직원 관리를 종료합니다.");
+					toMain = true;
 					break;
 			}
-			
+
+			if (toMain) {
+				break;
+			}
 			
 		}
 		
@@ -200,14 +206,14 @@ public class EmployeeManage {
 			recruit.setEmployeeIntoData();
 			
 			System.out.printf("\t%s %s의 등록을 완료하였습니다.\n", resultName, inputPosition);
-			System.out.println("\t엔터를 누르시면, 메인 메뉴로 돌아갑니다.");
+			System.out.println("\t엔터를 누르시면, 관리 메뉴로 돌아갑니다.");
 			scan.nextLine();
 			
 		} else {
 			System.out.println();
 			System.out.println("\t\t\t*** 경고 ***\t\t");
 			System.out.println("\t  올바르지 않은 직원 정보를 입력하셨습니다!");
-			System.out.println("\t   엔터를 눌러 메인화면으로 이동해주세요.");
+			System.out.println("\t   엔터를 눌러 관리 화면으로 이동해주세요.");
 			System.out.println("\t\t\t*** 경고 ***\t\t");
 			scan.nextLine();
 		}
@@ -274,7 +280,7 @@ public class EmployeeManage {
 			
 			System.out.println("=========================[직원 조회 완료]=========================");
 			System.out.println();
-			System.out.println("\t\t엔터를 누르시면 메인 메뉴로 돌아갑니다.");
+			System.out.println("\t\t엔터를 누르시면 관리 메뉴로 돌아갑니다.");
 			System.out.println();
 			scan.nextLine();
 
@@ -425,7 +431,7 @@ public class EmployeeManage {
 					} else if(menuInput.equals("1")) {
 						loop = true;
 					} else {
-						System.out.println("잘못된 메뉴 입력입니다! 엔터를 누르면 메인 메뉴로 돌아갑니다.");
+						System.out.println("잘못된 메뉴 입력입니다! 엔터를 누르면 관리 메뉴로 돌아갑니다.");
 						scan.nextLine();
 						loop = false;
 					}
@@ -440,7 +446,7 @@ public class EmployeeManage {
 					
 					System.out.printf("해당 직원의 정보 수정이 완료되었습니다.");
 					System.out.println();
-					System.out.println("엔터를 누르시면 메인 메뉴로 돌아갑니다.");
+					System.out.println("엔터를 누르시면 관리 메뉴로 돌아갑니다.");
 					writer.close();
 					loop = false;
 					scan.nextLine();
@@ -460,4 +466,158 @@ public class EmployeeManage {
 	
 	
 	
+	public void findEmployeeAttendanceList() {
+
+		Scanner scan = new Scanner(System.in);
+		boolean loop = true;
+		while (loop) {
+
+			System.out.println("============================[근태 조회]===========================");
+			System.out.println("관리자님, 반갑습니다.");
+			System.out.println("근태 상황을 조회할 직원의 사원코드를 입력해주세요.");
+			System.out.println();
+			System.out.println("아무것도 입력하지 않으시고 엔터를 입력하시면 메인메뉴로 돌아갑니다.");
+			System.out.println();
+			System.out.print("사원 코드 입력 :");
+			String inputCode = scan.nextLine();
+			System.out.println();
+
+			try {
+
+				BufferedReader reader = new BufferedReader(new FileReader(Path.EMPLOYEEATTENDANCE));
+
+				String line = null;
+				String[] list = new String[6];
+				boolean failureCheck = true;
+
+				while ((line = reader.readLine()) != null) {
+					list = line.split(",");
+					if (inputCode.equals(list[0])) {
+						viewEmployeeAttendanceList(inputCode);
+
+						failureCheck = false;
+						loop = false;
+						break;
+					}
+				}
+
+				if (failureCheck) {
+					System.out.println("잘못된 사원코드를 입력하셨습니다!");
+					System.out.println("엔터를 누르시면, 메인 메뉴로 돌아갑니다.");
+					loop = false;
+					scan.nextLine();
+				}
+
+				reader.close();
+
+			} catch (Exception e) {
+				System.out.println("EmployeeAttendanceManage.findEmployeeAttendanceList()");
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+	private void viewEmployeeAttendanceList(String inputCode) {
+
+		Scanner scan = new Scanner(System.in);
+		boolean loop = true;
+
+		try {
+
+			ArrayList<String[]> attendanceBoard = new ArrayList<String[]>();
+
+			BufferedReader reader2 = new BufferedReader(new FileReader(Path.EMPLOYEEATTENDANCE));
+
+			String line = null;
+			String[] list = new String[6];
+			int m = 0;
+
+			while ((line = reader2.readLine()) != null) {
+				list = line.split(",");
+				if (inputCode.equals(list[0])) {
+					attendanceBoard.add(list);
+				}
+			}
+
+			int pageMove = 0;
+
+			for(int pageIndex = 0; pageIndex<attendanceBoard.size() / 20 + 1; pageIndex+=pageMove) {
+
+				System.out.println("[사원코드]====[직원이름]====[출근일자]====[근무시간]====[근태상황]");
+
+				for(int i=pageIndex * 20; i<20 + pageIndex * 20; i++) {
+
+					if (i == attendanceBoard.size()) {
+						break;
+					}
+
+					System.out.printf("%s       %s       %s        %s         %s\n"
+										,attendanceBoard.get(i)[0]
+										,attendanceBoard.get(i)[1]
+										,attendanceBoard.get(i)[2]
+										,attendanceBoard.get(i)[4]
+										,attendanceBoard.get(i)[5]
+										);
+
+				}
+				System.out.println();
+				System.out.printf("\t\t\t- %d 페이지 -", pageIndex + 1);
+				System.out.println();
+				System.out.println("1. 다음 페이지");
+				System.out.println("2. 이전 페이지");
+				System.out.println("3. 메인 메뉴로 돌아가기");
+				System.out.print("메뉴 입력 :");
+				switch (scan.nextLine()) {
+
+					case "1"
+					: if (pageIndex == (attendanceBoard.size() / 20)) {
+						System.out.println("현재 페이지가 마지막 페이지 입니다.");
+						System.out.println("엔터를 누르시고 메뉴를 다시 입력해주세요.");
+						pageMove = 0;
+						scan.nextLine();
+						break;
+					} else {
+						pageMove = 1;
+						break;
+					}
+
+					case "2"
+					: if (pageIndex <= 0) {
+						System.out.println("현재 페이지가 첫 페이지 입니다.");
+						System.out.println("엔터를 누르시고 메뉴를 다시 입력해주세요.");
+
+						pageMove = 0;
+						scan.nextLine();
+						break;
+					} else {
+						pageMove = -1;
+						break;
+					}
+
+					default
+					: loop = false;
+					System.out.println("메인 메뉴로 돌아갑니다.");
+					break;
+				};
+
+				if (loop) {
+					
+				} else {
+					break;
+				}
+				
+			}
+
+			reader2.close();
+
+		} catch (Exception e) {
+			System.out.println("EmployeeAttendanceManage.viewEmployeeAttendanceList()");
+			e.printStackTrace();
+		}
+		
+	}
+	
 }
+

@@ -2,6 +2,12 @@ package com.project.center.main;
 
 import java.util.Scanner;
 
+
+import com.project.center.user.UserMyPage;
+import com.project.center.user.User;
+import com.project.center.employee.EmployeeAttendance;
+import com.project.center.employee.EmployeeAttendanceManage;
+import com.project.center.employee.EmployeeManage;
 import com.project.center.program.ProgramManage;
 import com.project.center.program.ProgramRegistrationList;
 import com.project.center.user.User;
@@ -12,12 +18,13 @@ public class CulturalCenter {
 	
 	public static void main(String[] args) {
 		
-		// 프로그램 기능 테스트용 객체
-		User user = new User("7948", "박영수", "1993-08-17","tteesstt", "tteesstt",  "1", "01077743635",  "1" , "주소");
 		// 유저, 직원, 관리자
+		User login = null;
+		EmployeeAttendanceManage employee = new EmployeeAttendanceManage();
+		EmployeeManage administer = new EmployeeManage();
 		
 		while(true)	{
-			int userType = 1; // 1 = 회원 2 = 직원 3 = 관리자
+			// 1 = 회원 2 = 직원 3 = 관리자
 			int Num;
 			
 			// 메인화면 1. 로그인 2.회원가입	3.종료
@@ -28,7 +35,7 @@ public class CulturalCenter {
 			
 			if(Num == 1) { // 로그인
 				System.out.println("로그인 선택");
-				UserLogin.checkUser();
+				login = UserLogin.checkUser();
 				// 로그인처리 메서드
 				// public void isLogin()? 로그인처리?
 				// public void createAccount(){} 로그인 성공하면?
@@ -55,19 +62,22 @@ public class CulturalCenter {
 			}
 			
 			System.out.println("프로그램 진행 . . . .");
+			System.out.println("사용자 : " + login.getName());
+			System.out.println("아이디 : " + login.getId());
 			
 			
 			while (true) {
 				
 				
 				// 1. 회원일때 2. 직원일때 3. 관리자 일때
-				if(userType == 1) {
+				if(login.getType() == 1) {
 					// 회원에게 보여질 메뉴 출력
 					showUserMain();
 					Num = selectNum();
 					
 					if(Num == 1) {
 						System.out.println("회원정보 조회");
+						UserMyPage.showMyPage(login);
 						
 					} else if (Num == 2) {
 						System.out.println("프로그램 신청");
@@ -101,10 +111,50 @@ public class CulturalCenter {
 						pause();
 					}
 					
-				} else if(userType == 2) {
+				} else if(login.getType() == 2) {
+
 					// 직원에게 보여질 메뉴 출력
-				} else if(userType == 3) {
-					// 관리자이게 보여질 메뉴 출력
+					employee.viewEmployeeAttendance(login);
+					break;
+				} else if(login.getType() == 3) {
+					// 관리자에게 보여질 메뉴 출력
+					//		System.out.println("1. 직원 등록\t2. 직원 수정");
+					//System.out.println("3. 직원 조회\t4. 직원 근태 조회");
+					showManageMain();
+					Num = selectNum();
+					if(Num == 1) {
+						System.out.println("직원 등록 관리");
+						administer.checkEmployeeManage();
+						administer.viewEmployeeManage();
+						
+					} else if (Num == 2) {
+						System.out.println("직원 근태 조회");
+						administer.findEmployeeAttendanceList();
+						
+					} else if (Num == 3) {
+						System.out.println("직원 조회");
+						
+					} else if (Num == 4) {
+						System.out.println("직원 근태 조회");
+						
+					} else if (Num == 5) {
+						System.out.println("시설예약");
+						
+					} else if (Num == 6) {
+						System.out.println("마일리지");
+						
+					} else if (Num == 7) {
+						System.out.println("진행중 이벤트");
+						
+					} else if (Num == 8) {
+						System.out.println("공지사항");
+						
+					} else if (Num == 9) {
+						System.out.println("로그아웃");
+						break;
+					} else {
+						pause();
+					}
 				}
 			}
 		}
@@ -121,7 +171,12 @@ public class CulturalCenter {
 		Scanner scan = new Scanner(System.in);
 		System.out.println();
 		System.out.print("번호를 선택하세요 : ");
-		return Integer.parseInt(scan.nextLine());
+		int input = Integer.parseInt(scan.nextLine());
+		if (input>0) {
+			return input;
+		} else {
+			return 0;
+		}
 		
 	}
 	
@@ -173,12 +228,17 @@ public class CulturalCenter {
 	
 	// 직원 회원의 메뉴를 출력하는 메서드
 	public static void showEmployeeMain() {
-		
+		System.out.println("직원 로그인");
 	}
 	
 	// 직원 회원의 메뉴를 출력하는 메서드
 	public static void showManageMain() {
-		
+		System.out.println();
+		System.out.println("1. 직원 등록 관리\t2. 직원 근태 조회");
+		System.out.println("3. ㅁㅁㅁㅁ\t4. ㅁㅁㅁㅁ");
+		System.out.println("5. ㅁㅁㅁㅁ\t\t6. ㅁㅁㅁㅁ");
+		System.out.println("7. ㅁㅁㅁㅁ\t8. ㅁㅁㅁㅁ");
+		System.out.println("9. 로그아웃");
 	}
 
 } // class 

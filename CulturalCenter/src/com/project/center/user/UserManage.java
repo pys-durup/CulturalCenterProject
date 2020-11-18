@@ -17,7 +17,6 @@ public class UserManage {
 	static boolean mainFlag = true;
 	
 	public static void main(String[] args) {
-
 	
 		while(mainFlag)	{
 			
@@ -26,36 +25,33 @@ public class UserManage {
 			// 사용자가 입력한 숫자를 받아온다
 			int Num = selectNum(); 
 			
-			
 			if(Num == 1) {
 				//System.out.println("\t1. 회원 목록 조회");
 				getUserInfo();
 				viewUserList();
-				break;
+				//break;
 				
 			} else if(Num == 2) { 
-				System.out.println("\t2. 회원 정보 검색");
-				//UserSelect()
-				break;
+				//System.out.println("\t2. 회원 정보 검색");
+				updateUser();
+				//break;
 				
 			} else if(Num == 3) { 
-				System.out.println("\t3. 회원 정보 수정");
-				//UserUpdate()
-				break;
+				//System.out.println("\t3. 회원 정보 수정");
+				changeUserInfo();
+				//break;
 				
 			} else if(Num == 4) { 
 				//System.out.println("\t4. 회원 정보 삭제");
 				deleteUser();
-				//UserDelete()
-				break;
+				//break;
 				
 			} else {
 				pause();
-				
+				break;
 			}
 			
 		}
-		
 		
 		System.out.println("프로그램 진행 . . . .");
 	
@@ -93,7 +89,7 @@ public class UserManage {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("\n 엔터키를 누르면 이전화면으로 돌아갑니다...");
 		scan.nextLine();
-		for(int i=0 ; i<10 ; i++) {
+		for(int i=0 ; i<5 ; i++) {
 			System.out.println();
 		}
 		
@@ -106,8 +102,6 @@ public class UserManage {
 	//회원정보를 회원정보.txt에서 읽어오는 메서드
 	private static void getUserInfo() {
 	
-		
-		//Scanner scan = new Scanner(System.in);
 		uList.clear();
 		
 		try {
@@ -138,7 +132,6 @@ public class UserManage {
 			}
 
 			reader.close();
-			
 			
 		} catch (Exception e) {
 			System.out.println("UserInfo.getUserInfo()");
@@ -235,7 +228,7 @@ public class UserManage {
 					}
 					
 				} else if (sel.equals("4")) {	//뒤로가기
-					pause();
+					//pause();
 					break;
 				}
 				
@@ -244,6 +237,210 @@ public class UserManage {
 		
 	}//UserList()
 	
+	
+	
+	//TODO 아래 회원 정보 수정 메서드 2개짜리 여기에 통합해보기
+	private static void changingInfo() {
+		
+		try {
+
+			Scanner scan = new Scanner(System.in);
+			getUserInfo();	//회원정보를 읽어오는 메서드
+			
+		} catch (Exception e) {
+			System.out.println("UserManage.changingInfo()");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
+	
+	//회원 정보를 수정하는 메서드
+	private static void changeUserInfo() {
+
+		try {
+
+			boolean flag = true;
+			Scanner scan = new Scanner(System.in);
+			getUserInfo();	//회원정보를 읽어오는 메서드
+			
+			while (flag) {
+				
+				System.out.print("수정하고 싶은 회원의 회원번호를 입력해주세요. : ");
+				String userCode = scan.nextLine();
+				
+				for (User u : uList) {
+					if (u.getCode().equals(userCode)) {
+						updateUser(userCode);
+						flag = false;
+						break;
+					} 
+				}
+			
+		}
+		
+		
+		} catch (Exception e) {
+			System.out.println("UserManage.changeUserInfo()");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	//회원 정보를 수정하는 메서드 - (하위)
+	private static void updateUser(String userCode) {
+		
+		try {
+		
+			Scanner scan = new Scanner(System.in);
+			
+			boolean flag = true;
+			//String num = "";
+			String changedInfo = "";
+			
+			System.out.println("\n\n");
+			System.out.println(
+					"-------------------------------------------------------------------------------");
+			System.out.println("\t\t\t\t회원 정보 수정");
+			System.out.println(
+					"-------------------------------------------------------------------------------");
+			
+			getUserInfo();	//회원정보를 읽어오는 메서드
+
+			while (flag) {
+
+				for (User u : uList) {
+
+					if (u.getCode().equals(userCode)) {
+
+
+						System.out.println(" [번호] [회원명] [생년월일]\t[아이디]\t [비밀번호] [성별]\t[전화번호]\t  [계층]\t   [주소]");
+						System.out.printf("%5s %4s %s %s %s %s %s %3s\t%s\r\n"
+											, u.getCode()
+											, u.getName()
+											, u.getBirth()
+											, u.getId()
+											, u.getPw()
+											, u.getGender()
+											, u.getTel()
+											, u.getGroup()
+											, u.getAddress());
+
+						System.out.println(
+								"-------------------------------------------------------------------------------");
+
+						// 관리자는 회원들의 계층(차상위,기초생활수급)정보와 비밀번호만 수정이 가능하다.
+						// 나머지 정보는 회원 본인이 스스로 수정이 가능함
+						System.out.println("\n\n1.계층\t2.비밀번호");
+						System.out.print("수정하실 정보의 번호를 입력하세요. 종료는 0번을 누르세요. : ");
+						String num = scan.nextLine();
+
+						if (num.equals("0")) {
+							//saveDeleteUser();
+							flag = false;
+							break;
+
+						} else if (num.equals("1") || num.equals("2")) {
+
+							System.out.println("수정할 내용을 입력하세요 : ");
+							changedInfo = scan.nextLine();
+							
+							//1 : 계층 정보 수정, 2 : 비밀번호 정보 수정
+							if (num.equals("1"))
+								u.setGroup(changedInfo);
+							if (num.equals("2"))
+								u.setPw(changedInfo);
+
+						} else {
+							System.out.println("잘못된 번호입니다.");
+							//flag = false;
+							break;
+						}
+					}
+				}
+				pause();
+			}
+
+		} catch (Exception e) {
+			System.out.println("UserManage.updateUser()");
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	private static void updateUser() {
+		
+		try {
+
+			Scanner scan = new Scanner(System.in);
+			
+			boolean flag = false;
+			
+			System.out.println("\n\n");
+			System.out.println("-------------------------------------------------------------------------------");
+			System.out.println("                                     회원 검색");
+			System.out.println("-------------------------------------------------------------------------------");
+			
+			System.out.print("\n검색할 회원의 회원번호를 입력하세요. : ");
+			String userCode = scan.nextLine();
+			
+			getUserInfo();	//회원정보를 읽어오는 메서드
+			
+			
+			for (User u : uList) {
+				//userCode에 해당하는 u배열 출력
+				if (u.getCode().equals(userCode)) {
+					System.out.println(" [번호] [회원명] [생년월일]\t[아이디]\t [비밀번호] [성별]\t[전화번호]\t  [계층]\t   [주소]");
+					System.out.printf("%5s %4s %s %s %s %s %s %3s\t%s\r\n"
+										, u.getCode()
+										, u.getName()
+										, u.getBirth()
+										, u.getId()
+										, u.getPw()
+										, u.getGender()
+										, u.getTel()
+										, u.getGroup()
+										, u.getAddress());
+
+					System.out.println(
+							"-------------------------------------------------------------------------------");
+					
+					//성별과 계층정보는 숫자 데이터로 저장되어 있었기 떄문에 다시 써 줄때도 숫자로 변환하여 writer를 써야함
+				
+					flag = true;
+					break;
+				}
+			}
+			
+			if (flag == false) {
+				System.out.println("\n존재하지 않는 회원코드입니다.");
+				pause();
+			}
+			
+			if (flag == true) {
+				System.out.println("\n해당 회원의 정보입니다.");
+				pause();
+			}
+
+
+		} catch (Exception e) {
+			System.out.println("UserManage.updateUser()");
+			e.printStackTrace();
+		}
+		
+	}
 	
 	
 	
@@ -281,11 +478,12 @@ public class UserManage {
 												,u.getBirth()
 												,u.getId()
 												,u.getPw()
-												,u.getGender()
+												,u.getGender().equals("남자") ? "1" : "2"
 												,u.getTel()
-												,u.getGroup()
+												,u.getGroup().equals("일반") ? "1" : u.getGroup().equals("차상위") ? "2" : "3"
 												,u.getAddress()));
 					
+					//성별과 계층정보는 숫자 데이터로 저장되어 있었기 떄문에 다시 써 줄때도 숫자로 변환하여 writer를 써야함
 				
 					writer.close();
 					uList.remove(u);
@@ -328,9 +526,9 @@ public class UserManage {
 												,u.getBirth()
 												,u.getId()
 												,u.getPw()
-												,u.getGender()
+												,u.getGender().equals("남자") ? "1" : "2"
 												,u.getTel()
-												,u.getGroup()
+												,u.getGroup().equals("일반") ? "1" : u.getGroup().equals("차상위") ? "2" : "3"
 												,u.getAddress()));
 			
 				
