@@ -77,7 +77,7 @@ public class UserManage {
 
 	
 	// 번호를 입력받는 메서드
-	private static int selectNum() {
+	public static int selectNum() {
 		
 		// 사용자에게 번호를 입력받는다
 		Scanner scan = new Scanner(System.in);
@@ -89,7 +89,7 @@ public class UserManage {
 	
 
 	// 일시정지
-	private static void pause() {
+	public static void pause() {
 		
 		Scanner scan = new Scanner(System.in);
 		System.out.println("\n 엔터키를 누르면 이전화면으로 돌아갑니다...");
@@ -354,7 +354,7 @@ public class UserManage {
 
 						} else if (num.equals("1") || num.equals("2")) {
 
-							System.out.println("수정할 내용을 입력하세요 : ");
+							System.out.print("수정할 내용을 입력하세요 : ");
 							changedInfo = scan.nextLine();
 							
 							//1 : 계층 정보 수정, 2 : 비밀번호 정보 수정
