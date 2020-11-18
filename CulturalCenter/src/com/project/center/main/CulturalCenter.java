@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import com.project.center.program.ProgramManage;
 import com.project.center.program.ProgramRegistrationList;
+import com.project.center.user.User;
 import com.project.center.user.UserLogin;
 import com.project.center.user.UserRegister;
 
@@ -11,6 +12,8 @@ public class CulturalCenter {
 	
 	public static void main(String[] args) {
 		
+		// 프로그램 기능 테스트용 객체
+		User user = new User("7948", "박영수", "1993-08-17","tteesstt", "tteesstt",  "1", "01077743635",  "1" , "주소");
 		// 유저, 직원, 관리자
 		
 		while(true)	{
@@ -69,13 +72,13 @@ public class CulturalCenter {
 					} else if (Num == 2) {
 						System.out.println("프로그램 신청");
 						ProgramManage pm = new ProgramManage();
-						pm.createApplyProgram();
+						pm.createApplyProgram(user);
 						
 					} else if (Num == 3) {
 						System.out.println("프로그램 등록현황");
-						ProgramRegistrationList pr = new ProgramRegistrationList();
+						ProgramRegistrationList pr = new ProgramRegistrationList(user);
 						pr.createProgramRegistorList();
-						pause();
+
 						
 					} else if (Num == 4) {
 						System.out.println("시설예약");
@@ -126,7 +129,7 @@ public class CulturalCenter {
 	private static void pause() {
 		
 		Scanner scan = new Scanner(System.in);
-		System.out.println("잘못된 숫자입니다. 엔터키를 누르면 이전화면으로 돌아갑니다.");
+		System.out.println("엔터키를 누르면 이전화면으로 돌아갑니다.");
 		scan.nextLine();
 		for(int i=0 ; i<10 ; i++) {
 			System.out.println();
