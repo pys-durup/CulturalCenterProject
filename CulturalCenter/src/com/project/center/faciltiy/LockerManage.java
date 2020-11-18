@@ -51,8 +51,7 @@ public class LockerManage {
 				//break;
 				
 			} else if(Num == 2) { 
-				//setLocker();
-				//break;
+
 				getLocker();
 				//UserManage.pause();
 				
@@ -83,7 +82,6 @@ public class LockerManage {
 			
 			boolean flag = true;
 
-			
 			lockerTemp();
 			
 			System.out.print("배정을 원하는 사물함 번호를 입력하세요. : ");
@@ -273,8 +271,11 @@ public class LockerManage {
 					System.out.println(locker.getLockerNum());
 					if (locker.getLockerNum().equals(lockerNum)) {
 
-						System.out.printf("사물함번호:%s, 회원번호:%s, 시작:%s, 끝:%s", locker.getLockerNum(), locker.getUserCode(),
-								locker.getStartDate(), locker.getEndDate());
+						System.out.printf("사물함번호:%s, 회원번호:%s, 시작:%s, 끝:%s\n"
+								, locker.getLockerNum()
+								, locker.getUserCode()
+								, locker.getStartDate()
+								, locker.getEndDate());
 
 						System.out.print("회원 번호를 입력하세요. : ");
 						String userCode = scan.nextLine();
@@ -300,7 +301,7 @@ public class LockerManage {
 							    + locker.getEndDate() + "\n";
 				}
 				
-				BufferedWriter writer = new BufferedWriter(new FileWriter(Path.LOCKER, false));
+				BufferedWriter writer = new BufferedWriter(new FileWriter(Path.LOCKER));
 				writer.write(lockerData);
 				writer.close();
 				System.out.println("데이터 수정 성공");
