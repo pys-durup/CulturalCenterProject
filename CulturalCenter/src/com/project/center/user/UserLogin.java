@@ -50,8 +50,8 @@ public class UserLogin {
 			//직원 로그인
 			while((line = employeeList.readLine()) != null) {
 				String[] list = line.split(",");
-				if (id.equals(list[0]) && pw.equals(list[1])) {
-					employee = new User(list[0], list[1]);
+				if (id.equals(list[0]) && pw.equals(list[3])) {
+					employee = new User(list[0], list[1], list[3]);
 					employee.setType(2);
 					manageList.close();
 					employeeList.close();

@@ -5,6 +5,9 @@ import java.util.Scanner;
 
 import com.project.center.user.UserMyPage;
 import com.project.center.user.User;
+import com.project.center.employee.EmployeeAttendance;
+import com.project.center.employee.EmployeeAttendanceManage;
+import com.project.center.employee.EmployeeManage;
 import com.project.center.program.ProgramManage;
 import com.project.center.user.UserLogin;
 import com.project.center.user.UserRegister;
@@ -15,6 +18,8 @@ public class CulturalCenter {
 		
 		// 유저, 직원, 관리자
 		User login = null;
+		EmployeeAttendanceManage employee = new EmployeeAttendanceManage();
+		EmployeeManage administer = new EmployeeManage();
 		
 		while(true)	{
 			// 1 = 회원 2 = 직원 3 = 관리자
@@ -102,17 +107,48 @@ public class CulturalCenter {
 						pause();
 					}
 					
-
-					
 				} else if(login.getType() == 2) {
 					// 직원에게 보여질 메뉴 출력
+					employee.viewEmployeeAttendance(login);
+					break;
 				} else if(login.getType() == 3) {
-					// 관리자이게 보여질 메뉴 출력
+					// 관리자에게 보여질 메뉴 출력
+					//		System.out.println("1. 직원 등록\t2. 직원 수정");
+					//System.out.println("3. 직원 조회\t4. 직원 근태 조회");
 					showManageMain();
 					Num = selectNum();
-					if (Num == 1) {
-						System.out.println("관리자 로그인에 성공했습니다.");
+					if(Num == 1) {
+						System.out.println("직원 등록 관리");
+						administer.checkEmployeeManage();
+						administer.viewEmployeeManage();
+						
+					} else if (Num == 2) {
+						System.out.println("직원 근태 조회");
+						administer.findEmployeeAttendanceList();
+						
+					} else if (Num == 3) {
+						System.out.println("직원 조회");
+						
+					} else if (Num == 4) {
+						System.out.println("직원 근태 조회");
+						
+					} else if (Num == 5) {
+						System.out.println("시설예약");
+						
+					} else if (Num == 6) {
+						System.out.println("마일리지");
+						
+					} else if (Num == 7) {
+						System.out.println("진행중 이벤트");
+						
+					} else if (Num == 8) {
+						System.out.println("공지사항");
+						
+					} else if (Num == 9) {
+						System.out.println("로그아웃");
 						break;
+					} else {
+						pause();
 					}
 				}
 			}
@@ -130,7 +166,12 @@ public class CulturalCenter {
 		Scanner scan = new Scanner(System.in);
 		System.out.println();
 		System.out.print("번호를 선택하세요 : ");
-		return Integer.parseInt(scan.nextLine());
+		int input = Integer.parseInt(scan.nextLine());
+		if (input>0) {
+			return input;
+		} else {
+			return 0;
+		}
 		
 	}
 	
@@ -187,7 +228,12 @@ public class CulturalCenter {
 	
 	// 직원 회원의 메뉴를 출력하는 메서드
 	public static void showManageMain() {
-		System.out.println("관리자 로그인");
+		System.out.println();
+		System.out.println("1. 직원 등록 관리\t2. 직원 근태 조회");
+		System.out.println("3. ㅁㅁㅁㅁ\t4. ㅁㅁㅁㅁ");
+		System.out.println("5. ㅁㅁㅁㅁ\t\t6. ㅁㅁㅁㅁ");
+		System.out.println("7. ㅁㅁㅁㅁ\t8. ㅁㅁㅁㅁ");
+		System.out.println("9. 로그아웃");
 	}
 
 } // class 

@@ -4,76 +4,19 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
+
+import com.project.center.user.User;
 
 import data.Path;
 
 public class EmployeeAttendanceManage {
 	
 	private boolean check = false;
-	
 	EmployeeAttendance employee = new EmployeeAttendance();
 	
-	private String code = "";
-	private String name = "";
-
-	public boolean isEmployeeAccess() {
-		
-		employee.setCode("");
-		employee.setName("");
-		
-		Scanner scan = new Scanner(System.in);
-		
-		try {
-
-			BufferedReader reader = new BufferedReader(new FileReader(Path.EMPLOYEELIST));
-			
-			System.out.println("============================[근태 기록]===========================");
-			System.out.println();
-			System.out.println("근태 기록을 위해, 사원코드와 비밀번호를 다시 입력해주세요.");
-			System.out.println();
-			System.out.print("사원코드 :");
-			String inputCode = scan.nextLine();
-			System.out.println();
-			System.out.print("비밀번호 :");
-			String inputPassword = scan.nextLine();
-			System.out.println();
-			
-			String line = null;
-			String[] list = new String[6];
-			
-			while ((line = reader.readLine()) != null) {
-				list = line.split(",");
-				if (inputCode.equals(list[0]) && inputPassword.equals(list[3])) {
-					check = true;
-					
-					employee.setCode(list[0]);
-					employee.setName(list[1]);
-					break;
-				} else {
-					check = false;
-					employee.setCode("");
-					employee.setName("");
-				}
-			}
-			
-			reader.close();
-			
-			if (check == false) {
-				mainToByFailure();
-				return false;
-			}
-			
-		} catch (Exception e) {
-			System.out.println("EmployeeAttendanceManage.checkEmployeeAccess()");
-			e.printStackTrace();
-		}
-		
-		return true;
-		
-	} //checkEmployeeAccess()
-
 	private void mainToByFailure() {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("\t\t\t*** 경고 ***\t\t");
@@ -86,44 +29,40 @@ public class EmployeeAttendanceManage {
 		scan.nextLine();
 	}
 	
-	public void viewEmployeeAttendance() {
+	public void viewEmployeeAttendance(User login) {
+		
+		employee.setCode(login.getId());
+		employee.setName(login.getName());
 
-		if (check) {
-			
-			Scanner scan = new Scanner(System.in);
-			
-			
-			System.out.println("============================[근태 기록]===========================");
-			System.out.println();
-			System.out.printf("%s님, 반갑습니다. 원하는 메뉴 번호를 입력해주세요.", employee.getName());
-			System.out.println();
-			System.out.println("1. 출근 기록");
-			System.out.println();
-			System.out.println("2. 퇴근 기록");
-			System.out.println();
-			System.out.println("3. 메인 메뉴로 돌아가기");
-			System.out.println();
-			System.out.print("메뉴 입력 :");
-			String inputMenu = scan.nextLine();
-			System.out.println();
-			
-			switch(inputMenu) {
-			case "1":
-				setEmployeeAttendanceByClockIn();
-				break;
-			case "2":
-				updateEmployeeAttendance();
-				break;
-			case "3":
-				mainTo();
-				break;
-			default:
-				System.out.println("근태 기록을 종료합니다.");
-				break;
-			}
-			
-		} else {
-			mainToByFailure();
+		Scanner scan = new Scanner(System.in);
+		
+		System.out.println("============================[근태 기록]===========================");
+		System.out.println();
+		System.out.printf("%s님, 반갑습니다. 원하는 메뉴 번호를 입력해주세요.", employee.getName());
+		System.out.println();
+		System.out.println("1. 출근 기록");
+		System.out.println();
+		System.out.println("2. 퇴근 기록");
+		System.out.println();
+		System.out.println("3. 메인 메뉴로 돌아가기");
+		System.out.println();
+		System.out.print("메뉴 입력 :");
+		String inputMenu = scan.nextLine();
+		System.out.println();
+		
+		switch(inputMenu) {
+		case "1":
+			setEmployeeAttendanceByClockIn();
+			break;
+		case "2":
+			updateEmployeeAttendance();
+			break;
+		case "3":
+			mainTo();
+			break;
+		default:
+			System.out.println("근태 기록을 종료합니다.");
+			break;
 		}
 		
 	}
@@ -326,10 +265,9 @@ public class EmployeeAttendanceManage {
 			e.printStackTrace();
 		}
 		
-	}
-
+	}	
+		
 }
-
 
 
 
