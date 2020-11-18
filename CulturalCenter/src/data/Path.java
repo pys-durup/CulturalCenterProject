@@ -22,6 +22,10 @@ public class Path {
 	public static final String MILEAGE = "src\\data\\마일리지정보.txt";
 	public static final String NOTICE = "src\\data\\공지사항.txt";
 	public static final String MASTER = "src\\data\\관리자.txt";
+	
+	
+	public static final String LOCKTEST = "src\\data\\사물함정보테스트용.txt"; 
+	public static final String USERTEST = "src\\data\\회원정보테스트용.txt"; 
 
 
 }
