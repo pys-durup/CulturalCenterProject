@@ -659,7 +659,7 @@ public class EmployeeManage {
 			Calendar leastDate = Calendar.getInstance();
 			
 			leastDate.set(Integer.parseInt(leastDateTemp.substring(0,4))
-						, Integer.parseInt(leastDateTemp.substring(4, 6))
+						, Integer.parseInt(leastDateTemp.substring(4, 6)) - 1
 						, Integer.parseInt(leastDateTemp.substring(6))
 						);
 			
@@ -668,7 +668,6 @@ public class EmployeeManage {
 			line = null;
 			list = new String[6];
 			Calendar temp = leastDate;
-			System.out.printf("%tF", leastDate);
 			int startMonth = leastDate.get(Calendar.MONTH) - 1;
 			boolean check = false;
 			
