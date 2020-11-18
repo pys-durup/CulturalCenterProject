@@ -369,6 +369,7 @@ public class LockerManage {
 			BufferedReader lockerReader = new BufferedReader(new FileReader(Path.LOCKER));
 			BufferedReader userReader = new BufferedReader(new FileReader(Path.USERLIST));
 			
+			System.out.println("==============================================================================");
 			System.out.println("                                   사 물 함");
 			System.out.println("==============================================================================");
 			
