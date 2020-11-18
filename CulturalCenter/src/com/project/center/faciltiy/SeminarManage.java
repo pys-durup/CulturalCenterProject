@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
+
+
 import data.Path;
 
 public class SeminarManage {
@@ -28,21 +30,22 @@ public class SeminarManage {
 
 		while (true) {
 
-			// 세미나실 조회(달력,세미나실 빈시간수 조회)
+			// 세미나실 조회(달력, 세미나실 빈시간수 조회)
 			showSeminarRoom(year, month, s);
 			System.out.println();
 
 			// 예약할 날짜를 입력한다. (이번달 캘린더의 날짜 1~31일)
-			System.out.printf("예약 날짜를 입력하세요 : ");
+			System.out.printf("조회할 날짜를 입력하세요 : ");
 			int date = Integer.parseInt(scan.nextLine());
-			checkDate(date);
+			if (date < 1 || date > 31) {
+				System.out.println("잘못된 날짜입니다.");
+				pause();
+				continue;
+			}
+			
 
-			System.out.printf("%d-%d-%s의 세미나실 예약현황\n", year, month, date);
+			System.out.printf("%d-%2d-%2s의 세미나실 예약현황\n", year, month, date);
 			System.out.println();
-
-//			int count = countSeminarReservation(s, num);
-//			System.out.printf("예약가능 시수 : %d/40", count);
-//			System.out.println();
 
 			showSeminarReservation(s, date);
 			
@@ -86,13 +89,6 @@ public class SeminarManage {
 	
 	
 
-	private static void checkDate(int date) {
-
-		if (date < 1 || date > 31) {
-			System.out.println("잘못된 날짜입니다.");
-		}
-
-	}
 	
 	
 
@@ -101,19 +97,19 @@ public class SeminarManage {
 
 		int index = 1;
 	
-		System.out.println("[No][세미나실] [시간] [정원][예약자][상태]");
+		System.out.println("[No][세미나실] [시간] [정원][예약자] [상태]");
 		for (int i=0; i<s.list.size(); i++) {
 
 			if (date == s.list.get(i).getDateI()) {
 
 				// 해당 날짜의 세미나실 시간표 출력
-				System.out.printf("%3d   [%s호]  [%s] %3s %5s %s\n"
-																,index
-																,s.list.get(i).getNumber()
-																,s.list.get(i).getTime()
-																,s.list.get(i).getCapacity()
-																,s.list.get(i).getUser()
-																,s.list.get(i).getState());
+				System.out.printf("%3d   [%s호]  [%s] %3s %6s  %s\n"
+															,index
+															,s.list.get(i).getNumber()
+															,s.list.get(i).getTime()
+															,s.list.get(i).getCapacity()
+															,s.list.get(i).getUser()
+															,s.list.get(i).getState());
 				index++;
 				
 			}
@@ -125,10 +121,12 @@ public class SeminarManage {
 
 	}
 
-	// 예약가능한 세미나실 목록, 예약
+	// 예약가능한 세미나실 목록, 예약하는 메소드
 	private static void SeminarReservation(SeminarReservation s, int date) {
 		
 		int index = 1;
+		
+		System.out.println();
 		System.out.println("[No][세미나실] [시간] [정원][예약자][상태]");
 		for (int i=0; i < s.list.size(); i++) {
 
@@ -154,6 +152,7 @@ public class SeminarManage {
 		
 		
 		//세미나실 예약
+		System.out.println();
 		System.out.print("예약할 세미나실 번호 입력 :");
 		int num = selectNum();
 		
@@ -163,12 +162,10 @@ public class SeminarManage {
 	
 		int indexTemp = 0;
 		for (int i=0; i < s.list.size(); i++) {
-
 			if (date == s.list.get(i).getDateI()) {
-				//예약가능한 세미나실 출력
 				if(s.list.get(i).getState().equals("예약가능")) {
-					
-					if(i == num) {
+					//선택된 세미나실에 입력된 예약자 회원코드 s.list에 저장
+					if(i+1 == num) {
 						s.list.get(i).setUser(code);
 						indexTemp = i;
 					}
@@ -178,7 +175,7 @@ public class SeminarManage {
 				
 			}
 		}
-		
+		//세미나실예약정보 file update
 		WriteSeminarReservatrion(s, indexTemp, code);
 		
 		System.out.println();
@@ -191,6 +188,35 @@ public class SeminarManage {
 	
 	private static void WriteSeminarReservatrion(SeminarReservation s, int index, String code) {
 		
+		try {
+			BufferedWriter writer
+				= new BufferedWriter(new FileWriter(Path.SEMINARRESERVATION)); 
+			
+			
+			//예약 수정된 s.list 덮어쓰기
+			for(int i=0; i<s.list.size(); i++) {
+				
+				writer.write(String.format("%s,%s,%s,%s,%s,%s,%s\r\n"
+						, s.list.get(i).getNumber()
+						, s.list.get(i).getUser()
+						, s.list.get(i).getDate()
+						, s.list.get(i).getTime()
+						, s.list.get(i).getCapacity()
+						, s.list.get(i).getPrice()
+						, s.list.get(i).getPay()));
+					
+			}
+			
+			writer.close();
+			
+			System.out.println("예약 완료");
+		
+			
+			
+		} catch (IOException e) {
+			System.out.println("WriteSeminarReservation");
+			e.printStackTrace();
+		}
 
 	}
 
@@ -224,8 +250,8 @@ public class SeminarManage {
 		System.out.println("   [일]      [월]      [화]      [수]      [목]      [금]      [토]");
 
 		// 1일을 요일 위치와 맞추기 위해 탭추가
-		for (int i = 1; i <= day_of_week; i++) {
-			System.out.print("\t ");
+		for (int i = 1; i <= day_of_week*10; i++) {
+			System.out.print(" ");
 		}
 
 		// 날짜 출력
