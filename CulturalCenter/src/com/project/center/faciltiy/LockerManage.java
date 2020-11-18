@@ -34,9 +34,8 @@ public class LockerManage {
 	//회원 정보를 담는 u ArrayList -temp
 	private static ArrayList<User> uTemp = new ArrayList<User>();
 		
-		
 	public static void main(String[] args) throws IOException {
-		
+
 		while(true)	{
 			
 			showMain(); //회원관리 메인창 출력
@@ -122,6 +121,47 @@ public class LockerManage {
 
 	
 	
+	
+	//사물함 정보 읽는 메서드 
+	private static void lockerTemp() {
+		
+		try {
+
+
+			BufferedReader lockerReader = new BufferedReader(new FileReader(Path.LOCKER));
+			BufferedReader userReader = new BufferedReader(new FileReader(Path.USERLIST));
+			
+			String line = null;
+
+			while ((line = lockerReader.readLine()) != null) {
+
+				String[] ltemp = line.split(","); // 락커정보 임시 배열
+
+				lTemp.add(new Locker(ltemp[0] // 락커번호
+						, ltemp[1] // 회원번호
+						, ltemp[2] // 시작일
+						, ltemp[3])); // 끝일
+			}
+			
+			while ((line = userReader.readLine()) != null) {
+				
+				String[] utemp = line.split(","); // 회원정보 임시 배열
+				
+				uTemp.add(new User(utemp[0] // 회원번호
+							, utemp[1])); // 회원이름
+				
+			}
+			
+			lockerReader.close();
+			userReader.close();
+
+		} catch (Exception e) {
+			System.out.println("LockerManage.lockerTemp()");
+			e.printStackTrace();
+		}
+		
+	}
+
 	
 	
 	
@@ -228,12 +268,7 @@ public class LockerManage {
 	
 	
 	
-	
-	
-	
-	
-	
-	
+
 	//사물함 배정 메서드
 	private static void getLocker() {
 		
@@ -334,7 +369,6 @@ public class LockerManage {
 			BufferedReader lockerReader = new BufferedReader(new FileReader(Path.LOCKER));
 			BufferedReader userReader = new BufferedReader(new FileReader(Path.USERLIST));
 			
-			System.out.println("------------------------------------------------------------------------------");
 			System.out.println("                                   사 물 함");
 			System.out.println("==============================================================================");
 			
@@ -366,10 +400,8 @@ public class LockerManage {
 			
 			String line1 = "";
 			String line2 = "";
-			
-			int usingLocker = 0;
 
-			int a = 0;
+			int b = 0;
 
 			for (int i = 0; i < l.size(); i++) {
 
@@ -378,20 +410,19 @@ public class LockerManage {
 					if (l.get(i).getUserCode().equals(u.get(j).getCode())) {
 						//l(사물함)의 사물함 번호 출력
 						line1 += String.format("[ %3s]\t", l.get(i).getLockerNum());
-						a++;
+						b++;
 						//현재날짜가 startDate(이용시작날짜)와 endDate(이용끝날짜) 사이에 존재한다.
 						//	-> 현재 본 회원이 사물함을 이용중이다. => 이용중인 사물함
 						if (present.compareTo(l.get(i).getStartDate()) > 0
 								&& present.compareTo(l.get(i).getEndDate()) < 0) {
 							line2 += String.format("%4s\t", u.get(j).getName());
-							usingLocker++;
 						// 	-> 이용중이지 않다면 빈 문자열 출력 => 이용 가능한 사물함	
 						} else {
 							line2 += String.format("   \t");
 						}
 
 						//line1, line2에 저장해 놓은 정보 출력(10개 단위)-> 초기화 -> 다시 반복
-						if (a % 10 == 0) {// 10으로 나누어 떨어지면 개행
+						if (b % 10 == 0) {// 10으로 나누어 떨어지면 개행
 							System.out.println(line1);
 							System.out.println();
 							System.out.println(line2);
@@ -403,63 +434,15 @@ public class LockerManage {
 				}
 			}
 			
-			System.out.println("------------------------------------------------------------------------------");
-			System.out.printf("\t현재 %s/%s명이 이용중 입니다.\n", usingLocker, l.size());
-			
 			lockerReader.close();
 			userReader.close();
 
 		} catch (Exception e) {
-			System.out.println("LockerManage.lockerList()");
+			System.out.println("LockerManage.rocker()");
 			e.printStackTrace();
 		}
 		
-	}//lockerList
-	
-	
-	
-	//사물함 정보 읽는 메서드 
-	private static void lockerTemp() {
-		
-		try {
-
-
-			BufferedReader lockerReader = new BufferedReader(new FileReader(Path.LOCKER));
-			BufferedReader userReader = new BufferedReader(new FileReader(Path.USERLIST));
-			
-			String line = null;
-
-			while ((line = lockerReader.readLine()) != null) {
-
-				String[] ltemp = line.split(","); // 락커정보 임시 배열
-
-				lTemp.add(new Locker(ltemp[0] // 락커번호
-						, ltemp[1] // 회원번호
-						, ltemp[2] // 시작일
-						, ltemp[3])); // 끝일
-			}
-			
-			while ((line = userReader.readLine()) != null) {
-				
-				String[] utemp = line.split(","); // 회원정보 임시 배열
-				
-				uTemp.add(new User(utemp[0] // 회원번호
-							, utemp[1])); // 회원이름
-				
-			}
-			
-			lockerReader.close();
-			userReader.close();
-
-		} catch (Exception e) {
-			System.out.println("LockerManage.lockerTemp()");
-			e.printStackTrace();
-		}
-		
-	}
-
-	
-	
+	}//rocker() 연습
 
 
 }
