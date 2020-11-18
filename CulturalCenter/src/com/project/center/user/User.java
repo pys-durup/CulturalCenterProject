@@ -27,6 +27,12 @@ public class User {
 		this.address = address;
 	}
 	
+	public User(String id, String name, String pw) {
+		this.name = name;
+		this.id = id;
+		this.pw = pw;
+	}
+	
 	public User(String id, String pw) {
 		this.id = id;
 		this.pw = pw;
@@ -111,7 +117,6 @@ public class User {
 	public void setType(int type) {
 		this.type = type;
 	}
-	
 	
 	
 }
