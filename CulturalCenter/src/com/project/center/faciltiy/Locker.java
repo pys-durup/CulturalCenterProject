@@ -2,6 +2,12 @@ package com.project.center.faciltiy;
 
 public class Locker {
 	
+	/**
+	 * @author Daeun
+	 * 		사물함관리 + 회원정보 코드와 연계를 위해 객체화
+	 * 		사물함 관련 변수 4개
+	 * 		객체 안에 모든 데이터를 넣을 수 있는 생성자 1개
+	 */
 		
 	private String lockerNum;
 	private String userCode;
