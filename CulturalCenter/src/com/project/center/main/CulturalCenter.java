@@ -8,6 +8,7 @@ import com.project.center.user.User;
 import com.project.center.employee.EmployeeAttendance;
 import com.project.center.employee.EmployeeAttendanceManage;
 import com.project.center.employee.EmployeeManage;
+import com.project.center.faciltiy.FacilityReservation;
 import com.project.center.program.ProgramManage;
 import com.project.center.program.ProgramRegistrationList;
 import com.project.center.user.User;
@@ -95,6 +96,7 @@ public class CulturalCenter {
 						
 					} else if (Num == 5) {
 						System.out.println("시설예약 확인");
+						FacilityReservation.findReservationList(login);
 						
 					} else if (Num == 6) {
 						System.out.println("마일리지");
