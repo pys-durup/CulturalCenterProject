@@ -179,12 +179,14 @@ public class ProgramRegistrationList {
 		// 종료된 프로그램 정보 출력
 		while(true) {
 			clear();
-			System.out.println("[종료된 프로그램]");
+			System.out.println("[프로그램 이력 확인하기]");
 			System.out.println("프로그램 이름 : " + programName);
 			System.out.println("강사명 : " + teacher);
 			System.out.println("강의실 : " + classRoom);
 			System.out.println("시작일 : " + startDate);
 			System.out.println("종료일 : " + endDate);
+			System.out.println("총 수업일수 : " + allClassDays + "일");
+			System.out.println();
 			
 			// □■  출석/수업일수 > 출석률   수업일수/총수업 > 진행률
 			float rate1 = attendanceDays/(float)classDays;
@@ -192,24 +194,25 @@ public class ProgramRegistrationList {
 			int count = 25;
 			// 출석률
 			System.out.printf("<수업출석률(%d%%)>\n", (int) (rate1 * 100));
-			for (int i = 0; i < count * rate1; i++) {
+			for (int i = 0; i < Math.floor(count*rate1); i++) {
 				System.out.print("■");
 			}
-			for (int i = 0; i < count - (count * rate1); i++) {
+			for (int i = 0; i < count - Math.floor(count*rate1); i++) {
 				System.out.print("□");
 			}
 			System.out.printf("(%d/%d)\n", attendanceDays, classDays);
 			// 진행률
 			System.out.printf("<수업진행률(%d%%)>\n", (int) (rate2 * 100));
-			for (int i = 0; i < count * rate2; i++) {
+			for (int i = 0; i < Math.floor(count*rate2); i++) {
 				System.out.print("■");
 			}
-			for (int i = 0; i < count - (count * rate2); i++) {
+			for (int i = 0; i < count - Math.floor(count*rate2); i++) {
 				System.out.print("□");
 			}
 			System.out.printf("(%d/%d)\n", classDays, allClassDays);
 			
 			System.out.println();
+			pause();
 			break;
 		}
 	}
@@ -275,12 +278,14 @@ public class ProgramRegistrationList {
 			}
 		}
 		
-		System.out.println("[진행중인 프로그램]");
+		System.out.println("[현재 진행중인 프로그램]");
 		System.out.println("프로그램 이름 : " + programName);
 		System.out.println("강사명 : " + teacher);
 		System.out.println("강의실 : " + classRoom);
 		System.out.println("시작일 : " + startDate);
 		System.out.println("종료일 : " + endDate);
+		System.out.println("총 수업일수 : " + allClassDays + "일");
+		System.out.println();
 		
 //		System.out.println("출석일수 : " + attendanceDays);
 //		System.out.println("결석일수 : " + absentDays);
@@ -297,24 +302,20 @@ public class ProgramRegistrationList {
 		int count = 25;
 		// 출석률
 		System.out.printf("<수업출석률(%d%%)>\n",(int)(rate1*100));
-		for(int i=0 ; i<count*rate1 ; i++) {
+		for(int i=0 ; i<Math.floor(count*rate1) ; i++) {
 			System.out.print("■");
 		}
-		for(int i=0 ; i<count-(count*rate1) ; i++) {
+		for(int i=0 ; i<count-Math.floor(count*rate1) ; i++) {
 			System.out.print("□");
 		}
 		System.out.printf("(%d/%d)\n", attendanceDays, classDays);
 		
-		
-		
-		
-		
 		// 진행률
 		System.out.printf("<수업진행률(%d%%)>\n",(int)(rate2*100));
-		for(int i=0 ; i<count*rate2 ; i++) {
+		for(int i=0 ; i<Math.floor(count*rate2) ; i++) {
 			System.out.print("■");
 		}
-		for(int i=0 ; i<count-(count*rate2) ; i++) {
+		for(int i=0 ; i<count-Math.floor(count*rate2) ; i++) {
 			System.out.print("□");
 		}
 		System.out.printf("(%d/%d)\n", classDays, allClassDays);
@@ -815,7 +816,7 @@ public class ProgramRegistrationList {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("엔터키를 누르면 이전화면으로 돌아갑니다.");
 		scan.nextLine();
-		for(int i=0 ; i<20 ; i++) {
+		for(int i=0 ; i<30 ; i++) {
 			System.out.println();
 		}
 	}
