@@ -304,6 +304,11 @@ public class ProgramRegistrationList {
 			System.out.print("□");
 		}
 		System.out.printf("(%d/%d)\n", attendanceDays, classDays);
+		
+		
+		
+		
+		
 		// 진행률
 		System.out.printf("<수업진행률(%d%%)>\n",(int)(rate2*100));
 		for(int i=0 ; i<count*rate2 ; i++) {
@@ -569,7 +574,7 @@ public class ProgramRegistrationList {
 	
 	
 	// 프로그램.txt에서 데이터를 읽어온다
-	private static ArrayList<Program> loadProgramData(String path) {
+	public static ArrayList<Program> loadProgramData(String path) {
 
 		ArrayList<Program> list = new ArrayList<Program>();
 		File file = new File(path);

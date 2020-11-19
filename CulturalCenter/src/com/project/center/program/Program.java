@@ -28,6 +28,10 @@ public class Program {
 		this.capacity = capacity;
 		this.price = price;
 	}
+	
+	public Program(String code, String name, String teacher, String startDate, String endDate) {
+		this(code, name, teacher, "", startDate, endDate, 0, 0);
+	}
 
 	public String getCode() {
 		return code;

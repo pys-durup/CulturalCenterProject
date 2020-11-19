@@ -5,6 +5,7 @@ import java.util.Scanner;
 import com.project.center.employee.EmployeeAttendanceManage;
 import com.project.center.employee.EmployeeManage;
 import com.project.center.extra.MileageConfirm;
+import com.project.center.program.ProgramAttendanceManage;
 import com.project.center.program.ProgramManage;
 import com.project.center.program.ProgramRegistrationList;
 import com.project.center.user.User;
@@ -102,6 +103,8 @@ public class CulturalCenter {
 						
 					} else if (Num == 8) {
 						System.out.println("공지사항");
+						ProgramAttendanceManage pam = new ProgramAttendanceManage();
+						pam.createAttendanceMenu(); // 테스트용
 					} else if (Num == 9) {
 						System.out.println("로그아웃");
 						break;
