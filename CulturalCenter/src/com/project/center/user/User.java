@@ -27,6 +27,15 @@ public class User {
 		this.address = address;
 	}
 	
+
+	public User(String code, String name, String id, String pw) {
+		super();
+		this.code = code;
+		this.name = name;
+		this.id = id;
+		this.pw = pw;
+	}
+
 	public User(String id, String name, String pw) {
 		this.name = name;
 		this.id = id;
