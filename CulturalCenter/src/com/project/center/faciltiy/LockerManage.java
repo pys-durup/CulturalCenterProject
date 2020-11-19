@@ -34,9 +34,8 @@ public class LockerManage {
 	//회원 정보를 담는 u ArrayList -temp
 	private static ArrayList<User> uTemp = new ArrayList<User>();
 		
-	public static void main(String[] args) throws IOException {
+	public void lockerManageMain () {
 
-		
 		lockerTemp();
 		while(true)	{
 			
@@ -49,27 +48,25 @@ public class LockerManage {
 				lockerList();
 				UserManage.pause();
 				//break;
-				
 			} else if(Num == 2) { 	//2. 사물함 배정
 				getLocker();
 				UserManage.pause();
-				
+				//break;
 			} else if(Num == 3) { 	//3. 회원별 사물함 정보보기
 				myLockerInfo();
 				UserManage.pause();
-				
+				//break;
 			} else {
-				UserManage.pause();
 				break;
 			}
 			
 		}
 		
 		
-	}//main(임시)
+	}//lockerManageMain
 	
 
-
+	//회원별 사물함 사용정보를 읽는 메서드
 	private static void myLockerInfo() {
 		
 		try {
@@ -243,6 +240,7 @@ public class LockerManage {
 		System.out.println("\t1. 사물함 사용 현황");
 		System.out.println("\t2. 사물함 배정");
 		System.out.println("\t3. 회원별 사물함 정보");
+		System.out.println("\n\t이전으로 가고 싶으면 0번을 입력하세요.");
 		
 	}
 

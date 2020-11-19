@@ -27,7 +27,7 @@ public class User {
 		this.address = address;
 	}
 	
-
+	//LockerManage에서 사용하는 생성자.
 	public User(String code, String name, String id, String pw) {
 		super();
 		this.code = code;
