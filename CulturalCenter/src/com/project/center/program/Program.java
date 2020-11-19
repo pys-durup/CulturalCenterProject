@@ -1,5 +1,10 @@
 package com.project.center.program;
 
+/**
+ * @author youngsu 
+ * 프로그램 객체
+ * 
+ */
 public class Program {
 
 	private String code;

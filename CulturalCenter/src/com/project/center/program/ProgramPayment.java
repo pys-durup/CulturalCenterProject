@@ -193,7 +193,7 @@ public class ProgramPayment {
 	 */
 	private void savePaymentData(String data) {
 		try {
-			System.out.println("savePaymentData method");
+//			System.out.println("savePaymentData method");
 			BufferedWriter writer = new BufferedWriter(new FileWriter(Path.PROGRAMPAYMENT, true));
 			writer.write(data);
 			writer.close();

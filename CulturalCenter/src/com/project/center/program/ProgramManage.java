@@ -501,10 +501,10 @@ public class ProgramManage {
 	private void showMonthResult() {
 		while(true) {
 			String yearMonth = getYearMonth();
-			System.out.println("yearMonth : " + yearMonth);
-			System.out.println("Plist startDate : " + pList.get(1).getStartDate());
-			System.out.println(pList.get(1).getStartDate().indexOf(yearMonth));
-			pause();
+//			System.out.println("yearMonth : " + yearMonth);
+//			System.out.println("Plist startDate : " + pList.get(1).getStartDate());
+//			System.out.println(pList.get(1).getStartDate().indexOf(yearMonth));
+//			pause();
 			if(yearMonth != "") {
 				// 선택한 년월에 맞는 결과를 담을 리스트
 				ArrayList<Program> resultList = new ArrayList<Program>();
@@ -541,7 +541,7 @@ public class ProgramManage {
 			} else {
 				// 뒤로가기
 				System.out.println("뒤로가기");
-				pause();
+//				pause();
 				break;
 			}
 		}
@@ -552,6 +552,7 @@ public class ProgramManage {
 	 *  
 	 */
 	private String getYearMonth() {
+		clear();
 		System.out.println("[월을 선택하세요]");
 		System.out.println("1. 2020-12");
 		System.out.println("2. 2021-01");

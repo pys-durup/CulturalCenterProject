@@ -26,14 +26,8 @@ public class ProgramRegistrationList {
 	private ArrayList<ProgramStudent> pstList;
 	private User login;
 	
-//	public ProgramRegistrationList() {
-//		this.login = new User("7948", "박영수", "1993-08-17","tteesstt", "tteesstt",  "1", "01077743635",  "1" , "주소");
-//	}
-	
 	public ProgramRegistrationList(User login) {
-		// 테스트용 유저 객체
 		this.login = login;
-		//this.login = login;
 	}
 
 	public void createProgramRegistorList() {
@@ -49,7 +43,7 @@ public class ProgramRegistrationList {
 				} else {
 					System.out.println("진행중인 프로그램이 없습니다");
 					pause();
-					break;
+//					break;
 				}
 			} else if (selectNum == 2) { // 2. 수업 이력
 //				System.out.println("종료된 프로그램 코드 : " + myProgramHistory());
@@ -58,7 +52,7 @@ public class ProgramRegistrationList {
 				} else {
 					System.out.println("종료된 프로그램이 없습니다");
 					pause();
-					break;
+//					break;
 				}
 
 			} else if (selectNum == 3) { // 3. 수업 환불
@@ -67,7 +61,7 @@ public class ProgramRegistrationList {
 				} else {
 					System.out.println("환불할수 있는 프로그램이 없습니다");
 					pause();
-					break;
+//					break;
 				}
 			} else if (selectNum == 4) {
 				break;
@@ -321,8 +315,7 @@ public class ProgramRegistrationList {
 		System.out.printf("(%d/%d)\n", classDays, allClassDays);
 		
 		System.out.println();
-		System.out.println("1. ㅁㅁㅁㅁ 2. 뒤로가기");
-		System.out.print("번호를 입력하세요 : ");
+		pause();
 	}
 
 	/**

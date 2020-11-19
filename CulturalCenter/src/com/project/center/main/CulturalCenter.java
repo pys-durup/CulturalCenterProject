@@ -2,16 +2,14 @@ package com.project.center.main;
 
 import java.util.Scanner;
 
-
-import com.project.center.user.UserMyPage;
-import com.project.center.user.User;
-import com.project.center.employee.EmployeeAttendance;
 import com.project.center.employee.EmployeeAttendanceManage;
 import com.project.center.employee.EmployeeManage;
+import com.project.center.extra.MileageConfirm;
 import com.project.center.program.ProgramManage;
 import com.project.center.program.ProgramRegistrationList;
 import com.project.center.user.User;
 import com.project.center.user.UserLogin;
+import com.project.center.user.UserMyPage;
 import com.project.center.user.UserRegister;
 
 public class CulturalCenter {
@@ -96,10 +94,10 @@ public class CulturalCenter {
 					} else if (Num == 5) {
 						System.out.println("시설예약 확인");
 						
-					} else if (Num == 6) {
-						System.out.println("마일리지");
-						
-					} else if (Num == 7) {
+					} else if (Num == 6) { // 마일리지
+						MileageConfirm mc = new MileageConfirm();
+						mc.showMyMileage(login);
+					} else if (Num == 7) { 
 						System.out.println("진행중 이벤트");
 						
 					} else if (Num == 8) {
@@ -220,7 +218,7 @@ public class CulturalCenter {
 		System.out.println();
 		System.out.println("1. 회원정보 조회\t2. 프로그램 신청");
 		System.out.println("3. 프로그램 등록현황\t4. 시설예약");
-		System.out.println("5. 시설예약 확인\t\t6. 마일리지");
+		System.out.println("5. 시설예약 확인\t6. 마일리지");
 		System.out.println("7. 진행중 이벤트\t8. 공지사항");
 		System.out.println("9. 로그아웃");
 		
