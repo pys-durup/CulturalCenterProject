@@ -10,13 +10,18 @@ import java.util.Scanner;
 import data.Path;
 
 public class UserManage {
+
+	/**
+	 * @author Daeun
+	 * 		관리자모드 - 회원관리
+	 */
 	
 	//회원 정보 담는 ulist와 초기화
 	private static ArrayList<User> uList = new ArrayList<User>();
 
 	static boolean mainFlag = true;
 	
-	public static void main(String[] args) {
+	public void userManageMain() {
 	
 		while(mainFlag)	{
 			
@@ -25,29 +30,24 @@ public class UserManage {
 			// 사용자가 입력한 숫자를 받아온다
 			int Num = selectNum(); 
 			
-			if(Num == 1) {
-				//System.out.println("\t1. 회원 목록 조회");
+			if(Num == 1) { 	//1. 회원 목록 조회
 				getUserInfo();
 				viewUserList();
 				//break;
 				
-			} else if(Num == 2) { 
-				//System.out.println("\t2. 회원 정보 검색");
-				updateUser();
+			} else if(Num == 2) { //2. 회원 정보 검색
+				searchUser();
 				//break;
 				
-			} else if(Num == 3) { 
-				//System.out.println("\t3. 회원 정보 수정");
+			} else if(Num == 3) { //3. 회원 정보 수정
 				changeUserInfo();
 				//break;
 				
-			} else if(Num == 4) { 
-				//System.out.println("\t4. 회원 정보 삭제");
+			} else if(Num == 4) { //4. 회원 정보 삭제
 				deleteUser();
 				//break;
 				
 			} else {
-				pause();
 				break;
 			}
 			
@@ -55,8 +55,7 @@ public class UserManage {
 		
 		System.out.println("프로그램 진행 . . . .");
 	
-		
-	} //main
+	} //userManageMain
 	
 	
 	// 프로그램의 메인 화면을 출력하는 메서드
@@ -67,12 +66,13 @@ public class UserManage {
 		System.out.println("\t2. 회원 정보 검색");
 		System.out.println("\t3. 회원 정보 수정");
 		System.out.println("\t4. 회원 정보 삭제");
+		System.out.println("\n\t이전으로 가고 싶으면 0번을 입력하세요.");
 		                                                                                    
 	}
 
 	
 	// 번호를 입력받는 메서드
-	private static int selectNum() {
+	public static int selectNum() {
 		
 		// 사용자에게 번호를 입력받는다
 		Scanner scan = new Scanner(System.in);
@@ -83,8 +83,8 @@ public class UserManage {
 	}
 	
 
-	// 일시정지
-	private static void pause() {
+	// 일시정지 메서드
+	public static void pause() {
 		
 		Scanner scan = new Scanner(System.in);
 		System.out.println("\n 엔터키를 누르면 이전화면으로 돌아갑니다...");
@@ -94,8 +94,6 @@ public class UserManage {
 		}
 		
 	}
-	
-	
 	
 	
 	
@@ -128,7 +126,6 @@ public class UserManage {
 											temp[7].equals("2") ? "차상위" : "기초" //계층
 								, temp[8]));	//주소));
 				
-				
 			}
 
 			reader.close();
@@ -137,7 +134,6 @@ public class UserManage {
 			System.out.println("UserInfo.getUserInfo()");
 			e.printStackTrace();
 		}
-		
 	}
 	
 	
@@ -145,7 +141,6 @@ public class UserManage {
 	private static void viewUserList() {
 
 		Scanner scan = new Scanner(System.in);
-
 		
 		for (int i=0; i<uList.size()/100+1;) {
 
@@ -180,8 +175,8 @@ public class UserManage {
 				System.out.println("\t\t\t1. 이전 페이지");
 				System.out.println("\t\t\t2. 다음 페이지");
 				System.out.println("\t\t\t3. 원하는 페이지로");
-				System.out.println("\t\t\t4. 뒤로가기");
-				System.out.print("\t\t\t메뉴 번호입력 : ");
+				System.out.println("\t\t\t4. 이전 메뉴로");
+				System.out.print("\n\t\t\t메뉴 번호입력 : ");
 				
 				String sel = scan.nextLine();
 				
@@ -232,7 +227,6 @@ public class UserManage {
 					break;
 				}
 				
-				
 		}
 		
 	}//UserList()
@@ -267,20 +261,18 @@ public class UserManage {
 			getUserInfo();	//회원정보를 읽어오는 메서드
 			
 			while (flag) {
-				
+
 				System.out.print("수정하고 싶은 회원의 회원번호를 입력해주세요. : ");
 				String userCode = scan.nextLine();
-				
+
 				for (User u : uList) {
 					if (u.getCode().equals(userCode)) {
 						updateUser(userCode);
 						flag = false;
 						break;
-					} 
+					}
 				}
-			
-		}
-		
+			}
 		
 		} catch (Exception e) {
 			System.out.println("UserManage.changeUserInfo()");
@@ -302,7 +294,6 @@ public class UserManage {
 			Scanner scan = new Scanner(System.in);
 			
 			boolean flag = true;
-			//String num = "";
 			String changedInfo = "";
 			
 			System.out.println("\n\n");
@@ -349,7 +340,7 @@ public class UserManage {
 
 						} else if (num.equals("1") || num.equals("2")) {
 
-							System.out.println("수정할 내용을 입력하세요 : ");
+							System.out.print("수정할 내용을 입력하세요 : ");
 							changedInfo = scan.nextLine();
 							
 							//1 : 계층 정보 수정, 2 : 비밀번호 정보 수정
@@ -379,8 +370,8 @@ public class UserManage {
 	
 	
 	
-	
-	private static void updateUser() {
+	//회원 검색 메서드 - 회원번호를 입력받아 회원 정보를 호출한다.
+	private static void searchUser() {
 		
 		try {
 
@@ -441,8 +432,6 @@ public class UserManage {
 		}
 		
 	}
-	
-	
 	
 	
 	

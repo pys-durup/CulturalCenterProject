@@ -6,11 +6,14 @@ import com.project.center.employee.EmployeeAttendanceManage;
 import com.project.center.employee.EmployeeManage;
 import com.project.center.extra.MileageConfirm;
 import com.project.center.program.ProgramAttendanceManage;
+import com.project.center.faciltiy.FacilityReservation;
+import com.project.center.faciltiy.LockerManage;
 import com.project.center.program.ProgramManage;
 import com.project.center.program.ProgramRegistrationList;
 import com.project.center.user.User;
 import com.project.center.user.UserLogin;
 import com.project.center.user.UserMyPage;
+import com.project.center.user.UserManage;
 import com.project.center.user.UserRegister;
 
 public class CulturalCenter {
@@ -21,6 +24,7 @@ public class CulturalCenter {
 		User login = null;
 		EmployeeAttendanceManage employee = new EmployeeAttendanceManage();
 		EmployeeManage administer = new EmployeeManage();
+		
 		
 		while(true)	{
 			// 1 = 회원 2 = 직원 3 = 관리자
@@ -94,6 +98,7 @@ public class CulturalCenter {
 						
 					} else if (Num == 5) {
 						System.out.println("시설예약 확인");
+						FacilityReservation.findReservationList(login);
 						
 					} else if (Num == 6) { // 마일리지
 						MileageConfirm mc = new MileageConfirm();
@@ -133,11 +138,13 @@ public class CulturalCenter {
 						administer.findEmployeeAttendanceList();
 						
 					} else if (Num == 3) {
-						System.out.println("직원 조회");
-						
+						System.out.println("회원 관리");
+						UserManage um = new UserManage();
+						um.userManageMain();
 					} else if (Num == 4) {
-						System.out.println("직원 근태 조회");
-						
+						System.out.println("사물함 관리");
+						LockerManage lm = new LockerManage();
+						lm.lockerManageMain();
 					} else if (Num == 5) {
 						System.out.println("시설예약");
 						
@@ -212,6 +219,7 @@ public class CulturalCenter {
 		System.out.println();
 		System.out.println();
 		System.out.println("\t\t1. 로그인\t2.회원가입\t3.아이디/비밀번호 찾기\t4.종료");
+		
 		                                                                                    
 	}
 	
@@ -236,7 +244,7 @@ public class CulturalCenter {
 	public static void showManageMain() {
 		System.out.println();
 		System.out.println("1. 직원 등록 관리\t2. 직원 근태 조회");
-		System.out.println("3. ㅁㅁㅁㅁ\t4. ㅁㅁㅁㅁ");
+		System.out.println("3. 회원 관리\t4. 사물함 관리");
 		System.out.println("5. ㅁㅁㅁㅁ\t\t6. ㅁㅁㅁㅁ");
 		System.out.println("7. ㅁㅁㅁㅁ\t8. ㅁㅁㅁㅁ");
 		System.out.println("9. 로그아웃");
