@@ -58,10 +58,10 @@ public class ProgramManage {
 			} else if(num == 2) { // 연령별 목록
 				showAgeResult();
 			} else if(num == 3) { // 테마별 목록
-				System.out.println("테마별");
+//				System.out.println("테마별");
 				showThemeResult();
 			} else if(num == 4) { // 월별 목록
-				System.out.println("월별");
+//				System.out.println("월별");
 				showMonthResult();
 			} else if(num == 5){
 				System.out.println("뒤로가기");
@@ -174,12 +174,46 @@ public class ProgramManage {
 		} 
 
 		while(true) {
-			
+			// TA, AD, OD
 			int size = this.pshowList.size();
 			clear();
 			System.out.println("============================================================================================================================================");
 			System.out.println("\t  <선택한 프로그램의 목록>");
-			if(text != null) System.out.printf("\t  '%s'로 검색한 결과 입니다\n", text);
+//			if (text.equals("TA")) {
+//				System.out.println("\t  '청소년'에게 추천하는 프로그램 검색 결과입니다");
+//			} else if (text.equals("AD")) { 
+//				System.out.println("\t  '성인'에게 추천하는 프로그램 검색 결과입니다");
+//			} else if (text.equals("OD")) { 
+//				System.out.println("\t  '중장년'에게 추천하는 프로그램 검색 결과입니다");
+//			} else if (text.equals("01")) {
+//				
+//			} else if () {
+//				{
+//			}
+//				System.out.println("asdf");
+//			} else {
+//				System.out.printf("\t  '%s'로 검색한 결과 입니다\n", text);
+//			}
+			
+			switch (text) {
+			case "TA": System.out.println("\t  '청소년'에게 추천하는 프로그램 검색 결과입니다"); break;
+			case "AD": System.out.println("\t  '성인'에게 추천하는 프로그램 검색 결과입니다"); break;
+			case "OD": System.out.println("\t  '중장년'에게 추천하는 프로그램 검색 결과입니다"); break;
+			case "01": System.out.println("\t  '요리' 테마의 프로그램 검색 결과입니다"); break;
+			case "02": System.out.println("\t  '스포츠' 테마의 프로그램 검색 결과입니다"); break;
+			case "03": System.out.println("\t  '언어' 테마의 프로그램 검색 결과입니다"); break;
+			case "04": System.out.println("\t  '건강' 테마의 프로그램 검색 결과입니다"); break;
+			case "05": System.out.println("\t  '원예' 테마의 프로그램 검색 결과입니다"); break;
+			case "06": System.out.println("\t  '미술' 테마의 프로그램 검색 결과입니다"); break;
+			case "07": System.out.println("\t  '댄스' 테마의 프로그램 검색 결과입니다"); break;
+			case "08": System.out.println("\t  '악기' 테마의 프로그램 검색 결과입니다"); break;
+			case "09": System.out.println("\t  '컴퓨터' 테마의 프로그램 검색 결과입니다"); break;
+			case "2020-12": System.out.println("\t  2020년 12월의 프로그램 검색 결과입니다"); break;
+			case "2021-1": System.out.println("\t  2021년 1월의 프로그램 검색 결과입니다"); break;
+			default: System.out.printf("\t  '%s'로 검색한 결과 입니다\n", text); break;
+			}
+			
+			
 			System.out.println("============================================================================================================================================");
 			System.out.println("프로그램의 개수 : " + size);
 			
@@ -340,7 +374,10 @@ public class ProgramManage {
 		 */
 		while(true) {
 			clear();
-			System.out.println("[선택한 프로그램의 상세정보]");
+			System.out.println("======================================================");
+			System.out.println("\t<프로그램 신청하기>");
+			System.out.println("======================================================");
+			System.out.println("\t[선택한 프로그램의 상세정보]");
 			System.out.printf("프로그램 이름 : %s\n", program.getName());
 			System.out.printf("강사명 : %s\n",program.getTeacher());
 			System.out.printf("강의실 : %s\n",program.getClassRoom());
@@ -348,6 +385,7 @@ public class ProgramManage {
 			System.out.printf("종료날짜 : %s\n",program.getEndDate());
 			System.out.printf("정원 : %d/%d\n", program.getCount() , program.getCapacity());
 			System.out.printf("가격 : %,d원\n",program.getPrice());
+			System.out.println("=====================================================");
 			System.out.println();
 			System.out.println("1.프로그램 결제하기  2.취소하기");
 			System.out.print("번호를 입력하세요 : ");
@@ -387,11 +425,11 @@ public class ProgramManage {
 		
 		// 나이 -> 나이코드
 		if(age >= 13 && age < 20) {
-			ageCode = "TA";
+			ageCode = "TA"; // 청소년
 		} else if (age >= 20 && age <= 40) {
-			ageCode = "AD";
+			ageCode = "AD"; // 성인
 		} else if (age > 40) {
-			ageCode = "OD";
+			ageCode = "OD"; // 중장년
 		}
 		
 		
@@ -421,7 +459,7 @@ public class ProgramManage {
 				System.out.println();
 				
 				// 신청 설정하는 메서드
-				setApplyProgram(null);
+				setApplyProgram(ageCode);
 				break;
 				
 			}
@@ -468,7 +506,7 @@ public class ProgramManage {
 						System.out.println();
 						
 						// 신청 설정하는 메서드
-						setApplyProgram(null);
+						setApplyProgram(themeCode);
 						break;
 						
 					}
@@ -488,12 +526,15 @@ public class ProgramManage {
 	 */
 	private String getTheme() {
 		clear();
-		System.out.println("    [테마를 선택하세요]");
-		System.out.println("1. 요리\t\t2. 스포츠");
-		System.out.println("3. 언어\t\t4. 건강");
-		System.out.println("5. 원예\t\t6. 미술");
-		System.out.println("7. 댄스\t\t8. 악기");
-		System.out.println("9. 컴퓨터\t0. 뒤로가기");
+		System.out.println("======================================================");
+		System.out.println("\t<프로그램 테마 선택하기>");
+		System.out.println("======================================================");
+		System.out.println("\t1. 요리\t\t2. 스포츠");
+		System.out.println("\t3. 언어\t\t4. 건강");
+		System.out.println("\t5. 원예\t\t6. 미술");
+		System.out.println("\t7. 댄스\t\t8. 악기");
+		System.out.println("\t9. 컴퓨터\t0. 뒤로가기");
+		System.out.println("======================================================");
 		
 		System.out.println();
 		System.out.print("테마 번호를 선택하세요 :");
@@ -554,7 +595,7 @@ public class ProgramManage {
 						System.out.println();
 						
 						// 신청 설정하는 메서드
-						setApplyProgram(null);
+						setApplyProgram(yearMonth);
 						break;
 						
 					}
@@ -575,12 +616,13 @@ public class ProgramManage {
 	 */
 	private String getYearMonth() {
 		clear();
-		System.out.println("[월을 선택하세요]");
-		System.out.println("1. 2020-12");
-		System.out.println("2. 2021-01");
-		System.out.println("3. 2021-02");
-		System.out.println("4. 2021-03");
-		System.out.println("5. 뒤로가기");
+		System.out.println("=============================================");
+		System.out.println("\t<프로그램 시작월 선택하기>");
+		System.out.println("=============================================");
+		System.out.println("\t1. 2020-12");
+		System.out.println("\t2. 2021-01");
+		System.out.println("\t3. 뒤로가기");
+		System.out.println("=============================================");
 		
 		System.out.println();
 		System.out.print("번호를 선택하세요 :");
@@ -589,9 +631,7 @@ public class ProgramManage {
 		switch (num) {
 			case 1: return "2020-12";
 			case 2: return "2021-1";
-			case 3: return "2021-2";
-			case 4: return "2021-3";
-			case 5: return "";			
+			case 3: return "";			
 			default: return ""; 
 		}
 	}
