@@ -9,6 +9,7 @@ import com.project.center.employee.EmployeeAttendance;
 import com.project.center.employee.EmployeeAttendanceManage;
 import com.project.center.employee.EmployeeManage;
 import com.project.center.faciltiy.FacilityReservation;
+import com.project.center.faciltiy.GymReservation;
 import com.project.center.faciltiy.LockerManage;
 import com.project.center.program.ProgramManage;
 import com.project.center.program.ProgramRegistrationList;
@@ -95,6 +96,7 @@ public class CulturalCenter {
 
 						
 					} else if (Num == 4) {
+						GymReservation.reservationGym(login);
 						System.out.println("시설예약");
 						
 					} else if (Num == 5) {
