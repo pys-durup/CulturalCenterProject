@@ -71,11 +71,15 @@ public class LockerManage {
 		
 		try {
 			boolean check = false;
-			String lNum = null, uCode = null, sDate = null, eDate = null;
+			String lNum = null, uCode = null, sDate = null, eDate = null, uName = null;
 
 			Scanner scan = new Scanner(System.in);
 			
-			System.out.print("회원번호를 입력해주세요 : ");
+			
+			System.out.println("=======================================================");
+			System.out.println("\t     회원별 사물함 정보");
+			System.out.println("=======================================================");
+			System.out.print("\t회원번호를 입력해주세요 : ");
 			int userCode = Integer.parseInt(scan.nextLine());	//숫자비교 하기위해 int로 형변환
 			
 			if (userCode > uTemp.size() || userCode < 0) {		//사물함 끝번호가 넘어가는 숫자 입력 불가능
@@ -85,16 +89,26 @@ public class LockerManage {
 				String sUserCode = String.format("%d", userCode); //다시 String으로 형변환
 
 				for (Locker locker : lTemp) {
-					if (locker.getUserCode().equals(sUserCode)) {
-						check = true;
-						lNum = locker.getLockerNum();
-						uCode = locker.getUserCode();
-						sDate = locker.getStartDate();
-						eDate = locker.getEndDate();	//해당회원이 사물함을 이용한다면 각 변수에 회원정보 저장
+					for (User user : uTemp) {
+						if (locker.getUserCode().equals(sUserCode)) {
+							check = true;
+							lNum = locker.getLockerNum();
+							uCode = locker.getUserCode();
+							sDate = locker.getStartDate();
+							eDate = locker.getEndDate();	//해당회원이 사물함을 이용한다면 각 변수에 회원정보 저장
+							if (locker.getUserCode().equals(user.getCode())) {
+							uName = user.getName();
+							}
+						}
 					}
 				}
 				if (check == true) {
-					System.out.printf("\n사물함번호:%s, 회원번호:%s, 이용기간:%s ~ %s\n", lNum, uCode, sDate, eDate);
+					System.out.println("=======================================================");
+					System.out.println("\t1.사물함 번호 : " + lNum);
+					System.out.println("\t2.회원 번호 :  " + uCode);
+					System.out.println("\t3.회원 이름 :  " + uName);
+					System.out.printf("\t4.이용 기간 : %s ~ %s\n", sDate, eDate);
+					System.out.println("=======================================================");
 				} else {
 					System.out.println("\n\t해당 회원이 현재 사물함을 이용하지 않습니다.");
 				}
@@ -171,8 +185,11 @@ public class LockerManage {
 			//이용기간이 무조건 한달이므로 endDate는 이용 시작일 이후 1달로 지정 
 			c.set(Calendar.MONTH, c.get(Calendar.MONTH)+1);
 			String endDate = String.format("%tF", c);
-
-			System.out.print("배정을 원하시는 사물함 번호를 입력하세요. : ");
+			
+			System.out.println("==============================================================");
+			System.out.println("\t     사물함 배정");
+			System.out.println("==============================================================");
+			System.out.print("\t배정을 원하시는 사물함 번호를 입력하세요. : ");
 			int lockerNum = Integer.parseInt(scan.nextLine());	//숫자비교 하기위해 int로 형변환
 			
 			if (lockerNum > lTemp.size() || lockerNum < 0) {		//사물함 끝번호가 넘어가는 숫자 입력 불가능
@@ -186,14 +203,15 @@ public class LockerManage {
 					//System.out.println(locker.getLockerNum());
 					if (locker.getLockerNum().equals(slockerNum)) {
 
-						System.out.printf("사물함번호:%s, 회원번호:%s, 시작:%s, 끝:%s\n"
-								, locker.getLockerNum()
-								, locker.getUserCode()
-								, locker.getStartDate()
-								, locker.getEndDate());
+//						System.out.printf("사물함번호:%s, 회원번호:%s, 시작:%s, 끝:%s\n"
+//								, locker.getLockerNum()
+//								, locker.getUserCode()
+//								, locker.getStartDate()
+//								, locker.getEndDate());
 
-						System.out.print("회원 번호를 입력하세요. : ");
+						System.out.print("\t회원 번호를 입력하세요. : ");
 						int userCode = Integer.parseInt(scan.nextLine());
+						System.out.println("==============================================================");
 						
 						if (userCode > uTemp.size() || userCode < 0) {
 							System.out.println("올바르지 않은 회원번호입니다.");
@@ -206,8 +224,8 @@ public class LockerManage {
 							locker.setEndDate(endDate);			//이용기간 한달 -> 다다음달 1일
 							
 							System.out.println("\n\t사물함 배정이 완료되었습니다.");
-							System.out.println("\t*사물함을 배정 받으신 회원님은 다음달 1일부터 사물함 이용이 가능합니다.*");
-	
+							System.out.println("\t*사물함을 배정 받으신 회원님은 다음달 1일부터 사물함 이용이 가능합니다.*\n");
+							System.out.println("==============================================================");
 							break;
 						}
 					}
@@ -235,12 +253,14 @@ public class LockerManage {
 	
 	//사물함 메인화면 출력 메서드
 	private static void showMain() {
-		
-		System.out.println("\n\t  [사물함 관리]\n");
+		System.out.println("=========================================");
+		System.out.println("\t  사물함 관리");
+		System.out.println("=========================================");
 		System.out.println("\t1. 사물함 사용 현황");
 		System.out.println("\t2. 사물함 배정");
 		System.out.println("\t3. 회원별 사물함 정보");
 		System.out.println("\n\t이전으로 가고 싶으면 0번을 입력하세요.");
+		System.out.println("=========================================");
 		
 	}
 
@@ -252,13 +272,14 @@ public class LockerManage {
 			BufferedReader lockerReader = new BufferedReader(new FileReader(Path.LOCKER));
 			BufferedReader userReader = new BufferedReader(new FileReader(Path.USERLIST));
 			
-			System.out.println("------------------------------------------------------------------------------");
+			System.out.println("==============================================================================");
 			System.out.println("                                   사 물 함");
 			System.out.println("==============================================================================");
 			
 			String line = null;
 
-			while ((line = lockerReader.readLine()) != null) {
+			while ((line = lockerReader.readLine(
+					)) != null) {
 
 				String[] ltemp = line.split(","); // 락커정보 임시 배열
 
@@ -290,6 +311,7 @@ public class LockerManage {
 
 			for (int i = 0; i < l.size(); i++) {
 				for (int j = 0; j < u.size(); j++) {
+					
 					if (l.get(i).getUserCode().equals(u.get(j).getCode())) {
 						
 						//l(사물함)의 사물함 번호 출력
@@ -309,9 +331,8 @@ public class LockerManage {
 						//line1, line2에 저장해 놓은 정보 출력(10개 단위)-> 초기화 -> 다시 반복
 						if (a % 10 == 0) {// 10으로 나누어 떨어지면 개행
 							System.out.println(line1);
-							System.out.println();
 							System.out.println(line2);
-							System.out.println("\n");
+							System.out.println();
 							line1 = "";		//문자열 초기화
 							line2 = "";		//문자열 초기화
 						}
@@ -321,7 +342,7 @@ public class LockerManage {
 			
 			lockerReader.close();
 			userReader.close();
-			System.out.println("------------------------------------------------------------------------------");
+			System.out.println("==============================================================================");
 
 		} catch (Exception e) {
 			System.out.println("LockerManage.rocker()");

@@ -41,7 +41,6 @@ public class UserRegister {
 			CulturalCenter.main(null);
 		}
 		
-		
 	}
 	
 	public static void insertUser() {
@@ -137,11 +136,10 @@ public class UserRegister {
 	private static void groupCheck(String group) {
 		
 		//1번과 2번과 3번만 체크 가능
-		if (group.equals("1") && group.equals("2") && group.equals("3")) {	
-		} else {
+		if (!group.equals("1") && group.equals("2") && group.equals("3")) {	
 			System.out.println("선택지에서 선택해주시길 바랍니다.");
 			insertUser();
-		}
+		} 
 	}
 
 	//주소 유효성 검사
