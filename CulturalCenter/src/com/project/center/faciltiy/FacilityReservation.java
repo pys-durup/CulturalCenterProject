@@ -98,7 +98,7 @@ public class FacilityReservation {
 									,Integer.parseInt(resList.get(i)[3].substring(0, 2)) + 2)
 							,Integer.parseInt(resList.get(i)[4 + index])
 							);
-			
+		
 		}
 		
 		System.out.println("----------------------------------------------------");
@@ -182,7 +182,7 @@ public class FacilityReservation {
 			System.out.println("선택하신 시설을 예약하실 때 카드로 결제하셨습니다.");
 			System.out.println("환불을 진행하시겠습니까?");
 			System.out.println();
-			System.out.println("1. 예 2. 메인 메뉴로 돌아가기");
+			System.out.println("1. 예 2. 조회 메뉴로 돌아가기");
 			System.out.print("메뉴 입력 :");
 			inputRefund = scan.nextLine();
 			refundWay = "카드";
@@ -191,7 +191,7 @@ public class FacilityReservation {
 			System.out.println("선택하신 시설을 예약하실 때 휴대폰으로 결제하셨습니다.");
 			System.out.println("환불을 진행하시겠습니까?");
 			System.out.println();
-			System.out.println("1. 예 2. 메인 메뉴로 돌아가기");
+			System.out.println("1. 예 2. 조회 메뉴로 돌아가기");
 			System.out.print("메뉴 입력 :");
 			inputRefund = scan.nextLine();
 			refundWay = "휴대폰";
@@ -231,12 +231,15 @@ public class FacilityReservation {
 				System.out.println();
 				System.out.println("환불이 완료되었습니다.");
 				System.out.println();
-				System.out.println("엔터를 입력하면 메인 메뉴로 돌아갑니다.");
+				System.out.println("엔터를 입력하면 조회 메뉴로 돌아갑니다.");
 				scan.nextLine();
+				break;
 			case "2" :
-				System.out.println("메인 메뉴로 돌아갑니다.");
+				System.out.println("조회 메뉴로 돌아갑니다.");
+				break;
 			default :
-				System.out.println("잘못된 입력입니다. 메인 메뉴로 돌아갑니다.");
+				System.out.println("잘못된 입력입니다. 조회 메뉴로 돌아갑니다.");
+				break;
 			
 		}
 		
