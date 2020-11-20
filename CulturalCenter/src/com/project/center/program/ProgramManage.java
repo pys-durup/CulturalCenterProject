@@ -45,8 +45,12 @@ public class ProgramManage {
 			// 입력 번호를 받아옴
 			System.out.print("번호를 입력하세요 : ");
 			int num = selectNum();
+			System.out.println();
 			
 			if(num == 1) { // 검색어로 찾기
+				System.out.println("=====================================");
+				System.out.println("\t  <검색어로 찾기>");
+				System.out.println("=====================================");
 				System.out.print("검색어를 입력하세요 : ");
 				String text = getSearchString();
 				showSearchList(text);
@@ -76,12 +80,15 @@ public class ProgramManage {
 	 */
 	private void showMenu() {
 		clear();
-		System.out.println("[프로그램 신청]");
-		System.out.println("1. 검색어로 찾기");
-		System.out.println("2. 연령별 추천 목록");
-		System.out.println("3. 테마별 추천 목록");
-		System.out.println("4. 월별 선택");
-		System.out.println("5. 뒤로가기");
+		System.out.println("=====================================");
+		System.out.println("\t  <프로그램 신청>");
+		System.out.println("=====================================");
+		System.out.println("\t1. 검색어로 찾기");
+		System.out.println("\t2. 연령별 추천 목록");
+		System.out.println("\t3. 테마별 추천 목록");
+		System.out.println("\t4. 월별 선택");
+		System.out.println("\t5. 뒤로가기");
+		System.out.println("=====================================");
 		System.out.println();
 	}
 	
@@ -133,7 +140,8 @@ public class ProgramManage {
 				System.out.println("검색 결과가 존재하지 않습니다");
 				break;
 			} else {
-				System.out.printf("<검색결과> '%s'로 검색한 결과 입니다\n", text);
+
+				
 //				System.out.println("[번호]  [프로그램 이름]\t\t\t[강사명]    [강의실]    [시작 날짜]\t[종료 날짜]\t[정원]\t  [현재상태]\t[가격]");
 				
 				// 프로그램 목록을 출력하고 pshowList에 출력데이터를 담는다
@@ -142,7 +150,7 @@ public class ProgramManage {
 				System.out.println();
 				
 				// 신청 설정하는 메서드
-				setApplyProgram();
+				setApplyProgram(text);
 				break;
 				
 			}
@@ -154,7 +162,7 @@ public class ProgramManage {
 	 *  @param list : 출력할 리스트
 	 *  
 	 */
-	private void setApplyProgram() {
+	private void setApplyProgram(String text) {
 		
 		int index = 1;
 		int startIndex = 1;
@@ -169,9 +177,13 @@ public class ProgramManage {
 			
 			int size = this.pshowList.size();
 			clear();
+			System.out.println("============================================================================================================================================");
+			System.out.println("\t  <선택한 프로그램의 목록>");
+			if(text != null) System.out.printf("\t  '%s'로 검색한 결과 입니다\n", text);
+			System.out.println("============================================================================================================================================");
 			System.out.println("프로그램의 개수 : " + size);
 			
-			System.out.println("[번호]  [프로그램 이름]\t\t\t\t [강사명]     [강의실]    [시작 날짜]\t[종료 날짜]\t [정원]   j [현재상태] [가격]");
+			System.out.println("[번호]  [프로그램 이름]\t\t\t\t [강사명]     [강의실]    [시작 날짜]\t[종료 날짜]\t [정원]   [현재상태]       [가격]");
 			for(int i=startIndex ; i<=endIndex ; i++) {
 				//  [프로그램 이름]   [강사명]    [강의실]     [시작 날짜]   [종료 날짜]   [정원]   [현재상태]     [가격]
 				System.out.printf("%3d\t%-25s\t%5s\t%s\t   %s\t%s\t(%d/%d)\t    %s\t %,d원\n"
@@ -195,9 +207,13 @@ public class ProgramManage {
 			// 검색 개수에 따라서 개수 조절
 			System.out.println();
 			if(this.pshowList.size() < 10) {
+				System.out.println("============================================================================================================================================\n");
 				System.out.println("1. 프로그램 신청하기\t 4. 뒤로가기");
+				System.out.println();
 			} else {
+				System.out.println("============================================================================================================================================\n");
 				System.out.println("1. 프로그램 신청하기 2. 이전 목록 3. 다음 목록 4. 뒤로가기");
+				System.out.println();
 			}
 			
 			System.out.print("번호를 입력하세요 : ");
@@ -271,7 +287,6 @@ public class ProgramManage {
 	private void showProgramList(ArrayList<Program> list) {
 		this.pshowList.clear(); // 초기화
 		for(Program p : list) { // 검색 결과가 있을때 출력내용 생성
-			System.out.println();
 			int count = 0; // 현재 수강중인 인원
 			String state = ""; // 현재 프로그램 모집상태(모집중 / 마감)
 			
@@ -399,7 +414,7 @@ public class ProgramManage {
 				System.out.println();
 				
 				// 신청 설정하는 메서드
-				setApplyProgram();
+				setApplyProgram(null);
 				break;
 				
 			}
@@ -446,7 +461,7 @@ public class ProgramManage {
 						System.out.println();
 						
 						// 신청 설정하는 메서드
-						setApplyProgram();
+						setApplyProgram(null);
 						break;
 						
 					}
@@ -532,7 +547,7 @@ public class ProgramManage {
 						System.out.println();
 						
 						// 신청 설정하는 메서드
-						setApplyProgram();
+						setApplyProgram(null);
 						break;
 						
 					}
@@ -594,7 +609,7 @@ public class ProgramManage {
 	// 일시정지
 	private static void pause() {
 		Scanner scan = new Scanner(System.in);
-		System.out.println("일시정지");
+		System.out.println("엔터키를 누르면 이전화면으로 돌아갑니다");
 		scan.nextLine();
 		for(int i=0 ; i<20 ; i++) {
 			System.out.println();
