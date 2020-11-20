@@ -174,24 +174,35 @@ public class FacilityReservation {
 						);
 		System.out.println();
 		
-		System.out.println("[결제 수단 선택]");
-		System.out.println("1. 휴대폰    2. 카드    3. 메인 메뉴로 돌아가기");
-		System.out.print("결제 수단을 입력하세요. :");
-		String inputRefund = scan.nextLine();
+		
+		String inputRefund = "";
+		String refundWay = "";
+		
+		if (reservation[5 + index].equals("1")) {
+			System.out.println("선택하신 시설을 예약하실 때 카드로 결제하셨습니다.");
+			System.out.println("환불을 진행하시겠습니까?");
+			System.out.println();
+			System.out.println("1. 예 2. 메인 메뉴로 돌아가기");
+			System.out.print("메뉴 입력 :");
+			inputRefund = scan.nextLine();
+			refundWay = "카드";
+			
+		} else if (reservation[5 + index].equals("2")) {
+			System.out.println("선택하신 시설을 예약하실 때 휴대폰으로 결제하셨습니다.");
+			System.out.println("환불을 진행하시겠습니까?");
+			System.out.println();
+			System.out.println("1. 예 2. 메인 메뉴로 돌아가기");
+			System.out.print("메뉴 입력 :");
+			inputRefund = scan.nextLine();
+			refundWay = "휴대폰";
+			
+		}
+		
 		System.out.println();
 		
-		String refundWay = "";
-		boolean checkWay = false;
-		
 		switch(inputRefund) {
-			case "1"
-				: refundWay = "휴대폰";
-				checkWay = true;
-			case "2"
-				: if (!checkWay) {
-					refundWay = "카드";
-				}
-				
+			case "1" :
+			
 				if (index == 1) {
 					System.out.println("[세미나실 환불 정보]");
 					room = "호";
@@ -222,10 +233,10 @@ public class FacilityReservation {
 				System.out.println();
 				System.out.println("엔터를 입력하면 메인 메뉴로 돌아갑니다.");
 				scan.nextLine();
-			case "3"
-				:
-			default
-				: System.out.println("메인 메뉴로 돌아갑니다.");
+			case "2" :
+				System.out.println("메인 메뉴로 돌아갑니다.");
+			default :
+				System.out.println("잘못된 입력입니다. 메인 메뉴로 돌아갑니다.");
 			
 		}
 		
