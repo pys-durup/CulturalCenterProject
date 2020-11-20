@@ -98,7 +98,6 @@ public class CulturalCenter {
 						System.out.println("시설예약 확인");
 						FacilityReservation.findReservationList(login);
 					} else if (Num == 6) {
-						System.out.println("마일리지");
 						
 					} else if (Num == 7) {
 						System.out.println("진행중 이벤트");
