@@ -290,25 +290,32 @@ public class ProgramManage {
 			int count = 0; // 현재 수강중인 인원
 			String state = ""; // 현재 프로그램 모집상태(모집중 / 마감)
 			
-			for(ProgramStudent ps : this.psList) {
-				if(p.getCode().equals(ps.getCode())) {
-					count = ps.getCount();
-					state = ps.getState();
-					break;
+			// 프로그램의 시작날짜가 오늘보다 늦은거
+			Calendar now = Calendar.getInstance();
+			Calendar startDate = stringToCal(p.getStartDate());
+			if(!now.after(startDate)) {
+				
+				for(ProgramStudent ps : this.psList) {
+					if(p.getCode().equals(ps.getCode())) {
+						count = ps.getCount();
+						state = ps.getState();
+						break;
+					}
+				}
+				// 출력을 위한 ArrayList<ProgramList> 에 정보들을 넣어놓는다
+				this.pshowList.add(new ProgramList(p.getCode()
+						,p.getName()
+						,p.getTeacher()
+						,p.getClassRoom()
+						,p.getStartDate()
+						,p.getEndDate()
+						,count
+						,p.getCapacity()
+						,state
+						,p.getPrice()));
 				}
 			}
-			// 출력을 위한 ArrayList<ProgramList> 에 정보들을 넣어놓는다
-			this.pshowList.add(new ProgramList(p.getCode()
-											,p.getName()
-											,p.getTeacher()
-											,p.getClassRoom()
-											,p.getStartDate()
-											,p.getEndDate()
-											,count
-											,p.getCapacity()
-											,state
-											,p.getPrice()));
-		}
+			
 	}
 	
 	
@@ -703,6 +710,20 @@ public class ProgramManage {
 			System.out.println("파일이 존재하지 않음");
 			return null;
 		}
+	}
+	
+	// String -> Calendar
+	public static Calendar stringToCal(String s) {
+		// "YYYY-MM-DD"
+		String[] list = s.split("-");
+		int year = Integer.parseInt(list[0]);
+		int month = Integer.parseInt(list[1]);
+		int date = Integer.parseInt(list[2]);
+
+		Calendar temp = Calendar.getInstance();
+		temp.set(year, month - 1, date);
+		return temp;
+
 	}
 
 	
