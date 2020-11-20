@@ -40,6 +40,8 @@ public class GymReservation {
 			
 			String line = null;
 			
+			gymList = new ArrayList<Gym>();
+			
 			while ((line = reader.readLine()) != null) {
 				String[] list = line.split(",");
 				if (room == 1) {

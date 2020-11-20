@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import com.project.center.user.UserMyPage;
 import com.project.center.user.User;
+import com.project.center.user.UserFind;
 import com.project.center.employee.EmployeeAttendance;
 import com.project.center.employee.EmployeeAttendanceManage;
 import com.project.center.employee.EmployeeManage;
@@ -54,7 +55,8 @@ public class CulturalCenter {
 				// 회원 가입 완료후 다시 메인화면으로
 			} else if(Num == 3) {
 				// 아이디/비밀번호 찾기 메서드
-				
+				System.out.println("아이디/비밀번호 찾기 선택");
+				UserFind.findUser();
 				
 				
 			} else if(Num == 4) { // 종료
