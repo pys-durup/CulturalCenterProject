@@ -110,7 +110,7 @@ public class UserRegister {
 			addressCheck(address);
 			
 			System.out.println("1.일반 2.기초생활수급자 3.차상위계층");
-			System.out.print("분    류 : ");
+			System.out.print("분    류 (숫자입력) : ");
 			group = scan.nextLine();
 			//분류 유효성 검사
 			groupCheck(group);
@@ -137,7 +137,7 @@ public class UserRegister {
 	private static void groupCheck(String group) {
 		
 		//1번과 2번과 3번만 체크 가능
-		if (group.equals("1") && group.equals("2") && group.equals("3")) {	
+		if (group.equals("1") || group.equals("2") || group.equals("3")) {	
 		} else {
 			System.out.println("선택지에서 선택해주시길 바랍니다.");
 			insertUser();

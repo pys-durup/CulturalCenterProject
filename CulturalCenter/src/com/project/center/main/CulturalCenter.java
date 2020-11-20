@@ -2,11 +2,14 @@ package com.project.center.main;
 
 import java.util.Scanner;
 
+import com.project.center.user.UserFind;
+import com.project.center.employee.EmployeeAttendance;
 import com.project.center.employee.EmployeeAttendanceManage;
 import com.project.center.employee.EmployeeManage;
 import com.project.center.extra.MileageConfirm;
 import com.project.center.program.ProgramAttendanceManage;
 import com.project.center.faciltiy.FacilityReservation;
+import com.project.center.faciltiy.GymReservation;
 import com.project.center.faciltiy.LockerManage;
 import com.project.center.program.ProgramManage;
 import com.project.center.program.ProgramRegistrationList;
@@ -52,7 +55,8 @@ public class CulturalCenter {
 				// 회원 가입 완료후 다시 메인화면으로
 			} else if(Num == 3) {
 				// 아이디/비밀번호 찾기 메서드
-				
+				System.out.println("아이디/비밀번호 찾기 선택");
+				UserFind.findUser();
 				
 				
 			} else if(Num == 4) { // 종료
@@ -94,6 +98,7 @@ public class CulturalCenter {
 
 						
 					} else if (Num == 4) {
+						GymReservation.reservationGym(login);
 						System.out.println("시설예약");
 						
 					} else if (Num == 5) {
