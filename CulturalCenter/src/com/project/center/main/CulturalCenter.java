@@ -99,7 +99,7 @@ public class CulturalCenter {
 					} else if (Num == 5) {
 						System.out.println("시설예약 확인");
 						FacilityReservation.findReservationList(login);
-						
+
 					} else if (Num == 6) { // 마일리지
 						MileageConfirm mc = new MileageConfirm();
 						mc.showMyMileage(login);
