@@ -19,6 +19,9 @@ public class UserManage {
 	//회원 정보 담는 ulist와 초기화
 	private static ArrayList<User> uList = new ArrayList<User>();
 
+	//삭제된 회원의 정보를 담는 deletedUserList
+	private static ArrayList<User> deletedUserList = new ArrayList<User>();
+
 	static boolean mainFlag = true;
 	
 	public void userManageMain() {
@@ -47,6 +50,11 @@ public class UserManage {
 				deleteUser();
 				//break;
 				
+			} else if(Num == 5) { //5. 삭제 회원 목록
+				getUserInfo();
+				deletedUserList();
+				//break;
+				
 			} else {
 				break;
 			}
@@ -58,6 +66,42 @@ public class UserManage {
 	} //userManageMain
 	
 	
+	//삭제된 회원의 정보를 출력하는 메서드
+	private void deletedUserList() {
+		
+
+			System.out.println("===============================================================================");
+			System.out.println("                                 삭제 회원 정보 조회");
+			System.out.println("===============================================================================");
+			
+			System.out.println(" [번호] [회원명] [생년월일]\t[아이디]\t [비밀번호] [성별]\t[전화번호]\t  [계층]\t   [주소]");
+			
+			System.out.println("-------------------------------------------------------------------------------");
+
+			
+				for (int j=0; j<deletedUserList.size(); j++) {
+					
+					System.out.printf("%5s %4s %s %s %s %s %s %3s\t%s\r\n"
+							, deletedUserList.get(j).getCode()	
+							, deletedUserList.get(j).getName()
+							, deletedUserList.get(j).getBirth()	
+							, deletedUserList.get(j).getId()	
+							, deletedUserList.get(j).getPw()	
+							, deletedUserList.get(j).getGender()	
+							, deletedUserList.get(j).getTel()
+							, deletedUserList.get(j).getGroup()
+							, deletedUserList.get(j).getAddress());
+						
+					}
+				
+				System.out.println("===============================================================================");
+				
+				pause();
+
+		
+	}
+
+
 	// 프로그램의 메인 화면을 출력하는 메서드
 	public static void showMain() {
 		
@@ -68,6 +112,7 @@ public class UserManage {
 		System.out.println("\t2. 회원 정보 검색");
 		System.out.println("\t3. 회원 정보 수정");
 		System.out.println("\t4. 회원 정보 삭제");
+		System.out.println("\t5. 삭제 회원 목록");
 		System.out.println("\n\t이전으로 가고 싶으면 0번을 입력하세요.");
 		System.out.println("========================================");
 		                                                                                    
@@ -104,11 +149,14 @@ public class UserManage {
 	private static void getUserInfo() {
 	
 		uList.clear();
+		deletedUserList.clear();
 		
 		try {
 			
 			//회원 파일 경로 읽어오기
 			BufferedReader reader = new BufferedReader(new FileReader(Path.USERLIST));
+			//삭제된 회원 파일 경로 읽어오기
+			BufferedReader reader2 = new BufferedReader(new FileReader(Path.DELETEUSERLIST));
 			
 			String line = null;
 
@@ -129,14 +177,38 @@ public class UserManage {
 											temp[7].equals("2") ? "차상위" : "기초" //계층
 								, temp[8]));	//주소));
 				
-			}
+				
+				
+				String line2 = null;
 
+				while ((line2 = reader2.readLine()) != null) {
+
+					//기본형태
+					//1,박영수,1993-11-15,gmosfi20,Hq!GqaC88,1,01060169587,1,서울시 용산구 한남동
+					String[] temp2 = line2.split(",");
+
+					deletedUserList.add(new User(temp2[0]	//회원번호
+									, temp2[1]	//회원명
+									, temp2[2]	//생년월일
+									, temp2[3]	//아이디
+									, temp2[4]	//비밀번호
+									, temp2[5].equals("1") ? "남자" : "여자" //성별
+									, temp2[6]	//번호
+									, temp2[7].equals("1") ? "일반" : 
+												temp2[7].equals("2") ? "차상위" : "기초" //계층
+									, temp2[8]));	//주소));	
+				
+				}
+			}
+			
+			reader2.close();
 			reader.close();
 			
 		} catch (Exception e) {
 			System.out.println("UserInfo.getUserInfo()");
 			e.printStackTrace();
 		}
+		
 	}
 	
 	
