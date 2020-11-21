@@ -1,5 +1,10 @@
 package com.project.center.program;
 
+/**
+ * @author youngsu 
+ * 프로그램 객체
+ * 
+ */
 public class Program {
 
 	private String code;
@@ -22,6 +27,10 @@ public class Program {
 		this.endDate = endDate;
 		this.capacity = capacity;
 		this.price = price;
+	}
+	
+	public Program(String code, String name, String teacher, String startDate, String endDate) {
+		this(code, name, teacher, "", startDate, endDate, 0, 0);
 	}
 
 	public String getCode() {

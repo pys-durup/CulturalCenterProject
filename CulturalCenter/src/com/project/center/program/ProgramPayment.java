@@ -46,12 +46,12 @@ public class ProgramPayment {
 			가격 : 1,000,000원
 			마일리지 적립액 : 50,000원
 		 */
-		
+		clear();
 		System.out.println("[신청 프로그램 정보]");
 		System.out.printf("프로그램 이름 : %s\n", this.paymentProgram.getName());
 		System.out.printf("가격 : %,d원\n",this.paymentProgram.getPrice());
 		System.out.printf("적립 마일리지 : %,d점\n", (int)(this.paymentProgram.getPrice() * 0.05));
-		
+		System.out.println();
 		System.out.println("결제 수단을 선택하세요");
 		System.out.println("1. 휴대폰  2. 카드  3.결제 취소하기");
 		System.out.print("번호를 입력하세요 : ");
@@ -62,6 +62,7 @@ public class ProgramPayment {
 				System.out.println("휴대폰 결제 성공");
 			} else { // 휴대폰 결제 실패시
 				System.out.println("휴대폰 결제 실패");
+				pause();
 			}
 		}else if (num == 2) { // 카드
 			if(cardPayment()) { // 카드 결제 성공시
@@ -192,7 +193,7 @@ public class ProgramPayment {
 	 */
 	private void savePaymentData(String data) {
 		try {
-			System.out.println("savePaymentData method");
+//			System.out.println("savePaymentData method");
 			BufferedWriter writer = new BufferedWriter(new FileWriter(Path.PROGRAMPAYMENT, true));
 			writer.write(data);
 			writer.close();
@@ -501,5 +502,11 @@ public class ProgramPayment {
 		scan.nextLine();
 		clearPage();
 
+	}
+	
+	private void clear() {
+		for (int i=0 ; i<40 ; i++) {
+			System.out.println();
+		}
 	}
 }
