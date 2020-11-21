@@ -18,7 +18,6 @@ public class UserManage {
 	
 	//회원 정보 담는 ulist와 초기화
 	private static ArrayList<User> uList = new ArrayList<User>();
-
 	//삭제된 회원의 정보를 담는 deletedUserList
 	private static ArrayList<User> deletedUserList = new ArrayList<User>();
 
@@ -36,24 +35,19 @@ public class UserManage {
 			if(Num == 1) { 	//1. 회원 목록 조회
 				getUserInfo();
 				viewUserList();
-				//break;
 				
 			} else if(Num == 2) { //2. 회원 정보 검색
 				searchUser();
-				//break;
 				
 			} else if(Num == 3) { //3. 회원 정보 수정
 				changeUserInfo();
-				//break;
 				
 			} else if(Num == 4) { //4. 회원 정보 삭제
 				deleteUser();
-				//break;
 				
 			} else if(Num == 5) { //5. 삭제 회원 목록
 				getUserInfo();
 				deletedUserList();
-				//break;
 				
 			} else {
 				break;
@@ -68,7 +62,6 @@ public class UserManage {
 	
 	//삭제된 회원의 정보를 출력하는 메서드
 	private void deletedUserList() {
-		
 
 			System.out.println("===============================================================================");
 			System.out.println("                                 삭제 회원 정보 조회");
@@ -91,7 +84,6 @@ public class UserManage {
 							, deletedUserList.get(j).getTel()
 							, deletedUserList.get(j).getGroup()
 							, deletedUserList.get(j).getAddress());
-						
 					}
 				
 				System.out.println("===============================================================================");
@@ -183,8 +175,7 @@ public class UserManage {
 
 				while ((line2 = reader2.readLine()) != null) {
 
-					//기본형태
-					//1,박영수,1993-11-15,gmosfi20,Hq!GqaC88,1,01060169587,1,서울시 용산구 한남동
+					//기본형태 : 위와 동일
 					String[] temp2 = line2.split(",");
 
 					deletedUserList.add(new User(temp2[0]	//회원번호
