@@ -179,22 +179,7 @@ public class ProgramManage {
 			clear();
 			System.out.println("============================================================================================================================================");
 			System.out.println("\t  <선택한 프로그램의 목록>");
-//			if (text.equals("TA")) {
-//				System.out.println("\t  '청소년'에게 추천하는 프로그램 검색 결과입니다");
-//			} else if (text.equals("AD")) { 
-//				System.out.println("\t  '성인'에게 추천하는 프로그램 검색 결과입니다");
-//			} else if (text.equals("OD")) { 
-//				System.out.println("\t  '중장년'에게 추천하는 프로그램 검색 결과입니다");
-//			} else if (text.equals("01")) {
-//				
-//			} else if () {
-//				{
-//			}
-//				System.out.println("asdf");
-//			} else {
-//				System.out.printf("\t  '%s'로 검색한 결과 입니다\n", text);
-//			}
-			
+
 			switch (text) {
 			case "TA": System.out.println("\t  '청소년'에게 추천하는 프로그램 검색 결과입니다"); break;
 			case "AD": System.out.println("\t  '성인'에게 추천하는 프로그램 검색 결과입니다"); break;

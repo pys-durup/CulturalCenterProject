@@ -25,9 +25,14 @@ public class ProgramRegistrationList {
 	private ArrayList<ProgramAttendance> paList;
 	private ArrayList<ProgramStudent> pstList;
 	private User login;
+	private String userCode;
 	
 	public ProgramRegistrationList(User login) {
 		this.login = login;
+	}
+	
+	public ProgramRegistrationList(String usercode) {
+		this.userCode = usercode;
 	}
 
 	public void createProgramRegistorList() {
@@ -339,7 +344,7 @@ public class ProgramRegistrationList {
 	 *  진행중인 프로그램 코드를 구한다
 	 * 
 	 */
-	private String myProgramState() {
+	public String myProgramState() {
 		this.paymentList = loadProgramPaymentData(Path.PROGRAMPAYMENT); // 프로그램결제.txt 데이터
 		this.psList = loadProgramStateData(Path.PROGRAMSTATE); // 프로그램상태.txt 데이터
 		this.pList = loadProgramData(Path.PROGRAMLIST); // 프로그램.txt 데이터
@@ -389,7 +394,7 @@ public class ProgramRegistrationList {
 	 *  수업 이력(종료된 프로그램의 코드를 구한다)
 	 * 
 	 */
-	private ArrayList<String> myProgramHistory() {
+	public ArrayList<String> myProgramHistory() {
 		this.paymentList = loadProgramPaymentData(Path.PROGRAMPAYMENT); // 프로그램결제.txt 데이터
 		this.psList = loadProgramStateData(Path.PROGRAMSTATE); // 프로그램상태.txt 데이터
 		this.pList = loadProgramData(Path.PROGRAMLIST); // 프로그램.txt 데이터
