@@ -111,11 +111,11 @@ public class EmployeeAttendanceManage {
 					e.printStackTrace();
 				}
 				
-				System.out.printf("%d월 %d일의 출근 시각이 갱신되었습니다."
+				System.out.printf("%d월 %d일의 출근 시각이 갱신되었습니다.\n"
 						, today.get(Calendar.MONTH) + 1
 						, today.get(Calendar.DATE)
 						);
-				System.out.println("==============================================================");
+				System.out.println("==================================================================");
 				System.out.println();
 				
 			} else {
@@ -123,11 +123,11 @@ public class EmployeeAttendanceManage {
 				dummy = null;
 				employee.setEmployeeAttendanceIntoData();
 				
-				System.out.printf("%d월 %d일의 출근 시각이 기록되었습니다."
+				System.out.printf("%d월 %d일의 출근 시각이 기록되었습니다.\n"
 						, today.get(Calendar.MONTH) + 1
 						, today.get(Calendar.DATE)
 						);
-				System.out.println("==============================================================");
+				System.out.println("==================================================================");
 				System.out.println();
 			}
 			
