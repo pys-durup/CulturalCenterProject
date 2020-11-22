@@ -16,7 +16,7 @@ import data.Path;
 
 public class ProgramManageBeta {
 	
-	public static void main(String[] args) throws IOException {
+	public  void programManageBetaMain() throws IOException {
 		
 		programMain();
 		
@@ -27,34 +27,42 @@ public class ProgramManageBeta {
 			
 			if(Num == 1) {//프로그램 조회
 			
+				System.out.println();
 				System.out.println("프로그램 조회 선택");
+				System.out.println("==============================================================================================");
 				System.out.println("1.진행중인 프로그램\n\n2.종료된 프로그램");
+				System.out.println("==============================================================================================");
+
 				int Num2;
 				Num2 = selectNum();
 			
-					if(Num2 ==1 ) {
-				
-					
-					System.out.println("진행중인 프로그램 조회 선택");
-					findProgramOnList();
-					back();
-					
-					}else if (Num2 == 2) {
-					
-					System.out.println("종료된 프로그램 조회 선택");
-					findProgramOffList();
-					back();
-					}else {
+					while(true) {
 						
-						
-						
-						if(Num2 !=1 || Num2 !=2) {
-														
-							System.out.println();
-							System.out.println("\t\t\t올바른 번호를 입력해 주세요.");
-							System.out.println("1.진행중인 프로그램\n\n2.종료된 프로그램");
-							Num2 = selectNum();
-						}
+						if(Num2 ==1 ) {
+							
+							
+							System.out.println("진행중인 프로그램 조회 선택");
+							findProgramOnList();
+							back();
+							break;
+						}else if (Num2 == 2) {
+							
+							System.out.println("종료된 프로그램 조회 선택");
+							findProgramOffList();
+							back();
+							break;
+						}else {
+							
+							
+							
+							if(Num2 !=1 || Num2 !=2) {
+								
+								System.out.println();
+								System.out.println("\t\t\t올바른 번호를 입력해 주세요.");
+								System.out.println("1.진행중인 프로그램\n\n2.종료된 프로그램");
+								Num2 = selectNum();
+							}
+					}
 							
 						
 						
@@ -69,7 +77,7 @@ public class ProgramManageBeta {
 				findProgramOnList();
 				insertProgram();
 				System.out.println("프로그램 등록이 완료 되었습니다.");
-			
+				programMain();
 			
 			}else if(Num == 3) { //프로그램 수정
 		
@@ -78,16 +86,10 @@ public class ProgramManageBeta {
 				modifyNumprogram();
 				findProgramOnList();
 				System.out.println("프로그램 수정이 완료 되었습니다.");
-				back();
+				programMain();
 				
-			}else if(Num == 4) { //프로그램 삭제
 				
-				System.out.println("프로그램 삭제 선택");
-				deleteProgram();
-				deleteNumProgram();
-				
-			}
-			else if(Num == 5) { //종료
+			}else if(Num == 4) { //종료
 		
 				System.out.println("프로그램을 종료합니다.");
 				break;
@@ -109,13 +111,16 @@ public class ProgramManageBeta {
 	}//main
 
 	
-	
+	//프로그램 등록 메서드
 	private static void insertProgram() throws IOException {
 
 		final String PATH = Path.PROGRAMLIST;
 		File file = new File(PATH);
 		System.out.println();
+		System.out.println("==============================================================================================");
+		System.out.println();
 		System.out.println("예시 : AD020188,[고급]신나고즐거운종이접기,유진준,511,2020-12-1,2020-12-31,40,400000");
+		System.out.println();
 		System.out.println("등록할 프로그램 정보를 입력하여 주세요.");
 
 		Scanner scan = new Scanner(System.in);
@@ -137,20 +142,7 @@ public class ProgramManageBeta {
 
 
 
-	private static void deleteNumProgram() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	private static void deleteProgram() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
+	//프로그램 수정 정보입력 메서드
 	private static void modifyNumprogram() throws IOException {
 		
 		String fileName = "src\\data\\프로그램.txt";
@@ -187,20 +179,54 @@ public class ProgramManageBeta {
 	}
 
 
-
+	
 	private static void modifyProgram() {
 		
 		findProgramOnList();
 		
 	}
-
+	//종료된 프로그램 조회 메서드
 	private static void findProgramOffList() {
 		
-		System.out.println("종료됨");
+		System.out.println("종료된 프로그램코드");
+		final String PATH = Path.PROGRAMSTATE;
+		File file = new File(PATH);
+		
+		try {
+			
+			
+			BufferedReader reader = new BufferedReader(new FileReader(PATH));
+			
+			String line =null;
+			
+			while ((line = reader.readLine()) != null) {
+				
+				String[] temp = line.split(",");
+				if(temp[3].equals("종료됨")){
+					
+					System.out.printf("%s\t%s\t%s\t%s\t\n"
+							,temp[0]
+							,temp[1]
+							,temp[2]
+							,temp[3]);}
+						
+					
+				
+				}
+			
+			reader.close();
+			
+			
+			
+		} catch (Exception e) {
+			System.out.println();
+			
+		}
+				
 		
 	}
 
-
+	//진행중 프로그램 조회메서드
 	private static void findProgramOnList() {
 
 		final String PATH = Path.PROGRAMLIST;
@@ -216,7 +242,7 @@ public class ProgramManageBeta {
 			while ((line = reader.readLine()) != null) {
 				
 				String[] temp = line.split(",");
-				
+		
 				System.out.printf("%-8s%-18s\t%s\t%s\t%s\t%s\t%s\t%s\n"
 						,temp[0]
 						,temp[1]
@@ -243,8 +269,9 @@ public class ProgramManageBeta {
 
 	// 프로그렘 관리 메인 메서드
 	public static void programMain() {
-
-		System.out.println("1.프로그램 조회\n\n2.프로그램 등록\n\n3.프로그램 수정\n\n4.프로그램 삭제\n\n5.종료");
+		System.out.println("==============================================================================================");	
+		System.out.println("1.프로그램 조회\n\n2.프로그램 등록\n\n3.프로그램 수정\n\n4.종료");
+		System.out.println("==============================================================================================");
 	}
 	
 	// 번호 입력 메서드
@@ -260,6 +287,7 @@ public class ProgramManageBeta {
 	//뒤로 가기 메서드
 	private static void back() {
 		System.out.println();
+		System.out.println("==============================================================================================");
 		while(true) {
 			System.out.print("뒤로 가시려면 B를 눌러주세요 : ");
 			

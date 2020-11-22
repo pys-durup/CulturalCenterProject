@@ -1,17 +1,27 @@
 package com.project.center.main;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 import com.project.center.user.UserFind;
 import com.project.center.employee.EmployeeAttendance;
 import com.project.center.employee.EmployeeAttendanceManage;
 import com.project.center.employee.EmployeeManage;
+import com.project.center.extra.Event;
 import com.project.center.extra.MileageConfirm;
+import com.project.center.extra.NoticeManage;
+import com.project.center.program.ClassRoomManage;
 import com.project.center.program.ProgramAttendanceManage;
 import com.project.center.faciltiy.FacilityReservation;
 import com.project.center.faciltiy.GymReservation;
 import com.project.center.faciltiy.LockerManage;
+import com.project.center.faciltiy.SeminarManage;
 import com.project.center.program.ProgramManage;
+import com.project.center.program.ProgramManageBeta;
 import com.project.center.program.ProgramRegistrationList;
 import com.project.center.user.User;
 import com.project.center.user.UserLogin;
@@ -19,9 +29,12 @@ import com.project.center.user.UserMyPage;
 import com.project.center.user.UserManage;
 import com.project.center.user.UserRegister;
 
+import data.Path;
+
 public class CulturalCenter {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+
 		
 		// 유저, 직원, 관리자
 		User login = null;
@@ -135,35 +148,47 @@ public class CulturalCenter {
 					showManageMain();
 					Num = selectNum();
 					if(Num == 1) {
-						System.out.println("직원 등록 관리");
 						administer.checkEmployeeManage();
 						administer.viewEmployeeManage();
 						
 					} else if (Num == 2) {
-						System.out.println("직원 근태 조회");
 						administer.findEmployeeAttendanceList();
 						
 					} else if (Num == 3) {
-						System.out.println("회원 관리");
+						//System.out.println("회원 관리");
 						UserManage um = new UserManage();
 						um.userManageMain();
+						
 					} else if (Num == 4) {
-						System.out.println("사물함 관리");
+						//System.out.println("사물함 관리");
 						LockerManage lm = new LockerManage();
 						lm.lockerManageMain();
+						
 					} else if (Num == 5) {
-						System.out.println("시설예약");
-						
+						System.out.println("강의실 관리");
+						ClassRoomManage crm = new ClassRoomManage();
+						makeClassRoom();
+						crm.classRoomManageMain();
 					} else if (Num == 6) {
-						System.out.println("마일리지");
-						
+						System.out.println("프로그램 관리");
+						ProgramManageBeta pmb = new ProgramManageBeta();
+						pmb.programManageBetaMain();
 					} else if (Num == 7) {
-						System.out.println("진행중 이벤트");
+						//System.out.println("진행중 이벤트");
+						Event event = new Event();
+						event.main(null);
 						
 					} else if (Num == 8) {
-						System.out.println("공지사항");
+						//System.out.println("공지사항");
+						NoticeManage notice = new NoticeManage();
+						notice.main(null);
 						
 					} else if (Num == 9) {
+						//System.out.println("시설예약");
+						SeminarManage seminar = new SeminarManage();
+						seminar.main(null);
+						
+					} else if (Num == 0) {
 						System.out.println("로그아웃");
 						break;
 					} else {
@@ -251,9 +276,53 @@ public class CulturalCenter {
 		System.out.println();
 		System.out.println("1. 직원 등록 관리\t2. 직원 근태 조회");
 		System.out.println("3. 회원 관리\t4. 사물함 관리");
-		System.out.println("5. ㅁㅁㅁㅁ\t\t6. ㅁㅁㅁㅁ");
-		System.out.println("7. ㅁㅁㅁㅁ\t8. ㅁㅁㅁㅁ");
-		System.out.println("9. 로그아웃");
+		System.out.println("5. 강의실 관리\t6. 프로그램 관리");
+		System.out.println("7. 진행중 이벤트\t8. 공지사항");
+		System.out.println("9. 시설예약\t0. 로그아웃");
+	}
+
+	//강의실 데이터 생성
+	private static void makeClassRoom() {
+		final String PATH = Path.PROGRAMLIST;
+		File file = new File(PATH);
+		
+		try {
+			
+			
+			BufferedReader reader = new BufferedReader(new FileReader(PATH));
+			
+			String line =null;
+			
+			while ((line = reader.readLine()) != null) {
+				String[] temp = line.split(",");
+				
+				FileWriter writer = new FileWriter("src\\data\\강의실.txt",true);
+				writer.append(temp[3]);
+				writer.append(',');
+				writer.append(temp[0]);
+				writer.append(',');
+				writer.append(temp[1]);
+				writer.append(',');
+				writer.append(temp[2]);
+				writer.append(',');
+				writer.append(temp[4]);
+				writer.append(',');
+				writer.append(temp[5]);
+				writer.append(',');
+				writer.append(temp[6]);
+				writer.append("\n");
+				writer.close();
+			}
+			
+			reader.close();
+			
+			
+			
+		} catch (Exception e) {
+			System.out.println("읽기종료");
+			
+		}
+		
 	}
 
 } // class 
