@@ -76,8 +76,9 @@ public class ProgramManageBeta {
 				System.out.println();
 				findProgramOnList();
 				insertProgram();
+				findProgramOnList();
 				System.out.println("프로그램 등록이 완료 되었습니다.");
-				programMain();
+				back();
 			
 			}else if(Num == 3) { //프로그램 수정
 		
