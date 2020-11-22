@@ -228,7 +228,7 @@ public class GymReservation {
 			
 		} else if (dateState.get(day) >= 4) {
 			System.out.println("===============================");
-			System.out.printf("%[d일]은 자리가 없는 날짜입니다.", day);
+			System.out.printf("[%d일]은 자리가 없는 날짜입니다.\n", day);
 			dateGym(login, month, dateState);
 		}
 		
@@ -420,7 +420,7 @@ public class GymReservation {
 
 		System.out.println("결제가 완료되었습니다.");
 		System.out.println("==============================");
-		System.out.printf("%s실 예약에 성공했습니다.", gymList.get(0).getName());
+		System.out.printf("%s실 예약에 성공했습니다.\n", gymList.get(0).getName());
 		System.out.println("==============================");
 		String type = "1";
 		

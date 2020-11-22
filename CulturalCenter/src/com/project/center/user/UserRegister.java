@@ -38,7 +38,8 @@ public class UserRegister {
 		if (check.equals("Y") || check.equals("y")) {
 			insertUser();
 		} else {
-			CulturalCenter.main(null);
+//			CulturalCenter.main(null);
+			return;	
 		}
 		
 	}

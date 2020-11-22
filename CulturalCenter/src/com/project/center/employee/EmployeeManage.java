@@ -27,6 +27,8 @@ public class EmployeeManage {
 			String masterID = masterList[0];
 			String masterPassword = masterList[1];
 			
+			System.out.println("==================================================================");
+			System.out.println("\t\t\t <직원 등록 관리>");
 			System.out.println("============================[직원 관리]===========================");
 			System.out.println();
 			System.out.printf("\t직원 관리 메뉴에 접근하기 위해, 관리자 아이디와\n"
@@ -48,6 +50,8 @@ public class EmployeeManage {
 				System.out.println("올바르지 않은 관리자 아이디 혹은 비밀번호를 입력하셨습니다!");
 				System.out.println("\t  엔터를 눌러 메인화면으로 이동해주세요.");
 				System.out.println("\t\t\t*** 경고 ***\t\t");
+				System.out.println("==================================================================");
+
 				scan.nextLine();
 				check = false;
 			}
@@ -207,6 +211,8 @@ public class EmployeeManage {
 			
 			System.out.printf("\t%s %s의 등록을 완료하였습니다.\n", resultName, inputPosition);
 			System.out.println("\t엔터를 누르시면, 관리 메뉴로 돌아갑니다.");
+			System.out.println("==================================================================");
+
 			scan.nextLine();
 			
 		} else {
@@ -215,6 +221,8 @@ public class EmployeeManage {
 			System.out.println("\t  올바르지 않은 직원 정보를 입력하셨습니다!");
 			System.out.println("\t   엔터를 눌러 관리 화면으로 이동해주세요.");
 			System.out.println("\t\t\t*** 경고 ***\t\t");
+			System.out.println("==================================================================");
+
 			scan.nextLine();
 		}
 		
@@ -322,14 +330,13 @@ public class EmployeeManage {
 				while ((line = reader.readLine()) != null) {
 					if(inputCode.equals(line.substring(0, 8))) {
 						check = true;
-						System.out.println(line.substring(0, 8));
 						break;
 					} 
 				}
 				
 				if (check) {
 					
-					System.out.println("수정할 직원의 비밀번호, 시급, 직책을 입력해주세요.");
+					System.out.println("직원의 새 비밀번호, 월 급여, 직책을 입력해주세요.");
 					System.out.println();
 					System.out.println("비밀번호는 10 ~ 16자 이내의 영어 대소문자, 숫자만을 이용하여 입력해주세요.");
 					System.out.printf("비밀번호 :");
@@ -447,6 +454,8 @@ public class EmployeeManage {
 					System.out.printf("해당 직원의 정보 수정이 완료되었습니다.");
 					System.out.println();
 					System.out.println("엔터를 누르시면 관리 메뉴로 돌아갑니다.");
+					System.out.println("==================================================================");
+
 					writer.close();
 					loop = false;
 					scan.nextLine();
@@ -465,7 +474,11 @@ public class EmployeeManage {
 	}
 	
 	public void findEmployeeAttendanceList() {
+		
+		System.out.println("==================================================================");
 
+		System.out.println("\t\t\t <직원 근태 조회>");
+		
 		Scanner scan = new Scanner(System.in);
 		boolean loop = true;
 		while (loop) {
@@ -502,6 +515,8 @@ public class EmployeeManage {
 				if (failureCheck) {
 					System.out.println("잘못된 사원코드를 입력하셨습니다!");
 					System.out.println("엔터를 누르시면, 메인 메뉴로 돌아갑니다.");
+					System.out.println("==================================================================");
+
 					loop = false;
 					scan.nextLine();
 				}
@@ -550,11 +565,11 @@ public class EmployeeManage {
 
 			int pageMove = 0;
 
-			for(int pageIndex = 0; pageIndex<attendanceBoard.size() / 20 + 1; pageIndex+=pageMove) {
+			for(int pageIndex = 0; pageIndex<attendanceBoard.size() / 15 + 1; pageIndex+=pageMove) {
 
 				System.out.println("[사원코드]====[직원이름]====[출근일자]====[근무시간]====[근태상황]");
 
-				for(int i=pageIndex * 20; i<20 + pageIndex * 20; i++) {
+				for(int i=pageIndex * 15; i<15 + pageIndex * 15; i++) {
 
 					if (i == attendanceBoard.size()) {
 						break;
@@ -586,7 +601,7 @@ public class EmployeeManage {
 				switch (scan.nextLine()) {
 
 					case "1"
-					: if (pageIndex == (attendanceBoard.size() / 20)) {
+					: if (pageIndex == (attendanceBoard.size() / 15)) {
 						System.out.println("현재 페이지가 마지막 페이지 입니다.");
 						System.out.println("엔터를 누르시고 메뉴를 다시 입력해주세요.");
 						pageMove = 0;
@@ -613,6 +628,7 @@ public class EmployeeManage {
 					default
 					: loop = false;
 					System.out.println("메인 메뉴로 돌아갑니다.");
+					System.out.println("==============================================================");
 					break;
 				};
 
@@ -664,10 +680,28 @@ public class EmployeeManage {
 						);
 			
 			BufferedReader reader = new BufferedReader(new FileReader(Path.EMPLOYEEATTENDANCE));
+			BufferedReader readerEmployee = new BufferedReader(new FileReader(Path.EMPLOYEELIST));
+			
+			line = null;
+			list = new String[6];
+			String enrollmentDate = "";
+			
+			while ((line = readerEmployee.readLine()) != null) {
+				list = line.split(",");
+				if (inputCode.equals(list[0])) {
+					enrollmentDate = list[5];
+					break;
+				}
+			}
+			
+			readerEmployee.close();
+			
 			
 			line = null;
 			list = new String[6];
 			Calendar temp = leastDate;
+			temp.add(Calendar.DATE, 1);
+			
 			int startMonth = leastDate.get(Calendar.MONTH) - 1;
 			boolean check = false;
 			
@@ -692,7 +726,8 @@ public class EmployeeManage {
 					}
 					
 					
-					if (check) {
+					if (check && Integer.parseInt(String.format("%tF", temp).replaceAll("-", ""))
+								> Integer.parseInt(enrollmentDate.replaceAll("-",""))) {
 						absenceDays += String.format("%tF,", temp);
 						check = false;
 					}
@@ -701,14 +736,15 @@ public class EmployeeManage {
 					
 				}
 				
+				
+				
 				if (temp.get(Calendar.MONTH + 1) == startMonth) {
 					temp.add(Calendar.MONTH, 1);
 				}
 				temp.add(Calendar.DATE, 1);
 				
 			}
-			
-			
+
 			BufferedReader readerStatus = new BufferedReader(new FileReader(Path.EMPLOYEEATTENDANCE));
 			
 			line = null;
@@ -716,13 +752,14 @@ public class EmployeeManage {
 			
 			while ((line = readerStatus.readLine()) != null) {
 				list = line.split(",");
-				if (list[5].equals("결근")) {
+				if (inputCode.equals(list[0])
+						&& list[5].equals("결근")) {
 					absenceDays += String.format("%tF,", temp);
 				}
 			}
 			
 			readerStatus.close();
-
+			
 		} catch (Exception e) {
 			System.out.println("EmployeeManage.getEmployeeAbsenceDays()");
 			e.printStackTrace();
