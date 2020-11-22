@@ -162,7 +162,7 @@ public class CulturalCenter {
 					} else if (Num == 5) {
 						System.out.println("강의실 관리");
 						ClassRoomManage crm = new ClassRoomManage();
-						makeClassRoom();
+						
 						crm.classRoomManageMain();
 					} else if (Num == 6) {
 						System.out.println("프로그램 관리");
@@ -267,49 +267,7 @@ public class CulturalCenter {
 		System.out.println("9. 로그아웃");
 	}
 
-	//강의실 데이터 생성
-	private static void makeClassRoom() {
-		final String PATH = Path.PROGRAMLIST;
-		File file = new File(PATH);
-		
-		try {
-			
-			
-			BufferedReader reader = new BufferedReader(new FileReader(PATH));
-			
-			String line =null;
-			
-			while ((line = reader.readLine()) != null) {
-				String[] temp = line.split(",");
-				
-				FileWriter writer = new FileWriter("src\\data\\강의실.txt",true);
-				writer.append(temp[3]);
-				writer.append(',');
-				writer.append(temp[0]);
-				writer.append(',');
-				writer.append(temp[1]);
-				writer.append(',');
-				writer.append(temp[2]);
-				writer.append(',');
-				writer.append(temp[4]);
-				writer.append(',');
-				writer.append(temp[5]);
-				writer.append(',');
-				writer.append(temp[6]);
-				writer.append("\n");
-				writer.close();
-			}
-			
-			reader.close();
-			
-			
-			
-		} catch (Exception e) {
-			System.out.println("읽기종료");
-			
-		}
-		
-	}
+
 
 } // class 
 
