@@ -127,8 +127,10 @@ public class CulturalCenter {
 						mc.showEvent();
 					} else if (Num == 8) {
 						System.out.println("공지사항");
-						ProgramAttendanceManage pam = new ProgramAttendanceManage();
-						pam.createAttendanceMenu(); // 테스트용
+						NoticeManage notice = new NoticeManage();
+						//notice.getNotice();
+						notice.userNotice();
+						//notice.findNoticeList();
 					} else if (Num == 9) {
 						System.out.println("로그아웃");
 						break;
