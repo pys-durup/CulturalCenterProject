@@ -92,9 +92,9 @@ public class MileageConfirm {
 				endDate = stringToCal(temp[3]);
 				
 				if(!now.after(endDate)) {
-					onGoing += String.format("%-30s\t\t\t%12s\t%s\t%s\n", temp[1], temp[2], temp[3], temp[4]);
+					onGoing += String.format("%-30s \t%12s\t\t%s\t %5s\n", temp[1], temp[2], temp[3], temp[4]);
 				} else {
-					exit += String.format("%-30s\t\t\t%12s\t%s\t%s\n", temp[1], temp[2], temp[3], temp[4]);
+					exit += String.format("%-30s \t%12s\t\t%s\t %5s\n", temp[1], temp[2], temp[3], temp[4]);
 				}
 			}
 			
@@ -108,7 +108,7 @@ public class MileageConfirm {
 		System.out.println("===============================================================================================");
 		System.out.println("\t\t\t<진행중인 이벤트>");
 		System.out.println("===============================================================================================");
-		System.out.println("[이벤트 제목]\t\t\t\t\t\t\t[이벤트 시작일]\t [이벤트 종료일]\t [적립 마일리지]");
+		System.out.println("[이벤트 제목]\t\t\t\t\t[이벤트 시작일]\t   [이벤트 종료일]   [적립 마일리지]");
 		System.out.println(onGoing);
 		
 		
@@ -116,9 +116,21 @@ public class MileageConfirm {
 		System.out.println("===============================================================================================");
 		System.out.println("\t\t\t<종료된 이벤트>");
 		System.out.println("===============================================================================================");
-		System.out.println("[이벤트 제목]\t\t\t\t\t\t\t[이벤트 시작일]\t [이벤트 종료일]\t [적립 마일리지]");
+		System.out.println("[이벤트 제목]\t\t\t\t\t[이벤트 시작일]\t   [이벤트 종료일]   [적립 마일리지]");
 		System.out.println(exit);
 		System.out.println();
+		
+		pause();
+	}
+	
+	// 일시정지
+	private static void pause() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("엔터키를 누르면 이전화면으로 돌아갑니다");
+		scan.nextLine();
+		for(int i=0 ; i<20 ; i++) {
+			System.out.println();
+		}
 	}
 	
 	

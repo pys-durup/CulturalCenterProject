@@ -96,37 +96,36 @@ public class CulturalCenter {
 					Num = selectNum();
 					
 					if(Num == 1) {
-						System.out.println("회원정보 조회");
+//						System.out.println("회원정보 조회");
 						UserMyPage.showMyPage(login);
 						
 					} else if (Num == 2) {
-						System.out.println("프로그램 신청");
+//						System.out.println("프로그램 신청");
 						ProgramManage pm = new ProgramManage();
 						pm.createApplyProgram(login);
 						
 					} else if (Num == 3) {
-						System.out.println("프로그램 등록현황");
+//						System.out.println("프로그램 등록현황");
 						ProgramRegistrationList pr = new ProgramRegistrationList(login);
 						pr.createProgramRegistorList();
 
-						
 					} else if (Num == 4) {
 						GymReservation.reservationGym(login);
-						System.out.println("시설예약");
+//						System.out.println("시설예약");
 						
 					} else if (Num == 5) {
-						System.out.println("시설예약 확인");
+//						System.out.println("시설예약 확인");
 						FacilityReservation.findReservationList(login);
 
 					} else if (Num == 6) { // 마일리지
 						MileageConfirm mc = new MileageConfirm();
 						mc.showMyMileage(login);
 					} else if (Num == 7) { 
-						System.out.println("진행중 이벤트");
+//						System.out.println("진행중 이벤트");
 						MileageConfirm mc = new MileageConfirm();
 						mc.showEvent();
 					} else if (Num == 8) {
-						System.out.println("공지사항");
+//						System.out.println("공지사항");
 						NoticeManage notice = new NoticeManage();
 						//notice.getNotice();
 						notice.userNotice();
@@ -190,6 +189,10 @@ public class CulturalCenter {
 						SeminarManage seminar = new SeminarManage();
 						seminar.main(null);
 						
+					} else if (Num == 10) {
+						System.out.println("출결조회");
+						ProgramAttendanceManage padm = new ProgramAttendanceManage();
+						padm.createAttendanceMenu();
 					} else if (Num == 0) {
 						System.out.println("로그아웃");
 						break;
@@ -280,7 +283,8 @@ public class CulturalCenter {
 		System.out.println("3. 회원 관리\t4. 사물함 관리");
 		System.out.println("5. 강의실 관리\t6. 프로그램 관리");
 		System.out.println("7. 진행중 이벤트\t8. 공지사항");
-		System.out.println("9. 시설예약\t0. 로그아웃");
+		System.out.println("9. 시설예약\t10. 출결조회");
+		System.out.println("0. 로그아웃");
 	}
 
 	//강의실 데이터 생성
