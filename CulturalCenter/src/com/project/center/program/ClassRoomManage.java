@@ -14,15 +14,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
-
+import javax.xml.crypto.Data;
 
 import data.Path;
 
 public class ClassRoomManage {
 	
-	public void classRoomManageMain() throws IOException {
+	public static void main(String[] args) throws IOException {
 		//강의실 데이터 생성
-		//makeClassRoom();
+		makeClassRoom();
 		//강의실 관리 메인화면 출력
 		classRoomMain();
 		while(true) {

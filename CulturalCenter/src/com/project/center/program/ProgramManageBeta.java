@@ -16,7 +16,7 @@ import data.Path;
 
 public class ProgramManageBeta {
 	
-	public void programManageBetaMain() throws IOException {
+	public static void main(String[] args) throws IOException {
 		
 		programMain();
 		
