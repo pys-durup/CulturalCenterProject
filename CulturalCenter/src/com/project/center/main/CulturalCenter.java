@@ -110,7 +110,8 @@ public class CulturalCenter {
 						mc.showMyMileage(login);
 					} else if (Num == 7) { 
 						System.out.println("진행중 이벤트");
-						
+						MileageConfirm mc = new MileageConfirm();
+						mc.showEvent();
 					} else if (Num == 8) {
 						System.out.println("공지사항");
 						ProgramAttendanceManage pam = new ProgramAttendanceManage();

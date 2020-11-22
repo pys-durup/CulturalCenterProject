@@ -85,7 +85,7 @@ public class ProgramManage {
 		System.out.println("=====================================");
 		System.out.println("\t1. 검색어로 찾기");
 		System.out.println("\t2. 연령별 추천 목록");
-		System.out.println("\t3. 테마별 추천 목록");
+		System.out.println("\t3. 테마별 목록");
 		System.out.println("\t4. 월별 선택");
 		System.out.println("\t5. 뒤로가기");
 		System.out.println("=====================================");
