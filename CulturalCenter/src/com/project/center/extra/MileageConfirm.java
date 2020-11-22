@@ -37,8 +37,13 @@ public class MileageConfirm {
 		}
 		
 		while(true) {
-			System.out.println("[마일리지 정보]");
-			System.out.printf("내가 보유한 마일리지 : %d\n\n", mileage);
+			System.out.println("========================================");
+			System.out.println("\t<마일리지 정보>");
+			System.out.println("========================================");
+			System.out.println();
+			System.out.printf("   내가 보유한 마일리지 : %d\n\n", mileage);
+			System.out.println();
+			System.out.println("========================================");
 			System.out.println("엔터키를 누르면 뒤로 이동합니다.");
 			Scanner scan = new Scanner(System.in);
 			scan.nextLine();
