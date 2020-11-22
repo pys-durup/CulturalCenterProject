@@ -91,7 +91,7 @@ public class ProgramManageBeta {
 				
 			}else if(Num == 4) { //종료
 		
-				System.out.println("프로그램을 종료합니다.");
+				System.out.println("프로그램관리를 종료합니다.");
 				break;
 			}else {
 				
@@ -148,6 +148,7 @@ public class ProgramManageBeta {
 		String fileName = "src\\data\\프로그램.txt";
 		InputStream in = System.in;
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		System.out.println("==============================================================================================");
 		System.out.print("수정하고 싶은 프로그램 정보 입력 : ");
 		String target = reader.readLine();
 		
@@ -171,7 +172,7 @@ public class ProgramManageBeta {
 		  newInfo.flush();
 		  newInfo.close();
 		  outinfo.close();
-		  reader.close();
+		  
 		  
 		  
 		

@@ -49,7 +49,7 @@ public class ClassRoomManage {
 
 			}else if(Num == 3) { //종료
 		
-				System.out.println("프로그램을 종료합니다.");
+				System.out.println("강의실 관리를 종료합니다.");
 				break;
 			}else {
 				
