@@ -211,6 +211,8 @@ public class EmployeeManage {
 			
 			System.out.printf("\t%s %s의 등록을 완료하였습니다.\n", resultName, inputPosition);
 			System.out.println("\t엔터를 누르시면, 관리 메뉴로 돌아갑니다.");
+			System.out.println("==================================================================");
+
 			scan.nextLine();
 			
 		} else {
@@ -334,7 +336,7 @@ public class EmployeeManage {
 				
 				if (check) {
 					
-					System.out.println("직원의 새 비밀번호, 시급, 직책을 입력해주세요.");
+					System.out.println("직원의 새 비밀번호, 월 급여, 직책을 입력해주세요.");
 					System.out.println();
 					System.out.println("비밀번호는 10 ~ 16자 이내의 영어 대소문자, 숫자만을 이용하여 입력해주세요.");
 					System.out.printf("비밀번호 :");
