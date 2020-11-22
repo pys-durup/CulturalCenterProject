@@ -30,14 +30,16 @@ public class FacilityReservation {
 				
 				ArrayList<String[]> seminarMyRervationList = getMyReservationList(readerSeminar, user);
 				ArrayList<String[]> gymMyReservationList = getMyReservationList(readerGym, user);
-				
-				System.out.println();
+				System.out.println("=======================================================");
+				System.out.println("\t\t  <시설 예약 확인>");
+				System.out.println("=======================================================");
 				System.out.println("시설 예약 내역을 조회할 항목을 선택해주세요.");
-				System.out.println("----------------------------------------------------");
+				System.out.println();
+				System.out.println("=======================================================");
 				System.out.println("1. 세미나실");
 				System.out.println("2. 체육시설");
 				System.out.println("3. 메인 메뉴로 돌아가기");
-				System.out.println("----------------------------------------------------");
+				System.out.println("=======================================================");
 				System.out.print("메뉴 입력 :");
 				String input = scan.nextLine();
 				System.out.println();
@@ -100,8 +102,8 @@ public class FacilityReservation {
 							);
 		
 		}
-		
-		System.out.println("----------------------------------------------------");
+		System.out.println("=======================================================");
+
 		System.out.println("1. 환불 신청하기\t2.뒤로 가기");
 		System.out.print("메뉴 입력 :");
 		String inputMenu = scan.nextLine();
@@ -134,6 +136,7 @@ public class FacilityReservation {
 				System.out.println("환불은 예약날짜 하루 전에는 불가능합니다.");
 				System.out.println();
 				System.out.println("엔터를 누르면 조회 메뉴로 돌아갑니다.");
+
 				scan.nextLine();
 			}
 			
@@ -183,6 +186,8 @@ public class FacilityReservation {
 			System.out.println("환불을 진행하시겠습니까?");
 			System.out.println();
 			System.out.println("1. 예 2. 조회 메뉴로 돌아가기");
+			System.out.println("=======================================================");
+
 			System.out.print("메뉴 입력 :");
 			inputRefund = scan.nextLine();
 			refundWay = "카드";
@@ -192,6 +197,8 @@ public class FacilityReservation {
 			System.out.println("환불을 진행하시겠습니까?");
 			System.out.println();
 			System.out.println("1. 예 2. 조회 메뉴로 돌아가기");
+			System.out.println("=======================================================");
+
 			System.out.print("메뉴 입력 :");
 			inputRefund = scan.nextLine();
 			refundWay = "휴대폰";
@@ -233,12 +240,15 @@ public class FacilityReservation {
 				System.out.println();
 				System.out.println("엔터를 입력하면 조회 메뉴로 돌아갑니다.");
 				scan.nextLine();
+
 				break;
 			case "2" :
 				System.out.println("조회 메뉴로 돌아갑니다.");
+
 				break;
 			default :
 				System.out.println("잘못된 입력입니다. 조회 메뉴로 돌아갑니다.");
+
 				break;
 			
 		}
