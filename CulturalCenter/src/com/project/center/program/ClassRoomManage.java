@@ -10,16 +10,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
+
+import javax.xml.crypto.Data;
 
 import data.Path;
 
 public class ClassRoomManage {
 	
 	public static void main(String[] args) throws IOException {
-		
+		//강의실 데이터 생성
+		makeClassRoom();
 		//강의실 관리 메인화면 출력
-		
 		classRoomMain();
 		while(true) {
 			int Num;
@@ -41,19 +45,9 @@ public class ClassRoomManage {
 				modifyContent();
 				findClassRoom();
 				System.out.println("수정이 완료 되었습니다.");
-//				while(true) {
-//					classRoomMain();
-//					Num2 = selectNum();
-//				}
+				
 
-			}else if(Num == 3) { //강의실 삭제
-		
-				System.out.println("강의실 삭제 선택");
-				deleteClassRoom();
-				deleteNumClassRoom();
-				
-				
-			}else if(Num == 4) { //종료
+			}else if(Num == 3) { //종료
 		
 				System.out.println("프로그램을 종료합니다.");
 				break;
@@ -75,6 +69,7 @@ public class ClassRoomManage {
 	//뒤로 가기 메서드
 	private static void back() {
 		Scanner scan = new Scanner(System.in);
+		System.out.println("==============================================================================================");
 		System.out.println();
 		System.out.print("뒤로 가시려면 B를 눌러주세요 : ");
 		String temp = scan.nextLine();
@@ -100,27 +95,12 @@ public class ClassRoomManage {
 	
 	// 강의실 관리 메인 메서드
 	public static void classRoomMain() {
-
-		System.out.println("\t1. 강의실 조회\t2.강의실 수정\t3.강의실 삭제\t4.종료");
-		                                                                                    
+		System.out.println("==============================================================================================");
+		System.out.println("\t1.강의실 조회\n\n\t2.강의실 수정\n\n\t3.종료");
+		System.out.println("==============================================================================================");
+                                                                              
 	}	
-	//강의실삭제 번호 입력 메서드
-	private static int deleteNumClassRoom() {
-		
-		Scanner scan = new Scanner(System.in);
-		System.out.println();
-		System.out.print("삭제하실 강의실 번호를 선택하세요 : ");
-		return Integer.parseInt(scan.nextLine());
-	}
-		
-	//강의실수정 번호 입력 메서드
-	private static int selectNumClassRoom() {
-		
-		Scanner scan = new Scanner(System.in);
-		System.out.println();
-		System.out.print("수정하실 강의실 번호를 선택하세요 : ");
-		return Integer.parseInt(scan.nextLine());
-	}
+
 	
 	
 	// 번호 입력 메서드
@@ -154,7 +134,8 @@ public class ClassRoomManage {
 			while ((line = reader.readLine()) != null) {
 				
 				String[] temp = line.split(",");
-				
+			
+			
 				System.out.printf("%s\t%s\t%-18s\t%s\t%s\t%s\t%s\n"
 						,temp[0]
 						,temp[1]
@@ -182,6 +163,7 @@ public class ClassRoomManage {
 		String fileName = "src\\data\\강의실.txt";
 		InputStream in = System.in;
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		System.out.println("==============================================================================================");
 		System.out.print("수정하고 싶은 강의실 정보 입력 : ");
 		String target = reader.readLine();
 		
@@ -253,11 +235,10 @@ public class ClassRoomManage {
 		
 			
 	}
-	
-	//강의실 삭제 메서드
-	public static void deleteClassRoom() {
-		System.out.println("강의실번호\t프로그램코드\t프로그램명\t\t\t강사명\t시작날짜\t\t종료날짜\t\t정원");		
-		final String PATH = Path.CLASSROOM;
+
+	//강의실 데이터 생성
+	private static void makeClassRoom() {
+		final String PATH = Path.PROGRAMLIST;
 		File file = new File(PATH);
 		
 		try {
@@ -268,18 +249,24 @@ public class ClassRoomManage {
 			String line =null;
 			
 			while ((line = reader.readLine()) != null) {
-				
 				String[] temp = line.split(",");
-			
-				System.out.printf("%s\t%s\t%-18s\t%s\t%s\t%s\t%s\n"
-						,temp[0]
-						,temp[1]
-						,temp[2]
-						,temp[3]
-						,temp[4]
-						,temp[5]
-						,temp[6]);
 				
+				FileWriter writer = new FileWriter("src\\data\\강의실.txt",true);
+				writer.append(temp[3]);
+				writer.append(',');
+				writer.append(temp[0]);
+				writer.append(',');
+				writer.append(temp[1]);
+				writer.append(',');
+				writer.append(temp[2]);
+				writer.append(',');
+				writer.append(temp[4]);
+				writer.append(',');
+				writer.append(temp[5]);
+				writer.append(',');
+				writer.append(temp[6]);
+				writer.append("\n");
+				writer.close();
 			}
 			
 			reader.close();
@@ -292,13 +279,6 @@ public class ClassRoomManage {
 		}
 		
 	}
-	
-	
-
-	
-	
-	
-	
 	
 
 }//classRoomManage
