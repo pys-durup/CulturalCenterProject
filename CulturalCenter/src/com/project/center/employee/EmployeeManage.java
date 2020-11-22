@@ -464,8 +464,6 @@ public class EmployeeManage {
 
 	}
 	
-	
-	
 	public void findEmployeeAttendanceList() {
 
 		Scanner scan = new Scanner(System.in);
@@ -523,18 +521,27 @@ public class EmployeeManage {
 
 		Scanner scan = new Scanner(System.in);
 		boolean loop = true;
-
+		String[] temp = getEmployeeAbsenceDays(inputCode).split(",");
+		String result = "현재까지 개근하고 있습니다!\n";
+		
+		if (temp.length > 1) {
+			result = "";
+			for (int i=1; i<temp.length; i++) {
+				result += String.format("%s\n", temp[i]);
+			}
+		}
+		
 		try {
 
 			ArrayList<String[]> attendanceBoard = new ArrayList<String[]>();
 
-			BufferedReader reader2 = new BufferedReader(new FileReader(Path.EMPLOYEEATTENDANCE));
+			BufferedReader readerAttendance = new BufferedReader(new FileReader(Path.EMPLOYEEATTENDANCE));
 
 			String line = null;
 			String[] list = new String[6];
 			int m = 0;
 
-			while ((line = reader2.readLine()) != null) {
+			while ((line = readerAttendance.readLine()) != null) {
 				list = line.split(",");
 				if (inputCode.equals(list[0])) {
 					attendanceBoard.add(list);
@@ -562,7 +569,14 @@ public class EmployeeManage {
 										);
 
 				}
-				System.out.println();
+				System.out.println("================================================================");
+				System.out.println("해당 직원의");
+				System.out.printf("결근일 :\n"
+									+ "%s"
+									, result);
+				System.out.printf("총 결근일 : %d일\n"
+								, temp.length - 1);
+				System.out.println("================================================================");
 				System.out.printf("\t\t\t- %d 페이지 -", pageIndex + 1);
 				System.out.println();
 				System.out.println("1. 다음 페이지");
@@ -610,7 +624,7 @@ public class EmployeeManage {
 				
 			}
 
-			reader2.close();
+			readerAttendance.close();
 
 		} catch (Exception e) {
 			System.out.println("EmployeeAttendanceManage.viewEmployeeAttendanceList()");
@@ -619,5 +633,119 @@ public class EmployeeManage {
 		
 	}
 	
+	private String getEmployeeAbsenceDays(String inputCode) {
+		Calendar today = Calendar.getInstance();
+		String absenceDays = "0,";
+		
+		try {
+
+			BufferedReader readerDate = new BufferedReader(new FileReader(Path.EMPLOYEEATTENDANCE));
+			
+			String line = null;
+			String[] list = new String[6];
+			String date = null;
+			int dateToNum = 0;
+			int leastDateNum = 99999999;
+			
+			while ((line = readerDate.readLine()) != null) {
+				list = line.split(",");
+				date = list[2].replaceAll("-", "");
+				dateToNum = Integer.parseInt(date);
+				leastDateNum = leastDateNum < dateToNum ? leastDateNum : dateToNum;
+			}
+			readerDate.close();
+			
+			String leastDateTemp = leastDateNum + "";
+			Calendar leastDate = Calendar.getInstance();
+			
+			leastDate.set(Integer.parseInt(leastDateTemp.substring(0,4))
+						, Integer.parseInt(leastDateTemp.substring(4, 6)) - 1
+						, Integer.parseInt(leastDateTemp.substring(6))
+						);
+			
+			BufferedReader reader = new BufferedReader(new FileReader(Path.EMPLOYEEATTENDANCE));
+			
+			line = null;
+			list = new String[6];
+			Calendar temp = leastDate;
+			int startMonth = leastDate.get(Calendar.MONTH) - 1;
+			boolean check = false;
+			
+			for (int i=0; 
+				Integer.parseInt(String.format("%tF", today).replaceAll("-", ""))
+				> Integer.parseInt(String.format("%tF", temp).replaceAll("-", ""));
+					 i++) {
+				
+				reader = new BufferedReader(new FileReader(Path.EMPLOYEEATTENDANCE));
+				
+				if (temp.get(Calendar.DAY_OF_WEEK) != 7
+						&& temp.get(Calendar.DAY_OF_WEEK) != 1) {
+					//System.out.printf("%tF\n", temp);
+					while ((line = reader.readLine()) != null) {
+						list = line.split(",");
+						if (inputCode.equals(list[0]) 
+								&& String.format("%tF", temp).equals(list[2])) {
+							check = false;
+							break;
+						}
+						check = true;
+					}
+					
+					
+					if (check) {
+						absenceDays += String.format("%tF,", temp);
+						check = false;
+					}
+					
+					reader.close();
+					
+				}
+				
+				if (temp.get(Calendar.MONTH + 1) == startMonth) {
+					temp.add(Calendar.MONTH, 1);
+				}
+				temp.add(Calendar.DATE, 1);
+				
+			}
+			
+			
+			BufferedReader readerStatus = new BufferedReader(new FileReader(Path.EMPLOYEEATTENDANCE));
+			
+			line = null;
+			list = new String[6];
+			
+			while ((line = readerStatus.readLine()) != null) {
+				list = line.split(",");
+				if (list[5].equals("결근")) {
+					absenceDays += String.format("%tF,", temp);
+				}
+			}
+			
+			readerStatus.close();
+
+		} catch (Exception e) {
+			System.out.println("EmployeeManage.getEmployeeAbsenceDays()");
+			e.printStackTrace();
+		}
+		
+		if (absenceDays.equals("0,")) {
+			return absenceDays;
+		} else {
+			return absenceDays.substring(0, absenceDays.length() - 1);
+		}
+		
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
 

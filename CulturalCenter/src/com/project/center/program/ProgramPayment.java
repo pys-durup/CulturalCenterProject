@@ -46,12 +46,16 @@ public class ProgramPayment {
 			가격 : 1,000,000원
 			마일리지 적립액 : 50,000원
 		 */
-		
-		System.out.println("[신청 프로그램 정보]");
+		clear();
+		System.out.println("======================================================");
+		System.out.println("\t<프로그램 결제하기>");
+		System.out.println("======================================================");
+		System.out.println("\t[신청 프로그램 정보]");
 		System.out.printf("프로그램 이름 : %s\n", this.paymentProgram.getName());
 		System.out.printf("가격 : %,d원\n",this.paymentProgram.getPrice());
 		System.out.printf("적립 마일리지 : %,d점\n", (int)(this.paymentProgram.getPrice() * 0.05));
-		
+		System.out.println("======================================================");
+		System.out.println();
 		System.out.println("결제 수단을 선택하세요");
 		System.out.println("1. 휴대폰  2. 카드  3.결제 취소하기");
 		System.out.print("번호를 입력하세요 : ");
@@ -59,15 +63,25 @@ public class ProgramPayment {
 		
 		if (num == 1) {// 휴대폰
 			if(phonePayment()) { // 휴대폰 결제 성공시
-				System.out.println("휴대폰 결제 성공");
+//				System.out.println("휴대폰 결제 성공");
 			} else { // 휴대폰 결제 실패시
+				System.out.println();
+				System.out.println("======================================================");
+				System.out.println("결제에 실패했습니다");
 				System.out.println("휴대폰 결제 실패");
+				System.out.println("======================================================");
+				pause();
 			}
 		}else if (num == 2) { // 카드
 			if(cardPayment()) { // 카드 결제 성공시
-				System.out.println("카드 결제 성공");
+//				System.out.println("카드 결제 성공");
 			} else { // 카드 결제 실패시
+				System.out.println();
+				System.out.println("======================================================");
+				System.out.println("결제에 실패했습니다");
 				System.out.println("카드 결제 실패");
+				System.out.println("======================================================");
+				pause();
 			}
 			
 		}else if (num == 3) {
@@ -83,7 +97,10 @@ public class ProgramPayment {
 	 *  
 	 */
 	private boolean phonePayment() {
-		System.out.println("휴대폰 결제 메서드 입니다");
+		System.out.println();
+		System.out.println("======================================================");
+		System.out.println("휴대폰 결제를 시작합니다");
+		System.out.println("======================================================");
 		System.out.print("'-'를 제외한 휴대폰 번호를 입력하세요 : ");
 		Scanner scan = new Scanner(System.in);
 		String phone = scan.nextLine();
@@ -116,7 +133,11 @@ public class ProgramPayment {
 			savePaymentData(paymentData);
 			// 프로그램수강생.txt 파일 수정하는 메서드
 			modifyStudentData(paymentObject);
+			System.out.println();
+			System.out.println("======================================================");
 			System.out.println("결제에 성공했습니다");
+			System.out.println("휴대폰 결제 성공");
+			System.out.println("======================================================");
 			pause();
 			// ============================ 결제에서 중복되는 부분 =====================================================
 			return true;
@@ -169,12 +190,16 @@ public class ProgramPayment {
 				savePaymentData(paymentData);
 				// 프로그램수강생.txt 파일 수정하는 메서드
 				modifyStudentData(paymentObject);
-				System.out.println("결제에 성공했습니다");
+				System.out.println();
+				System.out.println("======================================================");
+				System.out.println("결제에 실패했습니다");
+				System.out.println("카드 결제 실패");
+				System.out.println("======================================================");
 				pause();
 				// ============================ 결제에서 중복되는 부분 =====================================================
 				return true;
 			} else {
-				System.out.println("카드 비밀번호가 일치하지 않음");
+//				System.out.println("카드 비밀번호가 일치하지 않음");
 				return false;
 			}
 		} else {
@@ -192,7 +217,7 @@ public class ProgramPayment {
 	 */
 	private void savePaymentData(String data) {
 		try {
-			System.out.println("savePaymentData method");
+//			System.out.println("savePaymentData method");
 			BufferedWriter writer = new BufferedWriter(new FileWriter(Path.PROGRAMPAYMENT, true));
 			writer.write(data);
 			writer.close();
@@ -217,6 +242,9 @@ public class ProgramPayment {
 			if(ps.getCode().equals(programCode)) {
 				ps.setCount(ps.getCount()+1); // 수강정원 1 증가
 				ps.getUserCodes().add(userCdoe); // 수강생 목록에 추가
+				if(ps.getCount() == 20) {
+					ps.setState("모집마감");
+				}
 			}
 		}
 		
@@ -309,7 +337,10 @@ public class ProgramPayment {
 	public void programRefund(Program program, ArrayList<ProgramPaymentInfo> paymentList) {
 		
 		while(true) {
-			
+			System.out.println();
+			System.out.println("================================================");
+			System.out.println("\t    <프로그램 환불진행>");
+			System.out.println("================================================");
 			System.out.println("[결제 정보]");
 			System.out.println("프로그램이름 :" + program.getName());
 			String paymentType = "";
@@ -333,35 +364,43 @@ public class ProgramPayment {
 							, paymentList.get(i).getPaymentType());
 				}
 			}
-
-	
+			System.out.println("================================================");
+			System.out.println();
 			System.out.println("1. 계속진행하기 2. 뒤로가기");
 			System.out.print("번호를 입력하세요 : ");
 			int num = selectNum();
 			
 			if(num == 1) { // 환불진행
 				if(paymentType.equals("1")) { // 휴대폰결제 환불
+					System.out.println();
+					System.out.println("================================================");
 					System.out.println("휴대폰결제 환불을 진행합니다");
 					System.out.print("휴대폰번호 입력(- 제외) : ");
 					String phone = selectString();
 					if(phone.equals(this.user.getTel())) {
 						// 환불계속진행
 					} else {
+						System.out.println();
+						System.out.println("================================================");
 						System.out.println("휴대폰번호가 일치하지 않습니다");
-						System.out.println("환불신청을 취소합니다");
+						System.out.println("프로그램 환불에 실패했습니다");
 						pause();
 						break;
 					}
 					
 				} else { // 카드결제 환불
+					System.out.println();
+					System.out.println("================================================");
 					System.out.println("카드결제 환불을 진행합니다");
 					System.out.print("카드번호 입력 : ");
 					String card = selectString();
 					if(card.equals(this.user.getTel())) {
 						// 환불계속진행
 					} else {
+						System.out.println();
+						System.out.println("================================================");
 						System.out.println("카드번호가 일치하지 않습니다");
-						System.out.println("환불신청을 취소합니다");
+						System.out.println("프로그램 환불에 실패했습니다");
 						pause();
 						break;
 					}
@@ -378,7 +417,14 @@ public class ProgramPayment {
 				
 				for(ProgramStudent ps : psList) {
 					if(ps.getCode().equals(program.getCode())) {
+//						System.out.println("프로그램수강생.txt 수정");
 						ps.getUserCodes().remove(this.user.getCode());
+						int count = ps.getCount();
+//						System.out.println("현재 수강인원" + count);
+						count--;
+						ps.setCount(count);
+//						System.out.println("환불후 수강인원" + count);
+						ps.setState("모집중");
 					}
 				}
 				
@@ -433,7 +479,7 @@ public class ProgramPayment {
 				// refundData를 프로그램환불.txt에 저장
 				saveData(refundData, Path.PROGRAMREFUND, true);
 				
-				System.out.println("환불이 완료되었습니다");
+				System.out.println("프로그램 환불이 완료되었습니다");
 				pause();
 				break;
 				
@@ -501,5 +547,11 @@ public class ProgramPayment {
 		scan.nextLine();
 		clearPage();
 
+	}
+	
+	private void clear() {
+		for (int i=0 ; i<40 ; i++) {
+			System.out.println();
+		}
 	}
 }
