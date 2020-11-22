@@ -129,12 +129,10 @@ public class CulturalCenter {
 					showManageMain();
 					Num = selectNum();
 					if(Num == 1) {
-						System.out.println("직원 등록 관리");
 						administer.checkEmployeeManage();
 						administer.viewEmployeeManage();
 						
 					} else if (Num == 2) {
-						System.out.println("직원 근태 조회");
 						administer.findEmployeeAttendanceList();
 						
 					} else if (Num == 3) {
