@@ -24,9 +24,11 @@ public class EmployeeAttendanceManage {
 
 		Scanner scan = new Scanner(System.in);
 		
-		System.out.println("============================[근태 기록]===========================");
+		System.out.println("==================================================================");
+		System.out.println("\t\t\t  <근태 기록>");
+		System.out.println("==================================================================");
 		System.out.println();
-		System.out.printf("%s님, 반갑습니다. 원하는 메뉴 번호를 입력해주세요.", employee.getName());
+		System.out.printf("%s님, 반갑습니다. 원하는 메뉴 번호를 입력해주세요.\n", employee.getName());
 		System.out.println();
 		System.out.println("1. 출근 기록");
 		System.out.println();
@@ -47,9 +49,11 @@ public class EmployeeAttendanceManage {
 			break;
 		case "3":
 			System.out.println("근태 기록을 종료합니다.");
+			System.out.println("==============================================================");
 			break;
 		default:
 			System.out.println("근태 기록을 종료합니다.");
+			System.out.println("==============================================================");
 			break;
 		}
 		
@@ -111,6 +115,7 @@ public class EmployeeAttendanceManage {
 						, today.get(Calendar.MONTH) + 1
 						, today.get(Calendar.DATE)
 						);
+				System.out.println("==============================================================");
 				System.out.println();
 				
 			} else {
@@ -122,6 +127,7 @@ public class EmployeeAttendanceManage {
 						, today.get(Calendar.MONTH) + 1
 						, today.get(Calendar.DATE)
 						);
+				System.out.println("==============================================================");
 				System.out.println();
 			}
 			
@@ -187,6 +193,7 @@ public class EmployeeAttendanceManage {
 					deleteFormal();
 					
 					check = true;
+					System.out.println("==============================================================");
 					System.out.println("엔터를 누르시면, 메인 메뉴로 돌아갑니다.");
 					scan.nextLine();
 					break;
@@ -198,6 +205,7 @@ public class EmployeeAttendanceManage {
 			if(check == false) {
 				System.out.println("오늘 출근한 기록이 없습니다!");
 				System.out.println();
+				System.out.println("==============================================================");
 				System.out.println("\t  엔터를 눌러 메인화면으로"
 						+ " 이동해주세요.");
 				System.out.println("\t\t\t*** 경고 ***\t\t");
