@@ -68,8 +68,16 @@ public class NoticeManage {
 		
 		System.out.println("프로그램 종료");
 	
-
 		
+	}
+	
+	
+	//회원모드에서 공지사항을 확인할 수 있는 메서드
+	public static void userNotice() {
+		
+		list = new ArrayList<Notice>();
+		getNotice();
+		findNoticeList();
 		
 	}
 	

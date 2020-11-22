@@ -19,7 +19,7 @@ import java.util.Scanner;
 import data.Path;
 
 public class ClassRoomManage {
-	
+
 	public void classRoomManageMain() throws IOException {
 		//강의실 데이터 생성
 		makeClassRoom();
@@ -45,11 +45,11 @@ public class ClassRoomManage {
 				modifyContent();
 				findClassRoom();
 				System.out.println("수정이 완료 되었습니다.");
-				
+				back();
 
 			}else if(Num == 3) { //종료
 		
-				System.out.println("프로그램을 종료합니다.");
+				System.out.println("강의실 관리를 종료합니다.");
 				break;
 			}else {
 				
@@ -187,11 +187,9 @@ public class ClassRoomManage {
 		  newInfo.flush();
 		  newInfo.close();
 		  outinfo.close();
-		  reader.close();
-		  
-		  
-		
 
+		  
+		 
 	}
 	
 	

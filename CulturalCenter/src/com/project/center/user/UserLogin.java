@@ -17,16 +17,18 @@ public class UserLogin {
 		User user = new User(null, null, null, null, null, null, null, null, null);
 		
 		try {
-
+			
 			BufferedReader manageList = new BufferedReader(new FileReader(Path.MASTER));
 			BufferedReader employeeList = new BufferedReader(new FileReader(Path.EMPLOYEELIST));
 			BufferedReader userList = new BufferedReader(new FileReader(Path.USERLIST));			
-						
+			
 			String line = null;
 			
+			System.out.println("아이디를 입력하세요.");
 			System.out.print("아이디 : ");
 			String id = scan.nextLine();
 			
+			System.out.println("비밀번호를 입력하세요.");
 			System.out.print("비밀번호 : ");
 			String pw = scan.nextLine();
 			
@@ -83,20 +85,34 @@ public class UserLogin {
 			
 			//id나 pw가 다르면 다시 메인화면으로
 			if (!id.equals(idList) || !pw.equals(pwList)) {
-				System.out.println("로그인 실패");
+				System.out.println("");
+				System.out.println("아이디 또는 비밀번호가 일치하지 않습니다");
 				userList.close();
+				pause();
 				return null;
-			}
+			} 
 			
 			
 			
-
 		} catch (Exception e) {
 			System.out.println("UserLogin.checkUser()");
 			e.printStackTrace();
+			
 		}
-		
 		return null;
+		
+
+		
+	}
+	
+	private static void pause() {
+		
+		Scanner scan = new Scanner(System.in);
+		System.out.println("엔터키를 누르면 이전화면으로 돌아갑니다.");
+		scan.nextLine();
+		for(int i=0 ; i<10 ; i++) {
+			System.out.println();
+		}
 		
 	}
 

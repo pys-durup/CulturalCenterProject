@@ -30,7 +30,8 @@ public class UserFind {
 		} else if (num == 2) {
 			findUserPw();
 		} else if (num == 3) {
-			CulturalCenter.main(null);			
+//			CulturalCenter.main(null);
+			return;
 		}
 		
 		
@@ -80,7 +81,8 @@ public class UserFind {
 			System.out.println("========================================");
 		}
 		
-		CulturalCenter.main(null);
+//		CulturalCenter.main(null);
+		
 		
 	}
 	
@@ -124,7 +126,8 @@ public class UserFind {
 			System.out.println("========================================");
 		}
 		
-		CulturalCenter.main(null);
+//		CulturalCenter.main(null);
+		return;
 		
 		
 	}

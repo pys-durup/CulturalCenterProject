@@ -39,7 +39,7 @@ public class UserMyPage {
 				
 			//3번을 고른다면 뒤로가기
 			} else if (num.equals("3")) {
-				loop = false;
+				return;
 				
 			//그 외에 번호를 고른다면 다시 화면 띄우기
 			} else {
@@ -321,7 +321,7 @@ public class UserMyPage {
 			writer.write(data);
 			writer.close();
 			
-			updateUser(login);
+			return;
 
 
 		} catch (Exception e) {
