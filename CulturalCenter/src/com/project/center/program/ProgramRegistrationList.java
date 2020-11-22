@@ -25,9 +25,14 @@ public class ProgramRegistrationList {
 	private ArrayList<ProgramAttendance> paList;
 	private ArrayList<ProgramStudent> pstList;
 	private User login;
+	private String userCode;
 	
 	public ProgramRegistrationList(User login) {
 		this.login = login;
+	}
+	
+	public ProgramRegistrationList(String usercode) {
+		this.userCode = usercode;
 	}
 
 	public void createProgramRegistorList() {
@@ -90,8 +95,9 @@ public class ProgramRegistrationList {
 					}
 				}
 			}
-			
-			
+			System.out.println("=================================================================================================================");
+			System.out.println("\t\t\t\t\t<수강 이력 목록>");
+			System.out.println("=================================================================================================================");
 			System.out.println("[번호]\t[프로그램 이름]\t\t\t[강사명]\t[강의실]\t[시작 날짜]\t[종료 날짜]\t[현재상태]");
 			
 			for(int i=0 ; i<tempList.size() ; i++) {
@@ -106,8 +112,7 @@ public class ProgramRegistrationList {
 				index++;
 			}
 			
-			
-			
+			System.out.println("=================================================================================================================");
 			System.out.println();
 			System.out.println("1. 프로그램 번호 선택하기  2. 뒤로가기");
 			System.out.print("번호를 입력하세요 :");
@@ -179,6 +184,9 @@ public class ProgramRegistrationList {
 		// 종료된 프로그램 정보 출력
 		while(true) {
 			clear();
+			System.out.println("==========================================================");
+			System.out.println("\t\t<종료된 프로그램 정보>");
+			System.out.println("==========================================================");
 			System.out.println("[프로그램 이력 확인하기]");
 			System.out.println("프로그램 이름 : " + programName);
 			System.out.println("강사명 : " + teacher);
@@ -186,6 +194,7 @@ public class ProgramRegistrationList {
 			System.out.println("시작일 : " + startDate);
 			System.out.println("종료일 : " + endDate);
 			System.out.println("총 수업일수 : " + allClassDays + "일");
+			System.out.println("==========================================================");
 			System.out.println();
 			
 			// □■  출석/수업일수 > 출석률   수업일수/총수업 > 진행률
@@ -193,7 +202,7 @@ public class ProgramRegistrationList {
 			float rate2 = classDays/(float)allClassDays;
 			int count = 25;
 			// 출석률
-			System.out.printf("<수업출석률(%d%%)>\n", (int) (rate1 * 100));
+			System.out.printf("<수업출석률(%d%%)> (출석일 / 수업일수) \n", (int) (rate1 * 100));
 			for (int i = 0; i < Math.floor(count*rate1); i++) {
 				System.out.print("■");
 			}
@@ -202,7 +211,7 @@ public class ProgramRegistrationList {
 			}
 			System.out.printf("(%d/%d)\n", attendanceDays, classDays);
 			// 진행률
-			System.out.printf("<수업진행률(%d%%)>\n", (int) (rate2 * 100));
+			System.out.printf("<수업진행률(%d%%)> (수업일수 / 총 수업일수) \n", (int) (rate2 * 100));
 			for (int i = 0; i < Math.floor(count*rate2); i++) {
 				System.out.print("■");
 			}
@@ -212,6 +221,7 @@ public class ProgramRegistrationList {
 			System.out.printf("(%d/%d)\n", classDays, allClassDays);
 			
 			System.out.println();
+			System.out.println("==========================================================");
 			pause();
 			break;
 		}
@@ -278,6 +288,10 @@ public class ProgramRegistrationList {
 			}
 		}
 		
+		clear();
+		System.out.println("==========================================================");
+		System.out.println("\t\t<진행중인 프로그램 정보>");
+		System.out.println("==========================================================");
 		System.out.println("[현재 진행중인 프로그램]");
 		System.out.println("프로그램 이름 : " + programName);
 		System.out.println("강사명 : " + teacher);
@@ -285,6 +299,7 @@ public class ProgramRegistrationList {
 		System.out.println("시작일 : " + startDate);
 		System.out.println("종료일 : " + endDate);
 		System.out.println("총 수업일수 : " + allClassDays + "일");
+		System.out.println("==========================================================");
 		System.out.println();
 		
 //		System.out.println("출석일수 : " + attendanceDays);
@@ -301,7 +316,7 @@ public class ProgramRegistrationList {
 		// □■  출석/수업일수 > 출석률   수업일수/총수업 > 진행률
 		int count = 25;
 		// 출석률
-		System.out.printf("<수업출석률(%d%%)>\n",(int)(rate1*100));
+		System.out.printf("<수업출석률(%d%%)> (출석일 / 수업일수) \n",(int)(rate1*100));
 		for(int i=0 ; i<Math.floor(count*rate1) ; i++) {
 			System.out.print("■");
 		}
@@ -311,7 +326,7 @@ public class ProgramRegistrationList {
 		System.out.printf("(%d/%d)\n", attendanceDays, classDays);
 		
 		// 진행률
-		System.out.printf("<수업진행률(%d%%)>\n",(int)(rate2*100));
+		System.out.printf("<수업진행률(%d%%)> (수업일수 / 총 수업일수) \n",(int)(rate2*100));
 		for(int i=0 ; i<Math.floor(count*rate2) ; i++) {
 			System.out.print("■");
 		}
@@ -321,6 +336,7 @@ public class ProgramRegistrationList {
 		System.out.printf("(%d/%d)\n", classDays, allClassDays);
 		
 		System.out.println();
+		System.out.println("==========================================================");
 		pause();
 	}
 
@@ -328,7 +344,7 @@ public class ProgramRegistrationList {
 	 *  진행중인 프로그램 코드를 구한다
 	 * 
 	 */
-	private String myProgramState() {
+	public String myProgramState() {
 		this.paymentList = loadProgramPaymentData(Path.PROGRAMPAYMENT); // 프로그램결제.txt 데이터
 		this.psList = loadProgramStateData(Path.PROGRAMSTATE); // 프로그램상태.txt 데이터
 		this.pList = loadProgramData(Path.PROGRAMLIST); // 프로그램.txt 데이터
@@ -378,7 +394,7 @@ public class ProgramRegistrationList {
 	 *  수업 이력(종료된 프로그램의 코드를 구한다)
 	 * 
 	 */
-	private ArrayList<String> myProgramHistory() {
+	public ArrayList<String> myProgramHistory() {
 		this.paymentList = loadProgramPaymentData(Path.PROGRAMPAYMENT); // 프로그램결제.txt 데이터
 		this.psList = loadProgramStateData(Path.PROGRAMSTATE); // 프로그램상태.txt 데이터
 		this.pList = loadProgramData(Path.PROGRAMLIST); // 프로그램.txt 데이터
@@ -440,7 +456,7 @@ public class ProgramRegistrationList {
 //				System.out.println("myProgramRefund - 시작전 프로그램이 있다");
 				return myProgram;
 			} else {
-				System.out.println("시작전 프로그램이 없다");
+//				System.out.println("시작전 프로그램이 없다");
 				return null;
 			}
 			
@@ -466,7 +482,9 @@ public class ProgramRegistrationList {
 				}
 			}
 			
-			
+			System.out.println("=================================================================================================================");
+			System.out.println("\t\t\t\t\t<환불 가능 목록>");
+			System.out.println("=================================================================================================================");
 			System.out.println("[번호]\t[프로그램 이름]\t\t\t[강사명]\t[강의실]\t[시작 날짜]\t[종료 날짜]\t[현재상태]");
 			
 			for(int i=0 ; i<tempList.size() ; i++) {
@@ -482,7 +500,7 @@ public class ProgramRegistrationList {
 			}
 			
 			
-			
+			System.out.println("=================================================================================================================");
 			System.out.println();
 			System.out.println("1. 환불신청  2. 뒤로가기");
 			System.out.print("번호를 입력하세요 :");
@@ -525,13 +543,17 @@ public class ProgramRegistrationList {
 		// 환불하려는 프로그램 정보 출력
 		while(true) {
 			clear();
+			System.out.println("================================================");
+			System.out.println("\t\t<프로그램 환불>");
+			System.out.println("================================================");
 			System.out.println("[환불 하려는 프로그램]");
 			System.out.println("프로그램 이름 : " + programName);
 			System.out.println("강사명 : " + teacher);
 			System.out.println("강의실 : " + classRoom);
 			System.out.println("시작일 : " + startDate);
 			System.out.println("종료일 : " + endDate);
-			
+			System.out.println("================================================");
+			System.out.println();
 			System.out.println("1. 환불진행 하기 2. 뒤로가기");
 			System.out.print("번호를 입력하세요 : ");
 			int num = selectNum();
@@ -554,10 +576,15 @@ public class ProgramRegistrationList {
 
 	// 목록에서 선택한 번호 리턴 
 	private int userSelectNum() {
-		System.out.println("1. 진행중 프로그램");
-		System.out.println("2. 수업 이력");
-		System.out.println("3. 수업 환불");
-		System.out.println("4. 뒤로 가기");
+		clear();
+		System.out.println("================================================");
+		System.out.println("\t<프로그램 등록현황>");
+		System.out.println("================================================");
+		System.out.println("\t1. 진행중 프로그램");
+		System.out.println("\t2. 수업 이력");
+		System.out.println("\t3. 수업 환불");
+		System.out.println("\t4. 뒤로 가기");
+		System.out.println("================================================");
 		System.out.println();
 		System.out.print("번호를 입력하세요 : ");
 		
