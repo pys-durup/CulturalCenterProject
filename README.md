@@ -1,34 +1,18 @@
-# CulturalCenterProject
-Team 1 : java console project
+문화센터 전산 시스템 CRUD 프로젝트
+=============
+Java로 작성한 콘솔 입출력 프로젝트
+-------------
 
-## introduction
+### 개발환경
 
-    <table>
-        <tr>
-            <td>프로젝트 명</td>
-            <td>~</td>
-            <td>개발기간</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>프로젝트 개요</td>
-            <td>~</td>
-            <td>개발환경</td>
-            <td>~</td>
-        </tr>
-        <tr>
-            <td colspan="4">사용한 skill 또는 지식</td>
-        </tr>
-        <tr>
-            <td>개발언어</td>
-            <td>Java(JDK 1.8)</td>
-            <td>형상관리</td>
-            <td>Github, Git Desktop</td>
-        </tr>
-        <tr>
-            <td>개발도구</td>
-            <td>Eclipse JEE</td>
-            <td>사용기술</td>
-            <td>Java console</td>
-        </tr>
-    </table>
+* 프로젝트 기간 : 2020.11.03 ~ 2020.11.22
+* 사용 언어 : Java, JDK 1.8.0_221
+* 개발 도구 : Eclipse IDE for Enterprise Java Developers
+* 형상 관리 도구 : Github Desktop
+
+<hr>
+
+### 목적
+1. 수지 노인 복지관의 전산 시스템을 벤치마킹한 문화센터 전산 시스템 개발
+
+<hr>
