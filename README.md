@@ -28,6 +28,10 @@ Java로 작성한 콘솔 입출력 프로젝트
         <th>사용기술</th>
         <th>Java console</th>
     </tr>
+    <tr>
+        <th>개발 인원</th>
+        <th colspan="3">6명 : 박영수(팀장), 김다은, 권주홍, 이청강, 이은규, 김영범 </th>
+    </tr>
 </table>
 
 <hr>
